@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\Michael\\Documents\\fowler\\FowlerSite\\FowlerSite\\FowlerSite.csproj": {}
+    "C:\\Users\\Michael\\Documents\\Git\\fowler\\FowlerSite\\FowlerSite\\FowlerSite.csproj": {}
   },
   "projects": {
-    "C:\\Users\\Michael\\Documents\\fowler\\FowlerSite\\FowlerSite\\FowlerSite.csproj": {
+    "C:\\Users\\Michael\\Documents\\Git\\fowler\\FowlerSite\\FowlerSite\\FowlerSite.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\Michael\\Documents\\fowler\\FowlerSite\\FowlerSite\\FowlerSite.csproj",
+        "projectUniqueName": "C:\\Users\\Michael\\Documents\\Git\\fowler\\FowlerSite\\FowlerSite\\FowlerSite.csproj",
         "projectName": "FowlerSite",
-        "projectPath": "C:\\Users\\Michael\\Documents\\fowler\\FowlerSite\\FowlerSite\\FowlerSite.csproj",
+        "projectPath": "C:\\Users\\Michael\\Documents\\Git\\fowler\\FowlerSite\\FowlerSite\\FowlerSite.csproj",
         "packagesPath": "C:\\Users\\Michael\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\Michael\\Documents\\fowler\\FowlerSite\\FowlerSite\\obj\\",
+        "outputPath": "C:\\Users\\Michael\\Documents\\Git\\fowler\\FowlerSite\\FowlerSite\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
           "C:\\Users\\Michael\\AppData\\Roaming\\NuGet\\NuGet.Config",
