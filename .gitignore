@@ -5,10 +5,14 @@
 
 # Node artifact files
 node_modules/
-dist/
 
 # Compiled Java class files
 *.class
+
+# Visual studio code
+.vs
+.obj
+.bin
 
 # Compiled Python bytecode
 *.py[cod]
@@ -21,7 +25,6 @@ dist/
 
 # Maven
 target/
-dist/
 
 # JetBrains IDE
 .idea/
