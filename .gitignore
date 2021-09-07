@@ -10,9 +10,9 @@ node_modules/
 *.class
 
 # Visual studio code
-.vs
-.obj
-.bin
+.vs/
+obj/
+bin/
 
 # Compiled Python bytecode
 *.py[cod]
