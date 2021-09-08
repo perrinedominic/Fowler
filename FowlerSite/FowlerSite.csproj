@@ -9,6 +9,39 @@
   </ItemGroup>
 
   <ItemGroup>
+    <None Include="wwwroot\assets\vendor\bootstrap-slider\dist\bootstrap-slider.min.js" />
+    <None Include="wwwroot\assets\vendor\bootstrap\css\bootstrap-grid.css.map" />
+    <None Include="wwwroot\assets\vendor\bootstrap\css\bootstrap-grid.min.css.map" />
+    <None Include="wwwroot\assets\vendor\bootstrap\css\bootstrap-reboot.css.map" />
+    <None Include="wwwroot\assets\vendor\bootstrap\css\bootstrap-reboot.min.css.map" />
+    <None Include="wwwroot\assets\vendor\bootstrap\css\bootstrap.css.map" />
+    <None Include="wwwroot\assets\vendor\bootstrap\css\bootstrap.min.css.map" />
+    <None Include="wwwroot\assets\vendor\bootstrap\js\bootstrap.bundle.js" />
+    <None Include="wwwroot\assets\vendor\bootstrap\js\bootstrap.bundle.js.map" />
+    <None Include="wwwroot\assets\vendor\bootstrap\js\bootstrap.bundle.min.js" />
+    <None Include="wwwroot\assets\vendor\bootstrap\js\bootstrap.bundle.min.js.map" />
+    <None Include="wwwroot\assets\vendor\bootstrap\js\bootstrap.js" />
+    <None Include="wwwroot\assets\vendor\bootstrap\js\bootstrap.js.map" />
+    <None Include="wwwroot\assets\vendor\bootstrap\js\bootstrap.min.js" />
+    <None Include="wwwroot\assets\vendor\bootstrap\js\bootstrap.min.js.map" />
+    <None Include="wwwroot\assets\vendor\flickity\dist\flickity.pkgd.min.js" />
+    <None Include="wwwroot\assets\vendor\jarallax\dist\jarallax-video.min.js" />
+    <None Include="wwwroot\assets\vendor\jarallax\dist\jarallax.min.js" />
+    <None Include="wwwroot\assets\vendor\jquery-countdown\dist\jquery.countdown.min.js" />
+    <None Include="wwwroot\assets\vendor\jquery-validation\dist\jquery.validate.min.js" />
+    <None Include="wwwroot\assets\vendor\jquery\dist\jquery.min.js" />
+    <None Include="wwwroot\assets\vendor\object-fit-images\dist\ofi.min.js" />
+    <None Include="wwwroot\assets\vendor\photoswipe\dist\default-skin\default-skin.svg" />
+    <None Include="wwwroot\assets\vendor\photoswipe\dist\photoswipe-ui-default.min.js" />
+    <None Include="wwwroot\assets\vendor\photoswipe\dist\photoswipe.min.js" />
+    <None Include="wwwroot\assets\vendor\popper.js\dist\umd\popper.min.js" />
+    <None Include="wwwroot\assets\vendor\popper.js\dist\umd\popper.min.js.map" />
+    <None Include="wwwroot\assets\vendor\sticky-kit\dist\sticky-kit.min.js" />
+    <None Include="wwwroot\assets\vendor\summernote\dist\summernote-bs4.js.map" />
+    <None Include="wwwroot\assets\vendor\summernote\dist\summernote-bs4.min.js" />
+  </ItemGroup>
+
+  <ItemGroup>
     <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="3.1.5" />
   </ItemGroup>
 
