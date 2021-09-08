@@ -30,12 +30,22 @@ namespace FowlerSite.Controllers
 
         public IActionResult Store()
         {
-            return View();
+            return View("~/Views/Store/Store.cshtml");
         }
 
         public IActionResult StoreCart()
         {
-            return View();
+            return View("~/Views/Store/StoreCart.cshtml");
+        }
+
+        public IActionResult StoreCheckout()
+        {
+            return View("~/Views/Store/StoreCheckout.cshtml");
+        }
+
+        public IActionResult StoreProduct()
+        {
+            return View("~/Views/Store/StoreProduct.cshtml");
         }
 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
