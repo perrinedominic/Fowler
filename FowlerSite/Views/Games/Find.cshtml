@@ -1,0 +1,20 @@
+﻿@model DataAccessLibrary.Models.Game
+
+@{ 
+    ViewData["Title"] = "Find a Game by Category";
+}
+
+<h1>Find Game</h1>
+
+<label for="gameProperties">Choose filter:</label>
+<select id="gameProperties">
+    
+    <option value="@Model.Name">@Model.Name</option>
+    <option value="@Model.Description">@Model.Description</option>
+    <option value="@Model.Price">@Model.Price</option>
+    <option value="@Model.Genre">@Model.Genre</option>
+</select>
+
+@section scripts {
+    <script defer src="~/assets/js/GetFilterValues.js"></script>
+}
