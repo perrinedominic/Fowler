@@ -53,6 +53,11 @@ namespace FowlerSite.Controllers
             return View("~/Views/Store/StoreProduct.cshtml");
         }
 
+        public IActionResult StoreCatalog()
+        {
+            return View("~/Views/Store/StoreCatalog.cshtml");
+        }
+
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
         public IActionResult Error()
         {
