@@ -33,30 +33,8 @@ namespace FowlerSite.Controllers
             return View();
         }
 
-        public IActionResult Store()
-        {
-            return View("~/Views/Store/Store.cshtml");
-        }
 
-        public IActionResult StoreCart()
-        {
-            return View("~/Views/Store/StoreCart.cshtml");
-        }
 
-        public IActionResult StoreCheckout()
-        {
-            return View("~/Views/Store/StoreCheckout.cshtml");
-        }
-
-        public IActionResult StoreProduct()
-        {
-            return View("~/Views/Store/StoreProduct.cshtml");
-        }
-
-        public IActionResult StoreCatalog()
-        {
-            return View("~/Views/Store/StoreCatalog.cshtml");
-        }
 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
         public IActionResult Error()

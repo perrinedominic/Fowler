@@ -149,7 +149,7 @@
                                         <a href="store-product.html">In all revolutions of</a>
                                     </h3>
                                     <div class="nk-gap-1"></div>
-                                    <div class="nk-product-price">€ 23.00</div>
+                                    <div class="nk-product-price">$ 23.00</div>
                                 </div>
 
                                 <div class="nk-widget-post">
@@ -161,7 +161,7 @@
                                         <a href="store-product.html">With what mingled joy</a>
                                     </h3>
                                     <div class="nk-gap-1"></div>
-                                    <div class="nk-product-price">€ 14.00</div>
+                                    <div class="nk-product-price">$ 14.00</div>
                                 </div>
 
                                 <div class="nk-gap-2"></div>
@@ -342,45 +342,39 @@
 
                             </a><ul class="dropdown">
 
-                                <li>
-                                    <a href="store.html">
-                                        Store
 
-                                    </a>
-                                </li>
-                                <li>
-                                    <a href="store-product.html">
-                                        Product
+                                    <li class="active">
+                                        <a asp-action="Store">
+                                            Store
 
-                                    </a>
-                                </li>
-                                <li>
-                                    <a href="store-catalog.html">
-                                        Catalog
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a asp-action="StoreProduct">
+                                            Product
 
-                                    </a>
-                                </li>
-                                <li>
-                                    <a href="store-catalog-alt.html">
-                                        Catalog Alt
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a asp-action="StoreCatalog">
+                                            Catalog
 
-                                    </a>
-                                </li>
-                                <li>
-                                    <a href="store-checkout.html">
-                                        Checkout
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a asp-action="StoreCheckout">
+                                            Checkout
 
-                                    </a>
-                                </li>
-                                <li class="active">
-                                    <a href="store-cart.html">
-                                        Cart
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a asp-action="StoreCart">
+                                            Cart
 
-                                    </a>
-                                </li>
-                            </ul>
-                        </li>
-                    </ul>
+                                        </a>
+                                    </li>
+                                </ul>
+
                     <ul class="nk-nav nk-nav-right nk-nav-icons">
 
                         <li class="single-icon d-lg-none">
@@ -485,7 +479,7 @@
                                     <h5 class="h6">Price:</h5>
                                     <div class="nk-gap-1"></div>
 
-                                    <strong>€ 32.00</strong>
+                                    <strong>$ 32.00</strong>
                                 </td>
                                 <td class="nk-product-cart-quantity">
                                     <h5 class="h6">Quantity:</h5>
@@ -499,7 +493,7 @@
                                     <h5 class="h6">Total:</h5>
                                     <div class="nk-gap-1"></div>
 
-                                    <strong>€ 32.00</strong>
+                                    <strong>$ 32.00</strong>
                                 </td>
                                 <td class="nk-product-cart-remove"><a href="#"><span class="ion-android-close"></span></a></td>
                             </tr>
@@ -522,7 +516,7 @@
                                     <h5 class="h6">Price:</h5>
                                     <div class="nk-gap-1"></div>
 
-                                    <strong>€ 20.00</strong>
+                                    <strong>$ 20.00</strong>
                                 </td>
                                 <td class="nk-product-cart-quantity">
                                     <h5 class="h6">Quantity:</h5>
@@ -536,7 +530,7 @@
                                     <h5 class="h6">Total:</h5>
                                     <div class="nk-gap-1"></div>
 
-                                    <strong>€ 20.00</strong>
+                                    <strong>$ 20.00</strong>
                                 </td>
                                 <td class="nk-product-cart-remove"><a href="#"><span class="ion-android-close"></span></a></td>
                             </tr>
@@ -590,7 +584,7 @@
                                         Subtotal
                                     </td>
                                     <td>
-                                        € 52.00
+                                        $ 52.00
                                     </td>
                                 </tr>
                                 <tr class="nk-store-cart-totals-shipping">
@@ -606,7 +600,7 @@
                                         Total
                                     </td>
                                     <td>
-                                        € 52.00
+                                        $ 52.00
                                     </td>
                                 </tr>
                             </tbody>
