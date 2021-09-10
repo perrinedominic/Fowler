@@ -3854,4 +3854,4 @@ function initPluginSummernote() {
 exports.initPluginSummernote = initPluginSummernote;
 
 /***/ })
-/******/ ]);
+/******/]);
