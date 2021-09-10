@@ -4,17 +4,16 @@
     ViewData["Title"] = "Find a Game by Category";
 }
 
-<h1>Find Game</h1>
+<div class="text-center">
+    <h1>Find Game</h1>
 
-<label for="gameProperties">Choose filter:</label>
-<select id="gameProperties">
-    
-    <option value="@Model.Name">@Model.Name</option>
-    <option value="@Model.Description">@Model.Description</option>
-    <option value="@Model.Price">@Model.Price</option>
-    <option value="@Model.Genre">@Model.Genre</option>
-</select>
+    <label for="Filter">Choose filter: </label>
+    <select id="Filter">
+        <option value="@Model.Name">@Html.DisplayNameFor(model => model.Name)</option>
+        <option value="@Model.Description">@Html.DisplayNameFor(model => model.Description)</option>
+        <option value="@Model.Price">@Html.DisplayNameFor(model => model.Price)</option>
+        <option value="@Model.Genre">@Html.DisplayNameFor(model => model.Genre)</option>
+    </select>
 
-@section scripts {
-    <script defer src="~/assets/js/GetFilterValues.js"></script>
-}
+
+</div>
