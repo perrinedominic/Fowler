@@ -1,5 +1,5 @@
 ﻿@{
-    ViewBag.Title = "StoreCheckout";
+    ViewBag.Title = "StoreCatalog";
 }
 <!DOCTYPE html>
 
@@ -9,7 +9,7 @@
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
 
-    <title>GoodGames | Checkout</title>
+    <title>GoodGames | Action Games</title>
 
     <meta name="description" content="GoodGames - Bootstrap template for communities and games store">
     <meta name="keywords" content="game, gaming, template, HTML template, responsive, Bootstrap, premium">
@@ -343,7 +343,7 @@
 
                             </a><ul class="dropdown">
 
-                                
+
                                 <li class="active">
                                     <a asp-action="Store">
                                         Store
@@ -444,12 +444,7 @@
 
                 <li><span class="fa fa-angle-right"></span></li>
 
-                <li><a href="store-cart.html">Cart</a></li>
-
-
-                <li><span class="fa fa-angle-right"></span></li>
-
-                <li><span>Checkout</span></li>
+                <li><span>Action Games</span></li>
 
             </ul>
         </div>
@@ -460,151 +455,528 @@
 
 
         <div class="container">
-
-            <div class="nk-store nk-store-checkout">
-                <h3 class="nk-decorated-h-2"><span><span class="text-main-1">Billing</span> Details</span></h3>
-
-                <!-- START: Billing Details -->
-                <div class="nk-gap"></div>
-                <form action="#" class="nk-form">
-                    <div class="row vertical-gap">
-                        <div class="col-lg-6">
-                            <div class="row vertical-gap">
-                                <div class="col-sm-6">
-                                    <label for="fname">First Name <span class="text-main-1">*</span>:</label>
-                                    <input type="text" class="form-control required" name="fname" id="fname">
-                                </div>
-                                <div class="col-sm-6">
-                                    <label for="lname">Last Name <span class="text-main-1">*</span>:</label>
-                                    <input type="text" class="form-control required" name="lname" id="lname">
-                                </div>
-                            </div>
-
-                            <div class="nk-gap-1"></div>
-                            <label for="company">Company Name:</label>
-                            <input type="text" class="form-control" name="company" id="company">
-
-                            <div class="nk-gap-1"></div>
-                            <div class="row vertical-gap">
-                                <div class="col-sm-6">
-                                    <label for="email">Email Address <span class="text-main-1">*</span>:</label>
-                                    <input type="email" class="form-control required" name="email" id="email">
-                                </div>
-                                <div class="col-sm-6">
-                                    <label for="phone">Phone <span class="text-main-1">*</span>:</label>
-                                    <input type="tel" class="form-control required" name="phone" id="phone">
-                                </div>
-                            </div>
-
-                            <div class="nk-gap-1"></div>
-                            <label for="country-sel">Country <span class="text-main-1">*</span>:</label>
-                            <select name="country" class="form-control required" id="country-sel">
-                                <option value="">Select a country...</option>
-                            </select>
+            <!-- START: Categories -->
+            <div class="row vertical-gap">
+                <div class="col-lg-4">
+                    <div class="nk-feature-1">
+                        <div class="nk-feature-icon">
+                            <img src="~/assets/images/icon-mouse.png" alt="">
                         </div>
-                        <div class="col-lg-6">
-                            <label for="address">Address <span class="text-main-1">*</span>:</label>
-                            <input type="text" class="form-control required" name="address" id="address">
-
-                            <div class="nk-gap-1"></div>
-                            <label for="city">Town / City <span class="text-main-1">*</span>:</label>
-                            <input type="text" class="form-control required" name="city" id="city">
-
-                            <div class="nk-gap-1"></div>
-                            <div class="row vertical-gap">
-                                <div class="col-sm-6">
-                                    <label for="state">State / Country <span class="text-main-1">*</span>:</label>
-                                    <input type="text" class="form-control required" name="state" id="state">
-                                </div>
-                                <div class="col-sm-6">
-                                    <label for="zip">Postcode / ZIP <span class="text-main-1">*</span>:</label>
-                                    <input type="tel" class="form-control required" name="zip" id="zip">
-                                </div>
-                            </div>
-
-                            <div class="nk-gap-1"></div>
-                            <label class="custom-control custom-checkbox">
-                                <input type="checkbox" class="custom-control-input">
-                                <span class="custom-control-indicator"></span>
-                                Ship to different address?
-                            </label>
+                        <div class="nk-feature-cont">
+                            <h3 class="nk-feature-title"><a href="#">PC</a></h3>
+                            <h3 class="nk-feature-title text-main-1"><a href="#">View Games</a></h3>
                         </div>
                     </div>
-                </form>
-                <!-- END: Billing Details -->
-
-                <div class="nk-gap-2"></div>
-                <form action="#" class="nk-form">
-                    <div class="nk-gap-1"></div>
-                    <label for="notes">Order Notes:</label>
-                    <textarea class="form-control" name="notes" id="notes" placeholder="Order Notes" rows="6"></textarea>
-                </form>
-
-                <!-- START: Order Products -->
-                <div class="nk-gap-3"></div>
-                <h3 class="nk-decorated-h-2"><span><span class="text-main-1">Your</span> Order</span></h3>
-                <div class="nk-gap"></div>
-                <div class="table-responsive">
-                    <table class="nk-table nk-table-sm">
-                        <thead class="thead-default">
-                            <tr>
-                                <th class="nk-product-cart-title">Product</th>
-                                <th class="nk-product-cart-total">Total</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-
-                            <tr>
-                                <td class="nk-product-cart-title">
-                                    However, I have reason &times; 1
-                                </td>
-                                <td class="nk-product-cart-total">
-                                    $ 32.00
-                                </td>
-                            </tr>
-
-                            <tr>
-                                <td class="nk-product-cart-title">
-                                    She was bouncing &times; 1
-                                </td>
-                                <td class="nk-product-cart-total">
-                                    $ 20.00
-                                </td>
-                            </tr>
-
-                            <tr class="nk-store-cart-totals-subtotal">
-                                <td>
-                                    Subtotal
-                                </td>
-                                <td>
-                                    $ 52.00
-                                </td>
-                            </tr>
-                            <tr class="nk-store-cart-totals-shipping">
-                                <td>
-                                    Shipping
-                                </td>
-                                <td>
-                                    Free Shipping
-                                </td>
-                            </tr>
-                            <tr class="nk-store-cart-totals-total">
-                                <td>
-                                    Total
-                                </td>
-                                <td>
-                                    $ 52.00
-                                </td>
-                            </tr>
-                        </tbody>
-                    </table>
                 </div>
-                <!-- END: Order Products -->
-
-                <div class="nk-gap-2"></div>
-                <a class="nk-btn nk-btn-rounded nk-btn-color-main-1" href="#">Place Order</a>
+                <div class="col-lg-4">
+                    <div class="nk-feature-1">
+                        <div class="nk-feature-icon">
+                            <img src="~/assets/images/icon-gamepad.png" alt="">
+                        </div>
+                        <div class="nk-feature-cont">
+                            <h3 class="nk-feature-title"><a href="#">PS4</a></h3>
+                            <h3 class="nk-feature-title text-main-1"><a href="#">View Games</a></h3>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-4">
+                    <div class="nk-feature-1">
+                        <div class="nk-feature-icon">
+                            <img src="~/assets/images/icon-gamepad-2.png" alt="">
+                        </div>
+                        <div class="nk-feature-cont">
+                            <h3 class="nk-feature-title"><a href="#">Xbox</a></h3>
+                            <h3 class="nk-feature-title text-main-1"><a href="#">View Games</a></h3>
+                        </div>
+                    </div>
+                </div>
             </div>
+            <!-- END: Categories -->
+            <!-- START: Products Filter -->
+            <div class="nk-gap-2"></div>
+            <div class="row vertical-gap">
+                <div class="col-lg-8">
+                    <div class="row vertical-gap">
+                        <div class="col-md-4">
+                            <select class="form-control">
+                                <option value="" disabled selected>Select Platform</option>
+                                <option value="ps4">PS4</option>
+                                <option value="xbox">Xbox 1</option>
+                                <option value="pc">PC</option>
+                            </select>
+                        </div>
+                        <div class="col-md-8">
+                            <div class="nk-input-slider-inline">
+                                <div class="nk-input-slider">
+                                    <div class="nk-input-slider-content text-white">
+                                        PRICE:
+                                        <strong class="text-main-1">$ <span class="nk-input-slider-value-0"></span></strong>
+                                        -
+                                        <strong class="text-main-1">$ <span class="nk-input-slider-value-1"></span></strong>
+                                    </div>
+                                    <div class="nk-input-slider-input">
+                                        <input type="text"
+                                               name="price-filter"
+                                               data-slider-min="0"
+                                               data-slider-max="1800"
+                                               data-slider-step="1"
+                                               data-slider-value="[200, 1200]"
+                                               data-slider-tooltip="hide">
+                                    </div>
+                                </div>
+                                <div>
+                                    <a href="#" class="nk-btn nk-btn-rounded nk-btn-color-white">Apply</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-4">
+                    <form action="#" class="nk-form" novalidate="novalidate">
+                        <div class="input-group">
+                            <input type="text" class="form-control" placeholder="Type something...">
+                            <button class="nk-btn nk-btn-color-main-1"><span class="ion-search"></span></button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+            <!-- END: Products Filter -->
+
+            <div class="nk-gap-2"></div>
+            <!-- START: Products -->
+            <div class="row vertical-gap">
+
+                <div class="col-lg-6">
+                    <div class="nk-product-cat-2">
+                        <a class="nk-product-image" asp-action="StoreProduct">
+                            <img src="~/assets/images/product-1-md.jpg" alt="So saying he unbuckled">
+                        </a>
+                        <div class="nk-product-cont">
+                            <h3 class="nk-product-title h5"><a asp-action="StoreProduct">So saying he unbuckled</a></h3>
+                            <div class="nk-gap-1"></div>
+                            <div class="nk-product-rating" data-rating="4"> <i class="fa fa-star"></i> <i class="fa fa-star"></i> <i class="fa fa-star"></i> <i class="fa fa-star"></i> <i class="far fa-star"></i></div>
+                            <div class="nk-gap-1"></div>
+                            Just then her head struck against the roof of the hall: in fact she was now more than nine feet high, and she at once took up the little golden key and hurried off to the garden
+                            <div class="nk-gap-2"></div>
+                            <div class="nk-product-price">$ 23.00</div>
+                            <div class="nk-gap-1"></div>
+                            <a href="#" class="nk-btn nk-btn-rounded nk-btn-color-dark-3 nk-btn-hover-color-main-1">Add to Cart</a>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-lg-6">
+                    <div class="nk-product-cat-2">
+                        <a class="nk-product-image" asp-action="StoreProduct">
+                            <img src="~/assets/images/product-2-md.jpg" alt="However, I have reason">
+                        </a>
+                        <div class="nk-product-cont">
+                            <h3 class="nk-product-title h5"><a asp-action="StoreProduct">However, I have reason</a></h3>
+                            <div class="nk-gap-1"></div>
+                            <div class="nk-product-rating" data-rating="2.5"> <i class="fa fa-star"></i> <i class="fa fa-star"></i> <i class="fas fa-star-half"></i> <i class="far fa-star"></i> <i class="far fa-star"></i></div>
+                            <div class="nk-gap-1"></div>
+                            He made his passenger captain of one, with four of the men; and himself, his mate, and five more, went in the other; and they contrived their business very well, for they
+                            <div class="nk-gap-2"></div>
+                            <div class="nk-product-price">$ 32.00</div>
+                            <div class="nk-gap-1"></div>
+                            <a href="#" class="nk-btn nk-btn-rounded nk-btn-color-dark-3 nk-btn-hover-color-main-1">Add to Cart</a>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-lg-6">
+                    <div class="nk-product-cat-2">
+                        <a class="nk-product-image" asp-action="StoreProduct">
+                            <img src="~/assets/images/product-3-md.jpg" alt="It was some time before">
+                        </a>
+                        <div class="nk-product-cont">
+                            <h3 class="nk-product-title h5"><a asp-action="StoreProduct">It was some time before</a></h3>
+                            <div class="nk-gap-1"></div>
+                            <div class="nk-product-rating" data-rating="5"> <i class="fa fa-star"></i> <i class="fa fa-star"></i> <i class="fa fa-star"></i> <i class="fa fa-star"></i> <i class="fa fa-star"></i></div>
+                            <div class="nk-gap-1"></div>
+                            I have related the substance of several conversations I had with my master during the greatest part of the time I had the honour to be in his service; but have, indeed
+                            <div class="nk-gap-2"></div>
+                            <div class="nk-product-price">$ 14.00</div>
+                            <div class="nk-gap-1"></div>
+                            <a href="#" class="nk-btn nk-btn-rounded nk-btn-color-dark-3 nk-btn-hover-color-main-1">Add to Cart</a>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-lg-6">
+                    <div class="nk-product-cat-2">
+                        <a class="nk-product-image" asp-action="StoreProduct">
+                            <img src="~/assets/images/product-4-md.jpg" alt="She was bouncing">
+                        </a>
+                        <div class="nk-product-cont">
+                            <h3 class="nk-product-title h5"><a asp-action="StoreProduct">She was bouncing</a></h3>
+                            <div class="nk-gap-1"></div>
+
+                            <div class="nk-gap-1"></div>
+                            So saying he unbuckled his baldric with the bugle, took a feather from his cap, and gave them to Wamba; then drew a vizard from his pouch, and, repeating his charges to them
+                            <div class="nk-gap-2"></div>
+                            <div class="nk-product-price">$ 20.00</div>
+                            <div class="nk-gap-1"></div>
+                            <a href="#" class="nk-btn nk-btn-rounded nk-btn-color-dark-3 nk-btn-hover-color-main-1">Add to Cart</a>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-lg-6">
+                    <div class="nk-product-cat-2">
+                        <a class="nk-product-image" asp-action="StoreProduct">
+                            <img src="~/assets/images/product-5-md.jpg" alt="In all revolutions of">
+                        </a>
+                        <div class="nk-product-cont">
+                            <h3 class="nk-product-title h5"><a asp-action="StoreProduct">In all revolutions of</a></h3>
+                            <div class="nk-gap-1"></div>
+                            <div class="nk-product-rating" data-rating="4"> <i class="fa fa-star"></i> <i class="fa fa-star"></i> <i class="fa fa-star"></i> <i class="fa fa-star"></i> <i class="far fa-star"></i></div>
+                            <div class="nk-gap-1"></div>
+                            As we passed, I remarked a beautiful church-spire rising above some old elms in the park; and before them, in the midst of a lawn, and some outhouses, an old red house
+                            <div class="nk-gap-2"></div>
+                            <div class="nk-product-price">$ 23.00</div>
+                            <div class="nk-gap-1"></div>
+                            <a href="#" class="nk-btn nk-btn-rounded nk-btn-color-dark-3 nk-btn-hover-color-main-1">Add to Cart</a>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-lg-6">
+                    <div class="nk-product-cat-2">
+                        <a class="nk-product-image" asp-action="StoreProduct">
+                            <img src="~/assets/images/product-6-md.jpg" alt="Just then her head ">
+                        </a>
+                        <div class="nk-product-cont">
+                            <h3 class="nk-product-title h5"><a asp-action="StoreProduct">Just then her head </a></h3>
+                            <div class="nk-gap-1"></div>
+                            <div class="nk-product-rating" data-rating="3"> <i class="fa fa-star"></i> <i class="fa fa-star"></i> <i class="fa fa-star"></i> <i class="far fa-star"></i> <i class="far fa-star"></i></div>
+                            <div class="nk-gap-1"></div>
+                            Now the races of these two have been for some ages utterly extinct, and besides to discourse any further of them would not be at all to my purpose.
+                            <div class="nk-gap-2"></div>
+                            <div class="nk-product-price">$ 32.00</div>
+                            <div class="nk-gap-1"></div>
+                            <a href="#" class="nk-btn nk-btn-rounded nk-btn-color-dark-3 nk-btn-hover-color-main-1">Add to Cart</a>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-lg-6">
+                    <div class="nk-product-cat-2">
+                        <a class="nk-product-image" asp-action="StoreProduct">
+                            <img src="~/assets/images/product-7-md.jpg" alt="With what mingled joy">
+                        </a>
+                        <div class="nk-product-cont">
+                            <h3 class="nk-product-title h5"><a asp-action="StoreProduct">With what mingled joy</a></h3>
+                            <div class="nk-gap-1"></div>
+                            <div class="nk-product-rating" data-rating="3.5"> <i class="fa fa-star"></i> <i class="fa fa-star"></i> <i class="fa fa-star"></i> <i class="fas fa-star-half"></i> <i class="far fa-star"></i></div>
+                            <div class="nk-gap-1"></div>
+                            She clutched the matron by the arm, and forcing her into a chair by the bedside, was about to speak, when looking round, she caught sight of the two old women
+                            <div class="nk-gap-2"></div>
+                            <div class="nk-product-price">$ 14.00</div>
+                            <div class="nk-gap-1"></div>
+                            <a href="#" class="nk-btn nk-btn-rounded nk-btn-color-dark-3 nk-btn-hover-color-main-1">Add to Cart</a>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-lg-6">
+                    <div class="nk-product-cat-2">
+                        <a class="nk-product-image" asp-action="StoreProduct">
+                            <img src="~/assets/images/product-8-md.jpg" alt="She was bouncing away">
+                        </a>
+                        <div class="nk-product-cont">
+                            <h3 class="nk-product-title h5"><a asp-action="StoreProduct">She was bouncing away</a></h3>
+                            <div class="nk-gap-1"></div>
+                            <div class="nk-product-rating" data-rating="4.5"> <i class="fa fa-star"></i> <i class="fa fa-star"></i> <i class="fa fa-star"></i> <i class="fa fa-star"></i> <i class="fas fa-star-half"></i></div>
+                            <div class="nk-gap-1"></div>
+                            For good, too; though, in consequence of my previous emotions, I was still occasionally seized with a stormy sob. After we had jogged on for some little time
+                            <div class="nk-gap-2"></div>
+                            <div class="nk-product-price">$ 20.00</div>
+                            <div class="nk-gap-1"></div>
+                            <a href="#" class="nk-btn nk-btn-rounded nk-btn-color-dark-3 nk-btn-hover-color-main-1">Add to Cart</a>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-lg-6">
+                    <div class="nk-product-cat-2">
+                        <a class="nk-product-image" asp-action="StoreProduct">
+                            <img src="~/assets/images/product-9-md.jpg" alt="The word was">
+                        </a>
+                        <div class="nk-product-cont">
+                            <h3 class="nk-product-title h5"><a asp-action="StoreProduct">The word was</a></h3>
+                            <div class="nk-gap-1"></div>
+                            <div class="nk-product-rating" data-rating="5"> <i class="fa fa-star"></i> <i class="fa fa-star"></i> <i class="fa fa-star"></i> <i class="fa fa-star"></i> <i class="fa fa-star"></i></div>
+                            <div class="nk-gap-1"></div>
+                            With what mingled joy and sorrow do I take up the pen to write to my dearest friend! Oh, what a change between to-day and yesterday! Now I am friendless and alone
+                            <div class="nk-gap-2"></div>
+                            <div class="nk-product-price">$ 23.00</div>
+                            <div class="nk-gap-1"></div>
+                            <a href="#" class="nk-btn nk-btn-rounded nk-btn-color-dark-3 nk-btn-hover-color-main-1">Add to Cart</a>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-lg-6">
+                    <div class="nk-product-cat-2">
+                        <a class="nk-product-image" asp-action="StoreProduct">
+                            <img src="~/assets/images/product-10-md.jpg" alt="My mother was so much">
+                        </a>
+                        <div class="nk-product-cont">
+                            <h3 class="nk-product-title h5"><a asp-action="StoreProduct">My mother was so much</a></h3>
+                            <div class="nk-gap-1"></div>
+                            <div class="nk-product-rating" data-rating="3.5"> <i class="fa fa-star"></i> <i class="fa fa-star"></i> <i class="fa fa-star"></i> <i class="fas fa-star-half"></i> <i class="far fa-star"></i></div>
+                            <div class="nk-gap-1"></div>
+                            A hundred thousand grateful loves to your dear papa and mamma . Is your poor brother recovered of his rack - punch ? Oh, dear!Oh, dear!How men should beware of wicked
+                            <div class="nk-gap-2"></div>
+                            <div class="nk-product-price">$ 32.00</div>
+                            <div class="nk-gap-1"></div>
+                            <a href="#" class="nk-btn nk-btn-rounded nk-btn-color-dark-3 nk-btn-hover-color-main-1">Add to Cart</a>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-lg-6">
+                    <div class="nk-product-cat-2">
+                        <a class="nk-product-image" asp-action="StoreProduct">
+                            <img src="~/assets/images/product-11-md.jpg" alt="She gave my mother">
+                        </a>
+                        <div class="nk-product-cont">
+                            <h3 class="nk-product-title h5"><a asp-action="StoreProduct">She gave my mother</a></h3>
+                            <div class="nk-gap-1"></div>
+                            <div class="nk-product-rating" data-rating="3"> <i class="fa fa-star"></i> <i class="fa fa-star"></i> <i class="fa fa-star"></i> <i class="far fa-star"></i> <i class="far fa-star"></i></div>
+                            <div class="nk-gap-1"></div>
+                            Just then her head struck against the roof of the hall: in fact she was now more than nine feet high, and she at once took up the little golden key and hurried off to the garden
+                            <div class="nk-gap-2"></div>
+                            <div class="nk-product-price">$ 14.00</div>
+                            <div class="nk-gap-1"></div>
+                            <a href="#" class="nk-btn nk-btn-rounded nk-btn-color-dark-3 nk-btn-hover-color-main-1">Add to Cart</a>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-lg-6">
+                    <div class="nk-product-cat-2">
+                        <a class="nk-product-image" asp-action="StoreProduct">
+                            <img src="~/assets/images/product-12-md.jpg" alt="A hundred thousand">
+                        </a>
+                        <div class="nk-product-cont">
+                            <h3 class="nk-product-title h5"><a asp-action="StoreProduct">A hundred thousand</a></h3>
+                            <div class="nk-gap-1"></div>
+                            <div class="nk-product-rating" data-rating="4.5"> <i class="fa fa-star"></i> <i class="fa fa-star"></i> <i class="fa fa-star"></i> <i class="fa fa-star"></i> <i class="fas fa-star-half"></i></div>
+                            <div class="nk-gap-1"></div>
+                            He made his passenger captain of one, with four of the men; and himself, his mate, and five more, went in the other; and they contrived their business very well, for they
+                            <div class="nk-gap-2"></div>
+                            <div class="nk-product-price">$ 20.00</div>
+                            <div class="nk-gap-1"></div>
+                            <a href="#" class="nk-btn nk-btn-rounded nk-btn-color-dark-3 nk-btn-hover-color-main-1">Add to Cart</a>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-lg-6">
+                    <div class="nk-product-cat-2">
+                        <a class="nk-product-image" asp-action="StoreProduct">
+                            <img src="~/assets/images/product-13-md.jpg" alt="So saying he unbuckled">
+                        </a>
+                        <div class="nk-product-cont">
+                            <h3 class="nk-product-title h5"><a asp-action="StoreProduct">So saying he unbuckled</a></h3>
+                            <div class="nk-gap-1"></div>
+                            <div class="nk-product-rating" data-rating="5"> <i class="fa fa-star"></i> <i class="fa fa-star"></i> <i class="fa fa-star"></i> <i class="fa fa-star"></i> <i class="fa fa-star"></i></div>
+                            <div class="nk-gap-1"></div>
+                            I have related the substance of several conversations I had with my master during the greatest part of the time I had the honour to be in his service; but have, indeed
+                            <div class="nk-gap-2"></div>
+                            <div class="nk-product-price">$ 23.00</div>
+                            <div class="nk-gap-1"></div>
+                            <a href="#" class="nk-btn nk-btn-rounded nk-btn-color-dark-3 nk-btn-hover-color-main-1">Add to Cart</a>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-lg-6">
+                    <div class="nk-product-cat-2">
+                        <a class="nk-product-image" asp-action="StoreProduct">
+                            <img src="~/assets/images/product-14-md.jpg" alt="However, I have reason">
+                        </a>
+                        <div class="nk-product-cont">
+                            <h3 class="nk-product-title h5"><a asp-action="StoreProduct">However, I have reason</a></h3>
+                            <div class="nk-gap-1"></div>
+                            <div class="nk-product-rating" data-rating="1.5"> <i class="fa fa-star"></i> <i class="fas fa-star-half"></i> <i class="far fa-star"></i> <i class="far fa-star"></i> <i class="far fa-star"></i></div>
+                            <div class="nk-gap-1"></div>
+                            So saying he unbuckled his baldric with the bugle, took a feather from his cap, and gave them to Wamba; then drew a vizard from his pouch, and, repeating his charges to them
+                            <div class="nk-gap-2"></div>
+                            <div class="nk-product-price">$ 32.00</div>
+                            <div class="nk-gap-1"></div>
+                            <a href="#" class="nk-btn nk-btn-rounded nk-btn-color-dark-3 nk-btn-hover-color-main-1">Add to Cart</a>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-lg-6">
+                    <div class="nk-product-cat-2">
+                        <a class="nk-product-image" asp-action="StoreProduct">
+                            <img src="~/assets/images/product-15-md.jpg" alt="At first, for some time">
+                        </a>
+                        <div class="nk-product-cont">
+                            <h3 class="nk-product-title h5"><a asp-action="StoreProduct">At first, for some time</a></h3>
+                            <div class="nk-gap-1"></div>
+                            <div class="nk-product-rating" data-rating="4"> <i class="fa fa-star"></i> <i class="fa fa-star"></i> <i class="fa fa-star"></i> <i class="fa fa-star"></i> <i class="far fa-star"></i></div>
+                            <div class="nk-gap-1"></div>
+                            As we passed, I remarked a beautiful church-spire rising above some old elms in the park; and before them, in the midst of a lawn, and some outhouses, an old red house
+                            <div class="nk-gap-2"></div>
+                            <div class="nk-product-price">$ 14.00</div>
+                            <div class="nk-gap-1"></div>
+                            <a href="#" class="nk-btn nk-btn-rounded nk-btn-color-dark-3 nk-btn-hover-color-main-1">Add to Cart</a>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-lg-6">
+                    <div class="nk-product-cat-2">
+                        <a class="nk-product-image" asp-action="StoreProduct">
+                            <img src="~/assets/images/product-16-md.jpg" alt="When the last &#39;natural&#39;">
+                        </a>
+                        <div class="nk-product-cont">
+                            <h3 class="nk-product-title h5"><a asp-action="StoreProduct">When the last &#39;natural&#39;</a></h3>
+                            <div class="nk-gap-1"></div>
+                            <div class="nk-product-rating" data-rating="4.5"> <i class="fa fa-star"></i> <i class="fa fa-star"></i> <i class="fa fa-star"></i> <i class="fa fa-star"></i> <i class="fas fa-star-half"></i></div>
+                            <div class="nk-gap-1"></div>
+                            Now the races of these two have been for some ages utterly extinct, and besides to discourse any further of them would not be at all to my purpose.
+                            <div class="nk-gap-2"></div>
+                            <div class="nk-product-price">$ 20.00</div>
+                            <div class="nk-gap-1"></div>
+                            <a href="#" class="nk-btn nk-btn-rounded nk-btn-color-dark-3 nk-btn-hover-color-main-1">Add to Cart</a>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+            <!-- END: Products -->
+            <!-- START: Pagination -->
+            <div class="nk-gap-3"></div>
+            <div class="nk-pagination nk-pagination-center">
+                <a href="#" class="nk-pagination-prev">
+                    <span class="ion-ios-arrow-back"></span>
+                </a>
+                <nav>
+                    <a class="nk-pagination-current" href="#">1</a>
+                    <a href="#">2</a>
+                    <a href="#">3</a>
+                    <a href="#">4</a>
+                    <span>...</span>
+                    <a href="#">14</a>
+                </nav>
+                <a href="#" class="nk-pagination-next">
+                    <span class="ion-ios-arrow-forward"></span>
+                </a>
+            </div>
+            <!-- END: Pagination -->
+            <!-- START: Most Popular -->
+            <div class="nk-gap-3"></div>
+            <h3 class="nk-decorated-h-2"><span><span class="text-main-1">Most</span> Popular</span></h3>
+            <div class="nk-gap"></div>
+            <div class="row vertical-gap">
+
+
+                <div class="col-lg-4 col-md-6">
+                    <div class="nk-product-cat">
+                        <a class="nk-product-image" asp-action="StoreProduct">
+                            <img src="~/assets/images/product-11-xs.jpg" alt="She gave my mother">
+                        </a>
+                        <div class="nk-product-cont">
+                            <h3 class="nk-product-title h5"><a asp-action="StoreProduct">She gave my mother</a></h3>
+                            <div class="nk-gap-1"></div>
+                            <div class="nk-product-rating" data-rating="3"> <i class="fa fa-star"></i> <i class="fa fa-star"></i> <i class="fa fa-star"></i> <i class="far fa-star"></i> <i class="far fa-star"></i></div>
+                            <div class="nk-gap-1"></div>
+                            <div class="nk-product-price">$ 14.00</div>
+                        </div>
+                    </div>
+                </div>
+
+
+                <div class="col-lg-4 col-md-6">
+                    <div class="nk-product-cat">
+                        <a class="nk-product-image" asp-action="StoreProduct">
+                            <img src="~/assets/images/product-12-xs.jpg" alt="A hundred thousand">
+                        </a>
+                        <div class="nk-product-cont">
+                            <h3 class="nk-product-title h5"><a asp-action="StoreProduct">A hundred thousand</a></h3>
+                            <div class="nk-gap-1"></div>
+                            <div class="nk-product-rating" data-rating="4.5"> <i class="fa fa-star"></i> <i class="fa fa-star"></i> <i class="fa fa-star"></i> <i class="fa fa-star"></i> <i class="fas fa-star-half"></i></div>
+                            <div class="nk-gap-1"></div>
+                            <div class="nk-product-price">$ 20.00</div>
+                        </div>
+                    </div>
+                </div>
+
+
+                <div class="col-lg-4 col-md-6">
+                    <div class="nk-product-cat">
+                        <a class="nk-product-image" asp-action="StoreProduct">
+                            <img src="~/assets/images/product-13-xs.jpg" alt="So saying he unbuckled">
+                        </a>
+                        <div class="nk-product-cont">
+                            <h3 class="nk-product-title h5"><a asp-action="StoreProduct">So saying he unbuckled</a></h3>
+                            <div class="nk-gap-1"></div>
+                            <div class="nk-product-rating" data-rating="5"> <i class="fa fa-star"></i> <i class="fa fa-star"></i> <i class="fa fa-star"></i> <i class="fa fa-star"></i> <i class="fa fa-star"></i></div>
+                            <div class="nk-gap-1"></div>
+                            <div class="nk-product-price">$ 23.00</div>
+                        </div>
+                    </div>
+                </div>
+
+
+                <div class="col-lg-4 col-md-6">
+                    <div class="nk-product-cat">
+                        <a class="nk-product-image" asp-action="StoreProduct">
+                            <img src="~/assets/images/product-14-xs.jpg" alt="However, I have reason">
+                        </a>
+                        <div class="nk-product-cont">
+                            <h3 class="nk-product-title h5"><a asp-action="StoreProduct">However, I have reason</a></h3>
+                            <div class="nk-gap-1"></div>
+                            <div class="nk-product-rating" data-rating="1.5"> <i class="fa fa-star"></i> <i class="fas fa-star-half"></i> <i class="far fa-star"></i> <i class="far fa-star"></i> <i class="far fa-star"></i></div>
+                            <div class="nk-gap-1"></div>
+                            <div class="nk-product-price">$ 32.00</div>
+                        </div>
+                    </div>
+                </div>
+
+
+                <div class="col-lg-4 col-md-6">
+                    <div class="nk-product-cat">
+                        <a class="nk-product-image" asp-action="StoreProduct">
+                            <img src="~/assets/images/product-15-xs.jpg" alt="At first, for some time">
+                        </a>
+                        <div class="nk-product-cont">
+                            <h3 class="nk-product-title h5"><a asp-action="StoreProduct">At first, for some time</a></h3>
+                            <div class="nk-gap-1"></div>
+                            <div class="nk-product-rating" data-rating="4"> <i class="fa fa-star"></i> <i class="fa fa-star"></i> <i class="fa fa-star"></i> <i class="fa fa-star"></i> <i class="far fa-star"></i></div>
+                            <div class="nk-gap-1"></div>
+                            <div class="nk-product-price">$ 14.00</div>
+                        </div>
+                    </div>
+                </div>
+
+
+                <div class="col-lg-4 col-md-6">
+                    <div class="nk-product-cat">
+                        <a class="nk-product-image" asp-action="StoreProduct">
+                            <img src="~/assets/images/product-16-xs.jpg" alt="When the last &#39;natural&#39;">
+                        </a>
+                        <div class="nk-product-cont">
+                            <h3 class="nk-product-title h5"><a asp-action="StoreProduct">When the last &#39;natural&#39;</a></h3>
+                            <div class="nk-gap-1"></div>
+                            <div class="nk-product-rating" data-rating="4.5"> <i class="fa fa-star"></i> <i class="fa fa-star"></i> <i class="fa fa-star"></i> <i class="fa fa-star"></i> <i class="fas fa-star-half"></i></div>
+                            <div class="nk-gap-1"></div>
+                            <div class="nk-product-price">$ 20.00</div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+            <!-- END: Most Popular -->
         </div>
+
         <div class="nk-gap-2"></div>
 
 

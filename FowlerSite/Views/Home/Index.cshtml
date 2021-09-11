@@ -139,32 +139,32 @@
                             <div class="nk-cart-dropdown">
 
                                 <div class="nk-widget-post">
-                                    <a href="store-product.html" class="nk-post-image">
+                                    <a asp-action="StoreProduct" class="nk-post-image">
                                         <img src="assets/images/product-5-xs.jpg" alt="In all revolutions of">
                                     </a>
                                     <h3 class="nk-post-title">
                                         <a href="#" class="nk-cart-remove-item"><span class="ion-android-close"></span></a>
-                                        <a href="store-product.html">In all revolutions of</a>
+                                        <a asp-action="StoreProduct">In all revolutions of</a>
                                     </h3>
                                     <div class="nk-gap-1"></div>
-                                    <div class="nk-product-price">€ 23.00</div>
+                                    <div class="nk-product-price">$ 23.00</div>
                                 </div>
 
                                 <div class="nk-widget-post">
-                                    <a href="store-product.html" class="nk-post-image">
+                                    <a asp-action="StoreProduct" class="nk-post-image">
                                         <img src="assets/images/product-7-xs.jpg" alt="With what mingled joy">
                                     </a>
                                     <h3 class="nk-post-title">
                                         <a href="#" class="nk-cart-remove-item"><span class="ion-android-close"></span></a>
-                                        <a href="store-product.html">With what mingled joy</a>
+                                        <a asp-action="StoreProduct">With what mingled joy</a>
                                     </h3>
                                     <div class="nk-gap-1"></div>
-                                    <div class="nk-product-price">€ 14.00</div>
+                                    <div class="nk-product-price">$ 14.00</div>
                                 </div>
 
                                 <div class="nk-gap-2"></div>
                                 <div class="text-center">
-                                    <a href="store-checkout.html" class="nk-btn nk-btn-rounded nk-btn-color-main-1 nk-btn-hover-color-white">Proceed to Checkout</a>
+                                    <a asp-controller="Store" asp-action="StoreCheckout" class="nk-btn nk-btn-rounded nk-btn-color-main-1 nk-btn-hover-color-white">Proceed to Checkout</a>
                                 </div>
                             </div>
                         </li>
@@ -341,37 +341,31 @@
                             </a><ul class="dropdown">
 
                                 <li>
-                                    <a asp-action="Store">
+                                    <a asp-controller="Store" asp-action="Store">
                                         Store
 
                                     </a>
                                 </li>
                                 <li>
-                                    <a asp-action="StoreProduct">
+                                    <a asp-controller="Store" asp-action="StoreProduct">
                                         Product
 
                                     </a>
                                 </li>
                                 <li>
-                                    <a href="store-catalog.html">
+                                    <a asp-controller="Store" asp-action="StoreCatalog">
                                         Catalog
 
                                     </a>
                                 </li>
                                 <li>
-                                    <a href="store-catalog-alt.html">
-                                        Catalog Alt
-
-                                    </a>
-                                </li>
-                                <li>
-                                    <a asp-action="StoreCheckout">
+                                    <a asp-controller="Store" asp-action="StoreCheckout">
                                         Checkout
 
                                     </a>
                                 </li>
                                 <li>
-                                    <a asp-action="StoreCart">
+                                    <a asp-controller="Store" asp-action="StoreCart">
                                         Cart
 
                                     </a>
@@ -414,8 +408,8 @@
     <div id="nk-nav-mobile" class="nk-navbar nk-navbar-side nk-navbar-right-side nk-navbar-overlay-content d-lg-none">
         <div class="nano">
             <div class="nano-content">
-                <a href="index.html" class="nk-nav-logo">
-                    <img src="assets/images/logo.png" alt="" width="120">
+                <a asp-action="Index" class="nk-nav-logo">
+                    <img src="~/assets/images/logo.png" alt="" width="120">
                 </a>
                 <div class="nk-navbar-mobile-content">
                     <ul class="nk-nav">
@@ -1363,7 +1357,7 @@
                         <div class="row vertical-gap">
                             <div class="col-lg-4 col-md-6">
                                 <div class="nk-gallery-item-box">
-                                    <a href="assets/images/gallery-1.jpg" class="nk-gallery-item" data-size="1016x572">
+                                    <a href="~/assets/images/gallery-1.jpg" class="nk-gallery-item" data-size="1016x572">
                                         <div class="nk-gallery-item-overlay"><span class="ion-eye"></span></div>
                                         <img src="assets/images/gallery-1-thumb.jpg" alt="">
                                     </a>
@@ -1375,7 +1369,7 @@
                             </div>
                             <div class="col-lg-4 col-md-6">
                                 <div class="nk-gallery-item-box">
-                                    <a href="assets/images/gallery-2.jpg" class="nk-gallery-item" data-size="1188x594">
+                                    <a href="~/assets/images/gallery-2.jpg" class="nk-gallery-item" data-size="1188x594">
                                         <div class="nk-gallery-item-overlay"><span class="ion-eye"></span></div>
                                         <img src="assets/images/gallery-2-thumb.jpg" alt="">
                                     </a>
@@ -1386,7 +1380,7 @@
                             </div>
                             <div class="col-lg-4 col-md-6">
                                 <div class="nk-gallery-item-box">
-                                    <a href="assets/images/gallery-3.jpg" class="nk-gallery-item" data-size="625x350">
+                                    <a href="~/assets/images/gallery-3.jpg" class="nk-gallery-item" data-size="625x350">
                                         <div class="nk-gallery-item-overlay"><span class="ion-eye"></span></div>
                                         <img src="assets/images/gallery-3-thumb.jpg" alt="">
                                     </a>
@@ -1394,7 +1388,7 @@
                             </div>
                             <div class="col-lg-4 col-md-6">
                                 <div class="nk-gallery-item-box">
-                                    <a href="assets/images/gallery-4.jpg" class="nk-gallery-item" data-size="873x567">
+                                    <a href="~/assets/images/gallery-4.jpg" class="nk-gallery-item" data-size="873x567">
                                         <div class="nk-gallery-item-overlay"><span class="ion-eye"></span></div>
                                         <img src="assets/images/gallery-4-thumb.jpg" alt="">
                                     </a>
@@ -1402,7 +1396,7 @@
                             </div>
                             <div class="col-lg-4 col-md-6">
                                 <div class="nk-gallery-item-box">
-                                    <a href="assets/images/gallery-5.jpg" class="nk-gallery-item" data-size="471x269">
+                                    <a href="~/assets/images/gallery-5.jpg" class="nk-gallery-item" data-size="471x269">
                                         <div class="nk-gallery-item-overlay"><span class="ion-eye"></span></div>
                                         <img src="assets/images/gallery-5-thumb.jpg" alt="">
                                     </a>
@@ -1410,7 +1404,7 @@
                             </div>
                             <div class="col-lg-4 col-md-6">
                                 <div class="nk-gallery-item-box">
-                                    <a href="assets/images/gallery-6.jpg" class="nk-gallery-item" data-size="472x438">
+                                    <a href="~/assets/images/gallery-6.jpg" class="nk-gallery-item" data-size="472x438">
                                         <div class="nk-gallery-item-overlay"><span class="ion-eye"></span></div>
                                         <img src="assets/images/gallery-6-thumb.jpg" alt="">
                                     </a>
@@ -1428,15 +1422,15 @@
 
                         <div class="col-md-6">
                             <div class="nk-product-cat">
-                                <a class="nk-product-image" href="store-product.html">
+                                <a class="nk-product-image" asp-action="StoreProduct">
                                     <img src="assets/images/product-11-xs.jpg" alt="She gave my mother">
                                 </a>
                                 <div class="nk-product-cont">
-                                    <h3 class="nk-product-title h5"><a href="store-product.html">She gave my mother</a></h3>
+                                    <h3 class="nk-product-title h5"><a asp-action="StoreProduct">She gave my mother</a></h3>
                                     <div class="nk-gap-1"></div>
                                     <div class="nk-product-rating" data-rating="3"> <i class="fa fa-star"></i> <i class="fa fa-star"></i> <i class="fa fa-star"></i> <i class="far fa-star"></i> <i class="far fa-star"></i></div>
                                     <div class="nk-gap-1"></div>
-                                    <div class="nk-product-price">€ 14.00</div>
+                                    <div class="nk-product-price">$ 14.00</div>
                                     <div class="nk-gap-1"></div>
                                     <a href="#" class="nk-btn nk-btn-rounded nk-btn-color-dark-3 nk-btn-hover-color-main-1">Add to Cart</a>
                                 </div>
@@ -1446,15 +1440,15 @@
 
                         <div class="col-md-6">
                             <div class="nk-product-cat">
-                                <a class="nk-product-image" href="store-product.html">
+                                <a class="nk-product-image" asp-action="StoreProduct">
                                     <img src="assets/images/product-12-xs.jpg" alt="A hundred thousand">
                                 </a>
                                 <div class="nk-product-cont">
-                                    <h3 class="nk-product-title h5"><a href="store-product.html">A hundred thousand</a></h3>
+                                    <h3 class="nk-product-title h5"><a asp-action="StoreProduct">A hundred thousand</a></h3>
                                     <div class="nk-gap-1"></div>
                                     <div class="nk-product-rating" data-rating="4.5"> <i class="fa fa-star"></i> <i class="fa fa-star"></i> <i class="fa fa-star"></i> <i class="fa fa-star"></i> <i class="fas fa-star-half"></i></div>
                                     <div class="nk-gap-1"></div>
-                                    <div class="nk-product-price">€ 20.00</div>
+                                    <div class="nk-product-price">$ 20.00</div>
                                     <div class="nk-gap-1"></div>
                                     <a href="#" class="nk-btn nk-btn-rounded nk-btn-color-dark-3 nk-btn-hover-color-main-1">Add to Cart</a>
                                 </div>
@@ -1464,15 +1458,15 @@
 
                         <div class="col-md-6">
                             <div class="nk-product-cat">
-                                <a class="nk-product-image" href="store-product.html">
+                                <a class="nk-product-image" asp-action="StoreProduct">
                                     <img src="assets/images/product-13-xs.jpg" alt="So saying he unbuckled">
                                 </a>
                                 <div class="nk-product-cont">
-                                    <h3 class="nk-product-title h5"><a href="store-product.html">So saying he unbuckled</a></h3>
+                                    <h3 class="nk-product-title h5"><a asp-action="StoreProduct">So saying he unbuckled</a></h3>
                                     <div class="nk-gap-1"></div>
                                     <div class="nk-product-rating" data-rating="5"> <i class="fa fa-star"></i> <i class="fa fa-star"></i> <i class="fa fa-star"></i> <i class="fa fa-star"></i> <i class="fa fa-star"></i></div>
                                     <div class="nk-gap-1"></div>
-                                    <div class="nk-product-price">€ 23.00</div>
+                                    <div class="nk-product-price">$ 23.00</div>
                                     <div class="nk-gap-1"></div>
                                     <a href="#" class="nk-btn nk-btn-rounded nk-btn-color-dark-3 nk-btn-hover-color-main-1">Add to Cart</a>
                                 </div>
@@ -1482,15 +1476,15 @@
 
                         <div class="col-md-6">
                             <div class="nk-product-cat">
-                                <a class="nk-product-image" href="store-product.html">
-                                    <img src="assets/images/product-14-xs.jpg" alt="However, I have reason">
+                                <a class="nk-product-image" asp-action="StoreProduct">
+                                    <img src="~/assets/images/product-14-xs.jpg" alt="However, I have reason">
                                 </a>
                                 <div class="nk-product-cont">
-                                    <h3 class="nk-product-title h5"><a href="store-product.html">However, I have reason</a></h3>
+                                    <h3 class="nk-product-title h5"><a asp-action="StoreProduct">However, I have reason</a></h3>
                                     <div class="nk-gap-1"></div>
                                     <div class="nk-product-rating" data-rating="1.5"> <i class="fa fa-star"></i> <i class="fas fa-star-half"></i> <i class="far fa-star"></i> <i class="far fa-star"></i> <i class="far fa-star"></i></div>
                                     <div class="nk-gap-1"></div>
-                                    <div class="nk-product-price">€ 32.00</div>
+                                    <div class="nk-product-price">$ 32.00</div>
                                     <div class="nk-gap-1"></div>
                                     <a href="#" class="nk-btn nk-btn-rounded nk-btn-color-dark-3 nk-btn-hover-color-main-1">Add to Cart</a>
                                 </div>
@@ -1611,7 +1605,7 @@
                                     <div class="row sm-gap vertical-gap">
                                         <div class="col-sm-6">
                                             <div class="nk-gallery-item-box">
-                                                <a href="assets/images/gallery-1.jpg" class="nk-gallery-item" data-size="1016x572">
+                                                <a href="~/assets/images/gallery-1.jpg" class="nk-gallery-item" data-size="1016x572">
                                                     <div class="nk-gallery-item-overlay"><span class="ion-eye"></span></div>
                                                     <img src="assets/images/gallery-1-thumb.jpg" alt="">
                                                 </a>
@@ -1623,7 +1617,7 @@
                                         </div>
                                         <div class="col-sm-6">
                                             <div class="nk-gallery-item-box">
-                                                <a href="assets/images/gallery-2.jpg" class="nk-gallery-item" data-size="1188x594">
+                                                <a href="~/assets/images/gallery-2.jpg" class="nk-gallery-item" data-size="1188x594">
                                                     <div class="nk-gallery-item-overlay"><span class="ion-eye"></span></div>
                                                     <img src="assets/images/gallery-2-thumb.jpg" alt="">
                                                 </a>
@@ -1634,7 +1628,7 @@
                                         </div>
                                         <div class="col-sm-6">
                                             <div class="nk-gallery-item-box">
-                                                <a href="assets/images/gallery-3.jpg" class="nk-gallery-item" data-size="625x350">
+                                                <a href="~/assets/images/gallery-3.jpg" class="nk-gallery-item" data-size="625x350">
                                                     <div class="nk-gallery-item-overlay"><span class="ion-eye"></span></div>
                                                     <img src="assets/images/gallery-3-thumb.jpg" alt="">
                                                 </a>
@@ -1642,7 +1636,7 @@
                                         </div>
                                         <div class="col-sm-6">
                                             <div class="nk-gallery-item-box">
-                                                <a href="assets/images/gallery-4.jpg" class="nk-gallery-item" data-size="873x567">
+                                                <a href="~/assets/images/gallery-4.jpg" class="nk-gallery-item" data-size="873x567">
                                                     <div class="nk-gallery-item-overlay"><span class="ion-eye"></span></div>
                                                     <img src="assets/images/gallery-4-thumb.jpg" alt="">
                                                 </a>
@@ -1650,7 +1644,7 @@
                                         </div>
                                         <div class="col-sm-6">
                                             <div class="nk-gallery-item-box">
-                                                <a href="assets/images/gallery-5.jpg" class="nk-gallery-item" data-size="471x269">
+                                                <a href="~/assets/images/gallery-5.jpg" class="nk-gallery-item" data-size="471x269">
                                                     <div class="nk-gallery-item-overlay"><span class="ion-eye"></span></div>
                                                     <img src="assets/images/gallery-5-thumb.jpg" alt="">
                                                 </a>
@@ -1658,7 +1652,7 @@
                                         </div>
                                         <div class="col-sm-6">
                                             <div class="nk-gallery-item-box">
-                                                <a href="assets/images/gallery-6.jpg" class="nk-gallery-item" data-size="472x438">
+                                                <a href="~/assets/images/gallery-6.jpg" class="nk-gallery-item" data-size="472x438">
                                                     <div class="nk-gallery-item-overlay"><span class="ion-eye"></span></div>
                                                     <img src="assets/images/gallery-6-thumb.jpg" alt="">
                                                 </a>
@@ -1676,11 +1670,11 @@
                                         <span class="nk-widget-match-left">
                                             <span class="nk-widget-match-teams">
                                                 <span class="nk-widget-match-team-logo">
-                                                    <img src="assets/images/team-1.jpg" alt="">
+                                                    <img src="~/assets/images/team-1.jpg" alt="">
                                                 </span>
                                                 <span class="nk-widget-match-vs">VS</span>
                                                 <span class="nk-widget-match-team-logo">
-                                                    <img src="assets/images/team-2.jpg" alt="">
+                                                    <img src="~/assets/images/team-2.jpg" alt="">
                                                 </span>
                                             </span>
                                             <span class="nk-widget-match-date">CS:GO - Apr 28, 2018 8:00 pm</span>
@@ -1698,11 +1692,11 @@
                                         <span class="nk-widget-match-left">
                                             <span class="nk-widget-match-teams">
                                                 <span class="nk-widget-match-team-logo">
-                                                    <img src="assets/images/team-3.jpg" alt="">
+                                                    <img src="~/assets/images/team-3.jpg" alt="">
                                                 </span>
                                                 <span class="nk-widget-match-vs">VS</span>
                                                 <span class="nk-widget-match-team-logo">
-                                                    <img src="assets/images/team-2.jpg" alt="">
+                                                    <img src="~/assets/images/team-2.jpg" alt="">
                                                 </span>
                                             </span>
                                             <span class="nk-widget-match-date">LoL - Apr 24, 2018 7:20 pm</span>
@@ -1720,11 +1714,11 @@
                                         <span class="nk-widget-match-left">
                                             <span class="nk-widget-match-teams">
                                                 <span class="nk-widget-match-team-logo">
-                                                    <img src="assets/images/team-1.jpg" alt="">
+                                                    <img src="~/assets/images/team-1.jpg" alt="">
                                                 </span>
                                                 <span class="nk-widget-match-vs">VS</span>
                                                 <span class="nk-widget-match-team-logo">
-                                                    <img src="assets/images/team-4.jpg" alt="">
+                                                    <img src="~/assets/images/team-4.jpg" alt="">
                                                 </span>
                                             </span>
                                             <span class="nk-widget-match-date">Dota 2 - Apr 12, 2018 6:40 pm</span>
@@ -1743,30 +1737,30 @@
                             <div class="nk-widget-content">
 
                                 <div class="nk-widget-post">
-                                    <a href="store-product.html" class="nk-post-image">
+                                    <a asp-action="StoreProduct" class="nk-post-image">
                                         <img src="assets/images/product-1-xs.jpg" alt="So saying he unbuckled">
                                     </a>
-                                    <h3 class="nk-post-title"><a href="store-product.html">So saying he unbuckled</a></h3>
+                                    <h3 class="nk-post-title"><a asp-action="StoreProduct">So saying he unbuckled</a></h3>
                                     <div class="nk-product-rating" data-rating="4"> <i class="fa fa-star"></i> <i class="fa fa-star"></i> <i class="fa fa-star"></i> <i class="fa fa-star"></i> <i class="far fa-star"></i></div>
-                                    <div class="nk-product-price">€ 23.00</div>
+                                    <div class="nk-product-price">$ 23.00</div>
                                 </div>
 
                                 <div class="nk-widget-post">
-                                    <a href="store-product.html" class="nk-post-image">
+                                    <a asp-action="StoreProduct" class="nk-post-image">
                                         <img src="assets/images/product-2-xs.jpg" alt="However, I have reason">
                                     </a>
-                                    <h3 class="nk-post-title"><a href="store-product.html">However, I have reason</a></h3>
+                                    <h3 class="nk-post-title"><a asp-action="StoreProduct">However, I have reason</a></h3>
                                     <div class="nk-product-rating" data-rating="2.5"> <i class="fa fa-star"></i> <i class="fa fa-star"></i> <i class="fas fa-star-half"></i> <i class="far fa-star"></i> <i class="far fa-star"></i></div>
-                                    <div class="nk-product-price">€ 32.00</div>
+                                    <div class="nk-product-price">$ 32.00</div>
                                 </div>
 
                                 <div class="nk-widget-post">
-                                    <a href="store-product.html" class="nk-post-image">
+                                    <a asp-action="StoreProduct" class="nk-post-image">
                                         <img src="assets/images/product-3-xs.jpg" alt="It was some time before">
                                     </a>
-                                    <h3 class="nk-post-title"><a href="store-product.html">It was some time before</a></h3>
+                                    <h3 class="nk-post-title"><a asp-action="StoreProduct">It was some time before</a></h3>
                                     <div class="nk-product-rating" data-rating="5"> <i class="fa fa-star"></i> <i class="fa fa-star"></i> <i class="fa fa-star"></i> <i class="fa fa-star"></i> <i class="fa fa-star"></i></div>
-                                    <div class="nk-product-price">€ 14.00</div>
+                                    <div class="nk-product-price">$ 14.00</div>
                                 </div>
 
                             </div>
