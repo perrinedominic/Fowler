@@ -8,6 +8,14 @@ namespace DataAccessLibrary.Models
 {
     public class Game
     {
+        public string imagePath
+        {
+            get
+            {
+                return "~/assets/images/game-" + this.ProductID + ".jpg";
+            }
+        }
+
         [Key]
         public int ProductID { get; set; }
 
