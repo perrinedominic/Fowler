@@ -2,41 +2,49 @@
 
 @{
     ViewData["Title"] = "Details";
+    Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<h1>Details</h1>
-
-<div>
-    <h4>Game</h4>
-    <hr />
-    <dl class="row">
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Name)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Name)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Description)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Description)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Price)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Price)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Genre)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Genre)
-        </dd>
-    </dl>
-</div>
-<div>
-    <a asp-action="Edit" asp-route-id="@Model.ProductID">Edit</a> |
-    <a asp-action="Index">Back to List</a>
-</div>
+<body class="DetailsBody">
+    <h1 class="stuff">Details</h1>
+    <img src="@Url.Content(Model.imagePath)" class="img-thumbnail float-right col-lg-6 col-md-12 col-sm-12" />
+    <div>
+        <h4>Game</h4>
+        <hr />
+        <dl class="row">
+            <dt class = "col-sm-4">
+                @Html.DisplayNameFor(model => model.Name)
+            </dt>
+            <dd class = "col-sm-10 text-white">
+                @Html.DisplayFor(model => model.Name)
+            </dd>
+            <dt class = "col-sm-4">
+                @Html.DisplayNameFor(model => model.Description)
+            </dt>
+            <dd class = "col-sm-10 text-white">
+                @Html.DisplayFor(model => model.Description)
+            </dd>
+            <dt class = "col-sm-4">
+                @Html.DisplayNameFor(model => model.Price)
+            </dt>
+            <dd class = "col-sm-10 text-white">
+                @Html.DisplayFor(model => model.Price)
+            </dd>
+            <dt class = "col-sm-4">
+                @Html.DisplayNameFor(model => model.Genre)
+            </dt>
+            <dd class = "col-sm-10 text-white">
+                @Html.DisplayFor(model => model.Genre)
+            </dd>
+        </dl>
+        
+    </div>
+    <div>
+        <a asp-action="Edit" asp-route-id="@Model.ProductID">Edit</a> |
+        <a asp-action="Index">Back to List</a>
+    </div>
+    <div class="container">
+        <button class="align-content-end" id="AddToCart">Add to cart</button>
+    </div>
+    <div class="ChangeMe">Text</div>
+</body>
