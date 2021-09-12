@@ -5,7 +5,7 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<h1>Index</h1>
+<h1>Games</h1>
 <div class="IndexBody">
     <p>
         <a asp-action="Create">Create New</a>
@@ -13,6 +13,9 @@
     <table class="table text-white">
         <thead>
             <tr>
+                <th>
+
+                </th>
                 <th>
                     @Html.DisplayNameFor(model => model.Name)
                 </th>
@@ -33,6 +36,9 @@
             {
                 <tr>
                     <td>
+                        <img src="@Url.Content(item.imagePath)" class="img-thumbnail"/>
+                    </td>
+                    <td>
                         @Html.DisplayFor(modelItem => item.Name)
                     </td>
                     <td>
@@ -44,11 +50,13 @@
                     <td>
                         @Html.DisplayFor(modelItem => item.Genre)
                     </td>
+                    </tr>
+                    <tr>
                     <td>
-                        <a asp-action="Purchase" asp-route-id="@item.ProductID">Add to cart</a>|
-                        <a asp-action="Edit" asp-route-id="@item.ProductID">Edit</a>|
-                        <a asp-action="Details" asp-route-id="@item.ProductID">Details</a> |
-                        <a asp-action="Delete" asp-route-id="@item.ProductID">Delete</a>
+                        <h4 class="nk-feature-title text-main-1"><a asp-action="Purchase" asp-route-id="@item.ProductID">Add to cart    </a>|
+                        <a asp-action="Edit" asp-route-id="@item.ProductID">Edit    </a>|
+                        <a asp-action="Details" asp-route-id="@item.ProductID">Details    </a>|
+                        <a asp-action="Delete" asp-route-id="@item.ProductID">Delete</a></h4>
                     </td>
                 </tr>
             }
