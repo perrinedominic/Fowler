@@ -18,29 +18,29 @@ namespace FowlerSite.Controllers
             _logger = logger;
         }
 
-        public IActionResult Store()
+        public IActionResult Index()
         {
-            return View("~/Views/Store/Store.cshtml");
+            return View();
         }
 
         public IActionResult StoreCart()
         {
-            return View("~/Views/Store/StoreCart.cshtml");
+            return View();
         }
 
         public IActionResult StoreCheckout()
         {
-            return View("~/Views/Store/StoreCheckout.cshtml");
+            return View();
         }
 
         public IActionResult StoreProduct()
         {
-            return View("~/Views/Store/StoreProduct.cshtml");
+            return View();
         }
 
         public IActionResult StoreCatalog()
         {
-            return View("~/Views/Store/StoreCatalog.cshtml");
+            return View();
         }
 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
