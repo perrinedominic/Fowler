@@ -145,6 +145,11 @@ namespace FowlerSite.Controllers
             return RedirectToAction(nameof(Index));
         }
 
+        public IActionResult Find(Game game)
+        {
+            return View(game);
+        }
+
         private bool GameExists(int id)
         {
             return _context.Games.Any(e => e.ProductID == id);
