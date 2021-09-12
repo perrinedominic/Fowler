@@ -4,7 +4,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>@ViewData["Title"] - FowlerSite</title>
-    <link rel="icon" type="image/png" href="assets/images/favicon.png">
+    <link rel="icon" type="image/png" href="~/assets/images/favicon.png">
 
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
@@ -13,39 +13,39 @@
     <link href="https://fonts.googleapis.com/css?family=Montserrat:400,700%7cOpen+Sans:400,700" rel="stylesheet" type="text/css">
 
     <!-- Bootstrap -->
-    <link rel="stylesheet" href="assets/vendor/bootstrap/css/bootstrap.css">
+    <link rel="stylesheet" href="~/assets/vendor/bootstrap/css/bootstrap.css">
     <link rel="stylesheet" href="~/assets/vendor/bootstrap/css/bootstrap-grid.css">
     <link rel="stylesheet" href="~/assets/vendor/bootstrap/css/bootstrap-reboot.css">
 
     <!-- FontAwesome -->
-    <script defer src="assets/vendor/fontawesome-free/js/all.js"></script>
-    <script defer src="assets/vendor/fontawesome-free/js/v4-shims.js"></script>
+    <script defer src="~/assets/vendor/fontawesome-free/js/all.js"></script>
+    <script defer src="~/assets/vendor/fontawesome-free/js/v4-shims.js"></script>
 
     <!-- IonIcons -->
-    <link rel="stylesheet" href="assets/vendor/ionicons/css/ionicons.min.css">
+    <link rel="stylesheet" href="~/assets/vendor/ionicons/css/ionicons.min.css">
 
     <!-- Flickity -->
-    <link rel="stylesheet" href="assets/vendor/flickity/dist/flickity.min.css">
+    <link rel="stylesheet" href="~/assets/vendor/flickity/dist/flickity.min.css">
 
     <!-- Photoswipe -->
-    <link rel="stylesheet" type="text/css" href="assets/vendor/photoswipe/dist/photoswipe.css">
-    <link rel="stylesheet" type="text/css" href="assets/vendor/photoswipe/dist/default-skin/default-skin.css">
+    <link rel="stylesheet" type="text/css" href="~/assets/vendor/photoswipe/dist/photoswipe.css">
+    <link rel="stylesheet" type="text/css" href="~/assets/vendor/photoswipe/dist/default-skin/default-skin.css">
 
     <!-- Seiyria Bootstrap Slider -->
-    <link rel="stylesheet" href="assets/vendor/bootstrap-slider/dist/css/bootstrap-slider.min.css">
+    <link rel="stylesheet" href="~/assets/vendor/bootstrap-slider/dist/css/bootstrap-slider.min.css">
 
     <!-- Summernote -->
-    <link rel="stylesheet" type="text/css" href="assets/vendor/summernote/dist/summernote-bs4.css">
+    <link rel="stylesheet" type="text/css" href="~/assets/vendor/summernote/dist/summernote-bs4.css">
 
     <!-- GoodGames -->
-    <link rel="stylesheet" href="assets/css/goodgames.css">
+    <link rel="stylesheet" href="~/assets/css/goodgames.css">
 
     <!-- Custom Styles -->
-    <link rel="stylesheet" href="assets/css/custom.css">
+    <link rel="stylesheet" href="~/assets/css/custom.css">
 
     <!-- END: Styles -->
     <!-- jQuery -->
-    <script src="assets/vendor/jquery/dist/jquery.min.js"></script>
+    <script src="~/assets/vendor/jquery/dist/jquery.min.js"></script>
 </head>
 <body>
     <header>
@@ -57,7 +57,7 @@
                         <img src="assets/images/logo.png" alt="GoodGames" width="199">
                     </a>
 
-                    <ul class="nk-nav nk-nav-right d-none d-lg-table-cell" data-nav-mobile="#nk-nav-mobile">
+                    <ul class="nk-nav nk-nav-center d-none d-lg-table-cell" data-nav-mobile="#nk-nav-mobile">
 
                         <li class=" nk-drop-item">
                             <a asp-controller="Home" asp-action="Index">
@@ -65,10 +65,13 @@
                             </a>
                         </li>
                         <li class=" nk-drop-item">
-                            <a asp-controller="Games">
+                            <a asp-area="" asp-controller="Games" asp-action="Index">
                                 Games
-
-                            </a>
+                            </a><ul class="dropdown">
+                                <li>
+                                    <a asp-controller="Games" asp-action="Details">Details</a>
+                                </li>
+                            </ul>
                         </li>
                     </ul>
                     <ul class="nk-nav nk-nav-right nk-nav-icons">
@@ -82,8 +85,6 @@
                                 </span>
                             </a>
                         </li>
-
-
                     </ul>
                 </div>
             </div>
@@ -100,9 +101,6 @@
             &copy; 2021 - FowlerSite - <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
         </div>
     </footer>
-    <script src="~/lib/jquery/dist/jquery.min.js"></script>
-    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
-    <script src="~/js/site.js" asp-append-version="true"></script>
     @RenderSection("Scripts", required: false)
 </body>
 </html>
