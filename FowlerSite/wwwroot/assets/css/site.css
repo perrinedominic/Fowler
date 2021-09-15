@@ -2,3 +2,9 @@
      height: 50px;
      width: 50px;
  }
+
+.contactImages {
+    max-width: 200px;
+    height: auto;
+    padding: 10px 10px 10px 10px;
+}
