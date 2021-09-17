@@ -20,18 +20,26 @@ namespace FowlerSite.Controllers
             _context = context;
         }
 
-        public void AddGamesToDB(OESContext context, string[] info)
+        public void SetGameInfo(string[] info)
         {
             Game game = new Game();
             game.Name = info[0];
             game.Description = info[1];
             game.Genre = info[2];
-            game.Price = Int32.Parse(info[3]);
-            game.ProductID = Int32.Parse(info[4]);
-            context.Add(game);
+            game.Price = Convert.ToDecimal(info[3]);
+            this.AddGame(game);
         }
 
-        // GET: Games
+        public void AddGame([Bind("ProductID,Name,Description,Price,Genre")] Game game)
+        {
+            if (ModelState.IsValid)
+            {
+                _context.Add(game);
+                _context.SaveChangesAsync();
+            }
+        }
+
+        // GET: Games also does a database check to see if all of your games exist.
         public async Task<IActionResult> Index()
         {
             List<Game> games = await _context.Games.ToListAsync();
@@ -39,19 +47,15 @@ namespace FowlerSite.Controllers
             // Gets the games from the txt file.
             string[] lines = System.IO.File.ReadAllLines(@"Games.txt");
 
-
-            // Loop through the text file.
-            for (int i = 0; i < lines.Length - 1; i++)
+            if (games.Count != lines.Length - 1)
             {
-                string[] gameInfo = lines[i + 1].Split('`');
-
-                // Checks if the games exists in your database. if it does not or is null add game.
-                if (!(games[i].Name.IndexOf(gameInfo[0]) >= 0) || games[i] == null)
+                // Loop through the text file.
+                for (int i = games.Count; i < lines.Length - 1; i++)
                 {
-                    this.AddGamesToDB(_context, gameInfo);
+                    string[] gameInfo = lines[i + 1].Split('`');
+                    this.SetGameInfo(gameInfo);
                 }
             }
-            
             return View(games);
         }
 
