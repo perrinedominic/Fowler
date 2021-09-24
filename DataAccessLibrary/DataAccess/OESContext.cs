@@ -14,5 +14,7 @@ namespace DataAccessLibrary.DataAccess
         }
 
         public DbSet<Game> Games { get; set; }
+        public DbSet<CartItem> ShoppingCartItems { get; set; }
+        public DbSet<Cart> ShoppingCart { get; set; }
     }
 }

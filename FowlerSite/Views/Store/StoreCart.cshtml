@@ -1,4 +1,6 @@
-﻿@{
+﻿@model IEnumerable<DataAccessLibrary.Models.CartItem>
+
+@{
     ViewBag.Title = "StoreCart";
 }
 <!DOCTYPE html>
@@ -233,15 +235,42 @@
         <!-- END: Breadcrumbs -->
 
 
-
-
         <div class="container">
             <div class="nk-store nk-store-cart">
                 <div class="table-responsive">
 
                     <!-- START: Products in Cart -->
+
                     <table class="table nk-store-cart-products">
                         <tbody>
+
+                            @foreach (var item in Model)
+                            {
+                                <tr>
+                                    <td>
+                                        <img src="@Url.Content(item.Game.imagePath)" class="img-thumbnail" />
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.Game.Name)
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.Game.Price)
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.Quantity)
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td colspan="5">
+                                        <h4 class="nk-feature-title text-main-1 d-flex justify-content-end">
+                                            <a asp-action="StoreCart" asp-controller="Store" asp-route-id="@item.Game.ProductID">Add to cart&nbsp;&nbsp;&nbsp;</a>|
+                                            <a asp-action="Edit" asp-route-id="@item.Game.ProductID">&nbsp;&nbsp;&nbsp;Edit&nbsp;&nbsp;&nbsp;</a>|
+                                            <a asp-action="Details" asp-route-id="@item.Game.ProductID">&nbsp;&nbsp;&nbsp;Details&nbsp;&nbsp;&nbsp;</a>|
+                                            <a asp-action="Delete" asp-route-id="@item.Game.ProductID">&nbsp;&nbsp;&nbsp;Delete&nbsp;&nbsp;&nbsp;</a>
+                                        </h4>
+                                    </td>
+                                </tr>
+                            }
 
                             <tr>
                                 <td class="nk-product-cart-thumb">
@@ -320,7 +349,6 @@
                         </tbody>
                     </table>
                     <!-- END: Products in Cart -->
-
                 </div>
                 <div class="nk-gap-1"></div>
                 <a class="nk-btn nk-btn-rounded nk-btn-color-white float-right" href="#">Update Cart</a>

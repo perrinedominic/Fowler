@@ -30,5 +30,7 @@ namespace DataAccessLibrary.Models
         public decimal Price { get; set; }
 
         public string Genre { get; set; }
+
+        
     }
 }
