@@ -1,7 +1,7 @@
 ﻿@model IEnumerable<DataAccessLibrary.Models.CartItem>
 
 @{
-    ViewBag.Title = "StoreCart";
+//ViewBag.Title = "StoreCart";
 }
 <!DOCTYPE html>
 
@@ -247,9 +247,9 @@
                             @foreach (var item in Model)
                             {
                                 <tr>
-                                    <td>
+                                    @*<td>
                                         <img src="@Url.Content(item.Game.imagePath)" class="img-thumbnail" />
-                                    </td>
+                                    </td>*@
                                     <td>
                                         @Html.DisplayFor(modelItem => item.Game.Name)
                                     </td>

@@ -10,14 +10,13 @@ namespace DataAccessLibrary.Models
         [Key]
         public int CartId { get; set; }
 
-        public int ProductId { get; set; }
-
         public int CartStatusId { get; set; }
 
         public  DateTime AddedOn { get; set; }
 
         public DateTime UpdatedOn { get; set; }
 
-        public List<Game> Game;
+        public virtual List<CartItem> CartItems { get; set; }
+        public Guid UserId { get; set; }
     }
 }

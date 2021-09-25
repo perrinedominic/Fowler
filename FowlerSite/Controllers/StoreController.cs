@@ -10,6 +10,7 @@ using System.Diagnostics;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.Extensions.Configuration;
+using Microsoft.EntityFrameworkCore;
 
 namespace FowlerSite.Controllers
 {
@@ -17,14 +18,15 @@ namespace FowlerSite.Controllers
     {
         public int ShoppingCartId { get; set; }
 
-        private OESContext _db = new OESContext(null);
+        private OESContext _db;
 
         public const string CartSessionKey = "CartId";
 
         private readonly ILogger<StoreController> _logger;
 
-        public StoreController(ILogger<StoreController> logger)
+        public StoreController(OESContext context, ILogger<StoreController> logger)
         {
+            _db = context;
             _logger = logger;
         }
 
@@ -33,9 +35,12 @@ namespace FowlerSite.Controllers
             return View();
         }
 
-        public IActionResult StoreCart()
+        public IActionResult StoreCart(int id)
         {
-            return View();
+            int cardId = AddToCart(id);
+
+            IEnumerable < CartItem > items = _db.ShoppingCartItems.Include(x => x.Game).Where(x => x.CartId == cardId).ToList();
+            return View(items);
         }
 
         public IActionResult StoreCheckout()
@@ -53,13 +58,35 @@ namespace FowlerSite.Controllers
             return View();
         }
 
-        public void AddToCart(int productId)
+        public int AddToCart(int productId)
         {
             // Retrieve the product from the database.
-            ShoppingCartId = GetCartId();
+            var userId = GetUserID();
+
+            var cardId = 0;
+
+            if(_db.ShoppingCart.Any(x => x.UserId == userId) == false)
+            {
+                var cart = new Cart
+                {
+                    AddedOn = DateTime.Now,
+                    UpdatedOn = DateTime.Now,
+                    UserId = userId,
+                };
+
+                _db.ShoppingCart.Add(cart);
+
+                _db.SaveChanges();
+
+                cardId = cart.CartId;
+            }
+            else
+            {
+                cardId = _db.ShoppingCart.Where(x => x.UserId == userId).Select(x => x.CartId).FirstOrDefault();
+            }
 
             var cartItem = _db.ShoppingCartItems.SingleOrDefault(
-                c => c.CartId == ShoppingCartId
+                c => c.CartId == cardId
                 && c.ProductId == productId);
 
             if (cartItem == null)
@@ -69,7 +96,7 @@ namespace FowlerSite.Controllers
                 {
                     ItemId = Guid.NewGuid().ToString(),
                     ProductId = productId,
-                    CartId = ShoppingCartId,
+                    CartId = cardId,
                     Game = _db.Games.SingleOrDefault(
                         p => p.ProductID == productId),
                     Quantity = 1,
@@ -94,6 +121,8 @@ namespace FowlerSite.Controllers
             c.ProductId = productId;
             c.UpdatedOn = DateTime.Now;
             */
+
+            return cardId;
         }
 
         public void Dispose()
@@ -105,14 +134,14 @@ namespace FowlerSite.Controllers
             }
         }
 
-        public int GetCartId()
+        public Guid GetUserID()
         {
-            return 1;
+            return Guid.Empty;
         }
 
         public List<CartItem> GetCartItems()
         {
-            ShoppingCartId = GetCartId();
+            ShoppingCartId = 1;
 
             return _db.ShoppingCartItems.Where(
                 c => c.CartId == ShoppingCartId).ToList();
