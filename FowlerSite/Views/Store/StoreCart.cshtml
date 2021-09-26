@@ -1,7 +1,7 @@
 ﻿@model IEnumerable<DataAccessLibrary.Models.CartItem>
 
 @{
-//ViewBag.Title = "StoreCart";
+    //ViewBag.Title = "StoreCart";
 }
 <!DOCTYPE html>
 
@@ -136,11 +136,13 @@
 
 
                         <li>
-                            <span class="nk-cart-toggle">
-                                <span class="fa fa-shopping-cart"></span>
-                                <span class="nk-badge">27</span>
-                            </span>
-                            <div class="nk-cart-dropdown">
+                            <a asp-controller="Store" asp-action="StoreCart" asp-route-id="null" class="nk-cart-toggle">
+                                <span class="nk-cart-toggle">
+                                    <span class="fa fa-shopping-cart"></span>
+                                    @*<span class="nk-badge">27</span>*@
+                                </span>
+                            </a>
+                            @*<div class="nk-cart-dropdown">
 
                                 <div class="nk-widget-post">
                                     <a asp-action="StoreProduct" class="nk-post-image">
@@ -170,7 +172,7 @@
                                 <div class="text-center">
                                     <a asp-action="StoreCheckout" class="nk-btn nk-btn-rounded nk-btn-color-main-1 nk-btn-hover-color-white">Proceed to Checkout</a>
                                 </div>
-                            </div>
+                            </div>*@
                         </li>
 
                     </ul>
@@ -241,113 +243,131 @@
 
                     <!-- START: Products in Cart -->
 
-                    <table class="table nk-store-cart-products">
-                        <tbody>
-
-                            @foreach (var item in Model)
-                            {
+                    <form asp-action="StoreCart">
+                        <table class="table nk-store-cart-products">
+                            <tbody>
                                 <tr>
-                                    @*<td>
-                                        <img src="@Url.Content(item.Game.imagePath)" class="img-thumbnail" />
-                                    </td>*@
-                                    <td>
-                                        @Html.DisplayFor(modelItem => item.Game.Name)
+
+                                    <td class="font-weight-bold">
+                                        Cover:
                                     </td>
-                                    <td>
-                                        @Html.DisplayFor(modelItem => item.Game.Price)
+                                    <td class="font-weight-bold">
+                                        Product:
                                     </td>
-                                    <td>
-                                        @Html.DisplayFor(modelItem => item.Quantity)
+                                    <td class="font-weight-bold">
+                                        Price:
+                                    </td>
+                                    <td class="font-weight-bold">
+                                        Quantity:
                                     </td>
                                 </tr>
-                                <tr>
-                                    <td colspan="5">
-                                        <h4 class="nk-feature-title text-main-1 d-flex justify-content-end">
-                                            <a asp-action="StoreCart" asp-controller="Store" asp-route-id="@item.Game.ProductID">Add to cart&nbsp;&nbsp;&nbsp;</a>|
-                                            <a asp-action="Edit" asp-route-id="@item.Game.ProductID">&nbsp;&nbsp;&nbsp;Edit&nbsp;&nbsp;&nbsp;</a>|
-                                            <a asp-action="Details" asp-route-id="@item.Game.ProductID">&nbsp;&nbsp;&nbsp;Details&nbsp;&nbsp;&nbsp;</a>|
-                                            <a asp-action="Delete" asp-route-id="@item.Game.ProductID">&nbsp;&nbsp;&nbsp;Delete&nbsp;&nbsp;&nbsp;</a>
-                                        </h4>
-                                    </td>
-                                </tr>
-                            }
 
-                            <tr>
-                                <td class="nk-product-cart-thumb">
-                                    <a asp-action="StoreProduct" class="nk-image-box-1 nk-post-image">
-                                        <img src="~/assets/images/product-2-xs.jpg" alt="However, I have reason" width="115">
-                                    </a>
-                                </td>
-                                <td class="nk-product-cart-title">
-                                    <h5 class="h6">Product:</h5>
-                                    <div class="nk-gap-1"></div>
+                                @foreach (var item in Model)
+                                {
+                                    <tr>
 
-                                    <h2 class="nk-post-title h4">
-                                        <a asp-action="StoreProduct">However, I have reason</a>
-                                    </h2>
-                                </td>
-                                <td class="nk-product-cart-price">
-                                    <h5 class="h6">Price:</h5>
-                                    <div class="nk-gap-1"></div>
+                                        <td>
+                                            <img src="@Url.Content(item.Game.imagePath)" class="img-thumbnail" />
+                                        </td>
+                                        <td>
+                                            @Html.DisplayFor(modelItem => item.Game.Name)
+                                        </td>
+                                        <td id="itemPrice">
+                                            $@Html.DisplayFor(modelItem => item.Game.Price)
+                                        </td>
+                                        <td id="itemQuantity">
+                                            @Html.DisplayFor(modelItem => item.Quantity)
+                                        </td>
+                                    </tr>
+                                    @*<tr>
+                        <td colspan="5">
+                            <h4 class="nk-feature-title text-main-1 d-flex justify-content-end">
+                                <a asp-action="StoreCart" asp-controller="Store" asp-route-id="@item.Game.ProductID">Add to cart&nbsp;&nbsp;&nbsp;</a>|
+                                <a asp-action="Edit" asp-route-id="@item.Game.ProductID">&nbsp;&nbsp;&nbsp;Edit&nbsp;&nbsp;&nbsp;</a>|
+                                <a asp-action="Details" asp-route-id="@item.Game.ProductID">&nbsp;&nbsp;&nbsp;Details&nbsp;&nbsp;&nbsp;</a>|
+                                <a asp-action="Delete" asp-route-id="@item.Game.ProductID">&nbsp;&nbsp;&nbsp;Delete&nbsp;&nbsp;&nbsp;</a>
+                            </h4>
+                        </td>
+                    </tr>*@
+                                }
 
-                                    <strong>$ 32.00</strong>
-                                </td>
-                                <td class="nk-product-cart-quantity">
-                                    <h5 class="h6">Quantity:</h5>
-                                    <div class="nk-gap-1"></div>
+                                @*<tr>
+                    <td class="nk-product-cart-thumb">
+                        <a asp-action="StoreProduct" class="nk-image-box-1 nk-post-image">
+                            <img src="~/assets/images/product-2-xs.jpg" alt="However, I have reason" width="115">
+                        </a>
+                    </td>
+                    <td class="nk-product-cart-title">
+                        <h5 class="h6">Product:</h5>
+                        <div class="nk-gap-1"></div>
 
-                                    <div class="nk-form">
-                                        <input type="number" class="form-control" value="1" min="1" max="21">
-                                    </div>
-                                </td>
-                                <td class="nk-product-cart-total">
-                                    <h5 class="h6">Total:</h5>
-                                    <div class="nk-gap-1"></div>
+                        <h2 class="nk-post-title h4">
+                            <a asp-action="StoreProduct">However, I have reason</a>
+                        </h2>
+                    </td>
+                    <td class="nk-product-cart-price">
+                        <h5 class="h6">Price:</h5>
+                        <div class="nk-gap-1"></div>
 
-                                    <strong>$ 32.00</strong>
-                                </td>
-                                <td class="nk-product-cart-remove"><a href="#"><span class="ion-android-close"></span></a></td>
-                            </tr>
+                        <strong>$ 32.00</strong>
+                    </td>
+                    <td class="nk-product-cart-quantity">
+                        <h5 class="h6">Quantity:</h5>
+                        <div class="nk-gap-1"></div>
 
-                            <tr>
-                                <td class="nk-product-cart-thumb">
-                                    <a asp-action="StoreProduct" class="nk-image-box-1 nk-post-image">
-                                        <img src="~/assets/images/product-4-xs.jpg" alt="She was bouncing" width="115">
-                                    </a>
-                                </td>
-                                <td class="nk-product-cart-title">
-                                    <h5 class="h6">Product:</h5>
-                                    <div class="nk-gap-1"></div>
+                        <div class="nk-form">
+                            <input type="number" class="form-control" value="1" min="1" max="21">
+                        </div>
+                    </td>
+                    <td class="nk-product-cart-total">
+                        <h5 class="h6">Total:</h5>
+                        <div class="nk-gap-1"></div>
 
-                                    <h2 class="nk-post-title h4">
-                                        <a asp-action="StoreProduct">She was bouncing</a>
-                                    </h2>
-                                </td>
-                                <td class="nk-product-cart-price">
-                                    <h5 class="h6">Price:</h5>
-                                    <div class="nk-gap-1"></div>
+                        <strong>$ 32.00</strong>
+                    </td>
+                    <td class="nk-product-cart-remove"><a href="#"><span class="ion-android-close"></span></a></td>
+                </tr>
 
-                                    <strong>$ 20.00</strong>
-                                </td>
-                                <td class="nk-product-cart-quantity">
-                                    <h5 class="h6">Quantity:</h5>
-                                    <div class="nk-gap-1"></div>
+                <tr>
+                    <td class="nk-product-cart-thumb">
+                        <a asp-action="StoreProduct" class="nk-image-box-1 nk-post-image">
+                            <img src="~/assets/images/product-4-xs.jpg" alt="She was bouncing" width="115">
+                        </a>
+                    </td>
+                    <td class="nk-product-cart-title">
+                        <h5 class="h6">Product:</h5>
+                        <div class="nk-gap-1"></div>
 
-                                    <div class="nk-form">
-                                        <input type="number" class="form-control" value="1" min="1" max="21">
-                                    </div>
-                                </td>
-                                <td class="nk-product-cart-total">
-                                    <h5 class="h6">Total:</h5>
-                                    <div class="nk-gap-1"></div>
+                        <h2 class="nk-post-title h4">
+                            <a asp-action="StoreProduct">She was bouncing</a>
+                        </h2>
+                    </td>
+                    <td class="nk-product-cart-price">
+                        <h5 class="h6">Price:</h5>
+                        <div class="nk-gap-1"></div>
 
-                                    <strong>$ 20.00</strong>
-                                </td>
-                                <td class="nk-product-cart-remove"><a href="#"><span class="ion-android-close"></span></a></td>
-                            </tr>
+                        <strong>$ 20.00</strong>
+                    </td>
+                    <td class="nk-product-cart-quantity">
+                        <h5 class="h6">Quantity:</h5>
+                        <div class="nk-gap-1"></div>
 
-                        </tbody>
-                    </table>
+                        <div class="nk-form">
+                            <input type="number" class="form-control" value="1" min="1" max="21">
+                        </div>
+                    </td>
+                    <td class="nk-product-cart-total">
+                        <h5 class="h6">Total:</h5>
+                        <div class="nk-gap-1"></div>
+
+                        <strong>$ 20.00</strong>
+                    </td>
+                    <td class="nk-product-cart-remove"><a href="#"><span class="ion-android-close"></span></a></td>
+                </tr>*@
+
+                            </tbody>
+                        </table>
+                    </form>
                     <!-- END: Products in Cart -->
                 </div>
                 <div class="nk-gap-1"></div>
@@ -394,7 +414,7 @@
                                         Subtotal
                                     </td>
                                     <td>
-                                        $ 52.00
+                                        $0.00
                                     </td>
                                 </tr>
                                 <tr class="nk-store-cart-totals-shipping">

@@ -14,27 +14,53 @@ using Microsoft.EntityFrameworkCore;
 
 namespace FowlerSite.Controllers
 {
+    /// <summary>
+    /// The class which is used to represent a Store controller.
+    /// </summary>
     public class StoreController : Controller
     {
+        /// <summary>
+        /// Gets or sets the shopping cart id.
+        /// </summary>
         public int ShoppingCartId { get; set; }
 
         private OESContext _db;
 
+        /// <summary>
+        /// The Key for the cart session.
+        /// </summary>
         public const string CartSessionKey = "CartId";
 
+        /// <summary>
+        /// The logger for the controller.
+        /// </summary>
         private readonly ILogger<StoreController> _logger;
 
+        /// <summary>
+        /// Initializes a new instance of the StoreController class.
+        /// </summary>
+        /// <param name="context">The context used by the controller.</param>
+        /// <param name="logger">The logger that is used by the controller.</param>
         public StoreController(OESContext context, ILogger<StoreController> logger)
         {
             _db = context;
             _logger = logger;
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <returns>The index view.</returns>
         public IActionResult Index()
         {
             return View();
         }
 
+        /// <summary>
+        /// Stores the cart.
+        /// </summary>
+        /// <param name="id">The cart id.</param>
+        /// <returns>The view of the shopping cart items.</returns>
         public IActionResult StoreCart(int id)
         {
             int cardId = AddToCart(id);
@@ -58,6 +84,11 @@ namespace FowlerSite.Controllers
             return View();
         }
 
+        /// <summary>
+        /// Adds a product to the shopping cart/
+        /// </summary>
+        /// <param name="productId">The id of the selected product.</param>
+        /// <returns>The int id of the product.</returns>
         public int AddToCart(int productId)
         {
             // Retrieve the product from the database.
@@ -111,7 +142,10 @@ namespace FowlerSite.Controllers
                 // then add one to the quantity
                 cartItem.Quantity++;
             }
-            _db.SaveChanges();
+            if (productId != 0)
+            {
+                _db.SaveChanges();
+            }
 
             /*
             Game game = FindGame(productId);
@@ -139,6 +173,10 @@ namespace FowlerSite.Controllers
             return Guid.Empty;
         }
 
+        /// <summary>
+        /// Gets all the items in the shopping cart.
+        /// </summary>
+        /// <returns>A list that represents all the cart items in the shopping cart.</returns>
         public List<CartItem> GetCartItems()
         {
             ShoppingCartId = 1;
@@ -147,6 +185,29 @@ namespace FowlerSite.Controllers
                 c => c.CartId == ShoppingCartId).ToList();
         }
 
+        public decimal GetSubtotal()
+        {
+            decimal totalCost = 0;
+            List<CartItem> items = this.GetCartItems();
+
+            foreach(CartItem i in items)
+            {
+                Game game;
+                decimal cost;
+
+                game = i.Game;
+                cost = game.Price * i.Quantity;
+
+                totalCost += cost;
+            }
+
+            return totalCost;
+        }
+
+        /// <summary>
+        /// Used to cartch errors.
+        /// </summary>
+        /// <returns>The error that occured.</returns>
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
         public IActionResult Error()
         {

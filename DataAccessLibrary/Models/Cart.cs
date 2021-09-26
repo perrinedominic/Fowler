@@ -17,6 +17,7 @@ namespace DataAccessLibrary.Models
         public DateTime UpdatedOn { get; set; }
 
         public virtual List<CartItem> CartItems { get; set; }
+
         public Guid UserId { get; set; }
     }
 }
