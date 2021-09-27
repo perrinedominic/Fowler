@@ -5,61 +5,139 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<h1>Games</h1>
-<div class="IndexBody">
-    <p>
-        <a asp-action="Create">Create New</a>
-    </p>
-    <table class="table text-white">
-        <thead>
-            <tr>
-                <th>
 
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.Name)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.Description)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.Price)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.Genre)
-                </th>
-                <th></th>
-            </tr>
-        </thead>
-        <tbody>
-            @foreach (var item in Model)
-            {
-                <tr>
-                    <td>
-                        <img src="@Url.Content(item.imagePath)" class="img-thumbnail"/>
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.Name)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.Description)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.Price)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.Genre)
-                    </td>
-                    </tr>
-                    <tr>
-                    <td colspan="5">
-                        <h4 class="nk-feature-title text-main-1 d-flex justify-content-end"><a asp-action="StoreCart" asp-controller="Store" asp-route-id="@item.ProductID">Add to cart&nbsp;&nbsp;&nbsp;</a>|
-                        <a asp-action="Edit" asp-route-id="@item.ProductID">&nbsp;&nbsp;&nbsp;Edit&nbsp;&nbsp;&nbsp;</a>|
-                        <a asp-action="Details" asp-route-id="@item.ProductID">&nbsp;&nbsp;&nbsp;Details&nbsp;&nbsp;&nbsp;</a>|
-                        <a asp-action="Delete" asp-route-id="@item.ProductID">&nbsp;&nbsp;&nbsp;Delete&nbsp;&nbsp;&nbsp;</a></h4>
-                    </td>
-                </tr>
-            }
-        </tbody>
-    </table>
+<div class="container">
+    <div class="row">
+        <div class="col-4">
+
+        <h1>Filters</h1>
+
+        <!--
+        START: Sidebar
+
+        Additional Classes:
+            .nk-sidebar-left
+            .nk-sidebar-right
+            .nk-sidebar-sticky
+        -->
+            <aside class="nk-sidebar nk-sidebar-left">
+                <div class="nk-widget">
+                    <h4 class="nk-widget-title"><span><span class="text-main-1">Title</span></span></h4>
+                    <div class="nk-widget-content">
+                        <form action="#" class="nk-form nk-form-style-1" novalidate="novalidate">
+                            <div class="input-group">
+                                <input type="text" class="form-control" placeholder="Type something...">
+                                <button class="nk-btn nk-btn-color-main-1"><span class="ion-search"></span></button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+                <div class="nk-widget nk-widget-highlighted">
+                    <h4 class="nk-widget-title"><span><span class="text-main-1">Genres</span></span></h4>
+                    <div class="nk-widget-content">
+                        <ul class="nk-widget-categories">
+                            <li><a href="#">RTS</a></li>
+                            <li><a href="#">Action</a></li>
+                            <li><a href="#">RPG</a></li>
+                            <li><a href="#">MMO</a></li>
+                            <li><a href="#">MOBA</a></li>
+                            <li><a href="#">Adventure</a></li>
+                            <li><a href="#">Indie</a></li>
+                            <li><a href="#">Strategy</a></li>
+                            <li><a href="#">Racing</a></li>
+                            <li><a href="#">Simulator</a></li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="nk-widget nk-widget-highlighted">
+                    <h4 class="nk-widget-title"><span><span class="text-main-1">Price</span></span></h4>
+                    <div class="nk-widget-content">
+                        <div class="nk-input-slider">
+                            <input type="text"
+                                   name="price-filter"
+                                   data-slider-min="0"
+                                   data-slider-max="1800"
+                                   data-slider-step="1"
+                                   data-slider-value="[200, 1200]"
+                                   data-slider-tooltip="hide">
+                            <div class="nk-gap"></div>
+                            <div>
+                                <div class="text-white mt-4 float-left">
+                                    PRICE:
+                                    <strong class="text-main-1">$ <span class="nk-input-slider-value-0"></span></strong>
+                                    -
+                                    <strong class="text-main-1">$ <span class="nk-input-slider-value-1"></span></strong>
+                                </div>
+                                <a href="#" class="nk-btn nk-btn-rounded nk-btn-color-white float-right">Apply</a>
+                            </div>
+                            <div class="clearfix"></div>
+                        </div>
+                    </div>
+                </div>
+            </aside>
+        </div>
+
+        <div class="col-8">
+            <h1>Games</h1>
+            <div class="IndexBody">
+                <p>
+                    <a asp-action="Create">Create New</a>
+                </p>
+                <table class="table text-white">
+                    <thead>
+                        <tr>
+                            <th>
+
+                            </th>
+                            <th>
+                                @Html.DisplayNameFor(model => model.Name)
+                            </th>
+                            <th>
+                                @Html.DisplayNameFor(model => model.Description)
+                            </th>
+                            <th>
+                                @Html.DisplayNameFor(model => model.Price)
+                            </th>
+                            <th>
+                                @Html.DisplayNameFor(model => model.Genre)
+                            </th>
+                            <th></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var item in Model)
+                        {
+                            <tr>
+                                <td>
+                                    <img src="@Url.Content(item.imagePath)" class="img-thumbnail" />
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.Name)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.Description)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.Price)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.Genre)
+                                </td>
+                            </tr>
+                            <tr>
+                                <td colspan="5">
+                                    <h4 class="nk-feature-title text-main-1 d-flex justify-content-end">
+                                        <a asp-action="StoreCart" asp-controller="Store" asp-route-id="@item.ProductID">Add to cart&nbsp;&nbsp;&nbsp;</a>|
+                                        <a asp-action="Edit" asp-route-id="@item.ProductID">&nbsp;&nbsp;&nbsp;Edit&nbsp;&nbsp;&nbsp;</a>|
+                                        <a asp-action="Details" asp-route-id="@item.ProductID">&nbsp;&nbsp;&nbsp;Details&nbsp;&nbsp;&nbsp;</a>|
+                                        <a asp-action="Delete" asp-route-id="@item.ProductID">&nbsp;&nbsp;&nbsp;Delete&nbsp;&nbsp;&nbsp;</a>
+                                    </h4>
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
 </div>
