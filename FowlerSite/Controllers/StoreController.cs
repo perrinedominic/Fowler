@@ -78,23 +78,37 @@ namespace FowlerSite.Controllers
             return View(items);
         }
 
+        /// <summary>
+        /// Navigates to the store checkout page.
+        /// </summary>
+        /// <returns>Returns the view for the store checkout.</returns>
         public IActionResult StoreCheckout()
         {
             return View();
         }
 
+        /// <summary>
+        /// Navigates to the store product page.
+        /// </summary>
+        /// <returns>The view for the store product page.</returns>
         public IActionResult StoreProduct()
         {
             return View();
         }
 
+        /// <summary>
+        /// Navigates to the store catalog page.
+        /// </summary>
+        /// <returns>The view for the store catalog page.</returns>
         public IActionResult StoreCatalog()
         {
             return View();
         }
 
         /// <summary>
-        /// Adds a product to the shopping cart/
+        /// Adds a product to the shopping cart by creating a shopping cart if there is none.
+        /// If there is already a shopping cart, the cart will be selected based on ID. The product
+        /// will then be added to that table and the view.
         /// </summary>
         /// <param name="productId">The id of the selected product.</param>
         /// <returns>The int id of the product.</returns>
@@ -105,6 +119,7 @@ namespace FowlerSite.Controllers
 
             var cardId = 0;
 
+            // Create a cart if there is not already one assigned to the user.
             if(_db.ShoppingCart.Any(x => x.UserId == userId) == false)
             {
                 var cart = new Cart
@@ -125,6 +140,7 @@ namespace FowlerSite.Controllers
                 cardId = _db.ShoppingCart.Where(x => x.UserId == userId).Select(x => x.CartId).FirstOrDefault();
             }
 
+            // Selects the cart item from the database based on the cart and product id.
             var cartItem = _db.ShoppingCartItems.SingleOrDefault(
                 c => c.CartId == cardId
                 && c.ProductId == productId);
@@ -168,6 +184,11 @@ namespace FowlerSite.Controllers
             return cardId;
         }
 
+        /// <summary>
+        /// Removes the selected product from the database and the view.
+        /// </summary>
+        /// <param name="productId">The id of the product to be removed.</param>
+        /// <returns>Redirects the action to the store cart.</returns>
         public IActionResult Remove(int productId)
         {
             var userId = GetUserID();
@@ -175,6 +196,7 @@ namespace FowlerSite.Controllers
 
             List<CartItem> cartItems = GetCartItems();
 
+            // Loops through the cart items to find the correct product id.
             foreach(CartItem c in cartItems)
             {
                 if("-" + c.ProductId.ToString() == productId.ToString())
@@ -184,9 +206,14 @@ namespace FowlerSite.Controllers
                     break;
                 }
             }
+
             return RedirectToAction("StoreCart");
         }
 
+        /// <summary>
+        /// Gets the user id for the shopping cart.
+        /// </summary>
+        /// <returns>An empty GUID for the id.</returns>
         public Guid GetUserID()
         {
             return Guid.Empty;
@@ -204,6 +231,10 @@ namespace FowlerSite.Controllers
                 c => c.CartId == ShoppingCartId).ToList();
         }
 
+        /// <summary>
+        /// Calculates the subtotal of the carts based on the quantity of items and their respective prices.
+        /// </summary>
+        /// <returns></returns>
         public decimal GetSubtotal()
         {
             decimal totalCost = 0;
@@ -211,13 +242,7 @@ namespace FowlerSite.Controllers
 
             foreach(CartItem i in items)
             {
-                Game game;
-                decimal cost;
-
-                game = i.Game;
-                cost = game.Price * i.Quantity;
-
-                totalCost += cost;
+               totalCost += i.Game.Price;
             }
 
             return totalCost;

@@ -56,6 +56,7 @@
     <!-- END: Styles -->
     <!-- jQuery -->
     <script src="~/assets/vendor/jquery/dist/jquery.min.js"></script>
+    <script src="~/assets/js/demo.js"></script>
 
 
 </head>
@@ -256,28 +257,33 @@
                                     <td class="font-weight-bold">
                                         Quantity:
                                     </td>
+                                    <td class="font-weight-bold">
+                                    </td>
                                 </tr>
 
                                 @foreach (var item in Model)
                                 {
-                                    <tr>
+                            <tr>
 
-                                        @*<td class="d-lg-block">
-                                            <img style="max-height:200px;" src="@Url.Content(item.Game.imagePath)" class="img-thumbnail" />
-                                        </td>*@
-                                        <td>
-                                            @Html.DisplayFor(modelItem => item.Game.Name)
-                                        </td>
-                                        <td id="itemPrice">
-                                            $@Html.DisplayFor(modelItem => item.Game.Price)
-                                        </td>
-                                        <td id="itemQuantity">
-                                            @Html.DisplayFor(modelItem => item.Quantity)
-                                        </td>
-                                        <td>
-                                            <a asp-action="StoreCart" asp-route-id="-@item.ProductId" asp-controller="Store">Remove</a>
-                                        </td>
-                                    </tr>
+                                @*<td class="d-lg-block">
+            <img style="max-height:200px;" src="@Url.Content(item.Game.imagePath)" class="img-thumbnail" />
+        </td>*@
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.Game.Name)
+                                </td>
+                                <td id="itemPrice">
+                                    $@Html.DisplayFor(modelItem => item.Game.Price)
+                                </td>
+                                <td onclick="getItemSubtotal();" id="itemQuantity">
+                                    <input type="number" class="form-control col-lg-3" value="@Html.DisplayFor(modelItem => item.Quantity)" min="1" max="10">
+                                </td>
+                                <td onload="getItemSubtotal();" id="itemSubtotal">
+
+                                </td>
+                                <td>
+                                    <a asp-action="StoreCart" asp-route-id="-@item.ProductId" asp-controller="Store">Remove</a>
+                                </td>
+                            </tr>
                                     @*<tr>
                         <td colspan="5">
                             <h4 class="nk-feature-title text-main-1 d-flex justify-content-end">
@@ -413,7 +419,7 @@
                                         Subtotal
                                     </td>
                                     <td>
-                                        $0.00
+
                                     </td>
                                 </tr>
                                 <tr class="nk-store-cart-totals-shipping">
