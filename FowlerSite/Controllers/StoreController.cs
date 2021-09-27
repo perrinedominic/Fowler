@@ -63,7 +63,16 @@ namespace FowlerSite.Controllers
         /// <returns>The view of the shopping cart items.</returns>
         public IActionResult StoreCart(int id)
         {
-            int cardId = AddToCart(id);
+            int cardId = 1;
+
+            if (id.ToString().StartsWith("-"))
+            {
+                this.Remove(id);
+            }
+            else
+            {
+                AddToCart(id);
+            }
 
             IEnumerable < CartItem > items = _db.ShoppingCartItems.Include(x => x.Game).Where(x => x.CartId == cardId).ToList();
             return View(items);
@@ -159,13 +168,23 @@ namespace FowlerSite.Controllers
             return cardId;
         }
 
-        public void Dispose()
+        public IActionResult Remove(int productId)
         {
-            if (_db != null)
+            var userId = GetUserID();
+            var cardId = _db.ShoppingCart.Where(x => x.UserId == userId).Select(x => x.CartId).FirstOrDefault();
+
+            List<CartItem> cartItems = GetCartItems();
+
+            foreach(CartItem c in cartItems)
             {
-                _db.Dispose();
-                _db = null;
+                if("-" + c.ProductId.ToString() == productId.ToString())
+                {
+                    _db.ShoppingCartItems.Remove(c);
+                    _db.SaveChanges();
+                    break;
+                }
             }
+            return RedirectToAction("StoreCart");
         }
 
         public Guid GetUserID()

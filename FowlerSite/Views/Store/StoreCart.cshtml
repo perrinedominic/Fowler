@@ -247,10 +247,6 @@
                         <table class="table nk-store-cart-products">
                             <tbody>
                                 <tr>
-
-                                    <td class="font-weight-bold">
-                                        Cover:
-                                    </td>
                                     <td class="font-weight-bold">
                                         Product:
                                     </td>
@@ -266,9 +262,9 @@
                                 {
                                     <tr>
 
-                                        <td>
-                                            <img src="@Url.Content(item.Game.imagePath)" class="img-thumbnail" />
-                                        </td>
+                                        @*<td class="d-lg-block">
+                                            <img style="max-height:200px;" src="@Url.Content(item.Game.imagePath)" class="img-thumbnail" />
+                                        </td>*@
                                         <td>
                                             @Html.DisplayFor(modelItem => item.Game.Name)
                                         </td>
@@ -277,6 +273,9 @@
                                         </td>
                                         <td id="itemQuantity">
                                             @Html.DisplayFor(modelItem => item.Quantity)
+                                        </td>
+                                        <td>
+                                            <a asp-action="StoreCart" asp-route-id="-@item.ProductId" asp-controller="Store">Remove</a>
                                         </td>
                                     </tr>
                                     @*<tr>
