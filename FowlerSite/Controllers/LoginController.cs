@@ -13,5 +13,10 @@ namespace FowlerSite.Controllers
         {
             return View("Login");
         }
+
+        public IActionResult Create()
+        {
+            return View();
+        }
     }
 }

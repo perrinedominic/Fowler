@@ -13,12 +13,11 @@ body {
     background: #121212; /* fallback for old browsers */
     overflow-x: hidden;
     height: 100%;
+    width: 100%;
     /* code to make all text unselectable */
     -webkit-user-select: none;
-    -khtml-user-select: none;
     -moz-user-select: none;
     -ms-user-select: none;
-    -o-user-select: none;
     user-select: none;
 }
 
@@ -56,7 +55,7 @@ h1 {
     justify-content: center;
     align-items: center;
     width: 500px;
-    height: 350px;
+    height: 470px;
     margin-top: 5px;
     padding-top: 20px;
     border-radius: 12px;

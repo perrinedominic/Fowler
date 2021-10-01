@@ -1,0 +1,34 @@
+﻿@model Users
+
+<!DOCTYPE html>
+<head>
+    <link href="~/assets/css/login.css" rel="stylesheet" />
+</head>
+<body>
+    <div class="flex-container">
+        <div class="content-container">
+            <div class="form-container">
+                <form method="post" asp-action="Create">
+                    <h1>
+                        Create an Account:
+                    </h1>
+                    <br>
+                    <br>
+                    <span class="subtitle">CREATE USERNAME:</span>
+                    <br>
+                    <input type="text" name="username" value="" asp-for="Username"/>
+                    <br>
+                    <span class="subtitle">CREATE PASSWORD:</span>
+                    <br>
+                    <input type="password" name="password" value="" asp-for="Password"/>
+                    <br>
+                    <span class="subtitle">ENTER YOUR EMAIL:</span>
+                    <br />
+                    <input type="text" name="Email" value="" asp-for="EmailAddress"/>
+                    <br /><br />
+                    <button class="btn btn-outline-primary">Create</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</body>

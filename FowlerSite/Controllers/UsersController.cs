@@ -7,22 +7,57 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using DataAccessLibrary.DataAccess;
 using DataAccessLibrary.Models;
+using Microsoft.Data.SqlClient;
+using Microsoft.Extensions.Configuration;
+using System.Data;
+using FowlerSite.Models;
 
 namespace FowlerSite.Controllers
 {
     public class UsersController : Controller
     {
+        /// <summary>
+        /// The string used to set the default connection for the database.
+        /// </summary>
+        private string connectionString;
+
+        /// <summary>
+        /// The context for the database of users.
+        /// </summary>
         private readonly OESContext _context;
 
-        public UsersController(OESContext context)
+        /// <summary>
+        /// Initialzes a new instance of the users controller class.
+        /// </summary>
+        /// <param name="context">The context for the users.</param>
+        /// <param name="configuration">The default configuration for database connection.</param>
+        public UsersController(OESContext context, IConfiguration configuration)
         {
             _context = context;
+
+            Configuration = configuration;
+
+            this.connectionString = Configuration["ConnectionStrings:DefaultConnection"];
         }
+
+        /// <summary>
+        /// Gets the configuration.
+        /// </summary>
+        public IConfiguration Configuration { get; }
 
         // GET: Users
         public async Task<IActionResult> Index()
         {
             return View(await _context.Users.ToListAsync());
+        }
+
+        /// <summary>
+        /// The method used to add users to a login list.
+        /// </summary>
+        /// <returns>The view for successfully logging in.</returns>
+        public IActionResult UserLogin()
+        {
+            return View();
         }
 
         // GET: Users/Details/5
@@ -43,8 +78,60 @@ namespace FowlerSite.Controllers
             return View(user);
         }
 
-        // GET: Users/Create
-        public IActionResult Create()
+        /// <summary>
+        /// Creates the new user.
+        /// </summary>
+        /// <param name="user">The user being created.</param>
+        /// <returns>Redirects to the login function once the user has been created.</returns>
+        [HttpPost]
+        public IActionResult Create(Users user)
+        {
+            using (SqlConnection connection = new SqlConnection(this.connectionString))
+            {
+                string sql = "INSERT INTO Users (Username, EmailAddress, Password) VALUES (@Username, @EmailAddress, @Password)";
+
+                using (SqlCommand command = new SqlCommand(sql, connection))
+                {
+                    command.CommandType = CommandType.Text;
+
+                    // Add the parameters to the db.
+                    SqlParameter parameter = new SqlParameter
+                    {
+                        ParameterName = "@Username",
+                        Value = user.Username,
+                        SqlDbType = SqlDbType.VarChar,
+                        Size = 450
+                    };
+                    command.Parameters.Add(parameter);
+
+                    parameter = new SqlParameter
+                    {
+                        ParameterName = "@EmailAddress",
+                        Value = user.EmailAddress,
+                        SqlDbType = SqlDbType.VarChar,
+                        Size = 100
+                    };
+                    command.Parameters.Add(parameter);
+
+                    parameter = new SqlParameter
+                    {
+                        ParameterName = "@Password",
+                        Value = user.Password,
+                        SqlDbType = SqlDbType.VarChar,
+                        Size = 100
+                    };
+                    command.Parameters.Add(parameter);
+
+                    connection.Open();
+                    command.ExecuteNonQuery();
+                    connection.Close();
+                }
+            }
+
+            return View("Login");
+        }
+
+        public IActionResult AccountCreation()
         {
             return View();
         }

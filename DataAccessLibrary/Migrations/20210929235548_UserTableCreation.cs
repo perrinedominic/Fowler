@@ -11,11 +11,8 @@ namespace DataAccessLibrary.Migrations
                 columns: table => new
                 {
                     Username = table.Column<string>(nullable: false),
-                    FirstName = table.Column<string>(nullable: true),
-                    LastName = table.Column<string>(nullable: true),
-                    EmailAddress = table.Column<string>(nullable: true),
-                    Password = table.Column<string>(nullable: true),
-                    Address = table.Column<string>(nullable: true)
+                    EmailAddress = table.Column<string>(nullable: false),
+                    Password = table.Column<string>(nullable: false),
                 },
                 constraints: table =>
                 {
