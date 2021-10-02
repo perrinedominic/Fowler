@@ -37,6 +37,10 @@ h1 {
     font-weight: 800;
 }
 
+footer{
+    display: none;
+}
+
 .flex-container {
     width: 100vw;
     margin-top: 60px;

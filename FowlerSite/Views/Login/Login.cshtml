@@ -8,7 +8,7 @@
     <div class="flex-container">
         <div class="content-container">
             <div class="form-container">
-                <form method="post" asp-action="Login">
+                <form method="post" asp-action="UserLogin">
                     <h1>
                         Login
                     </h1>
@@ -16,15 +16,15 @@
                     <br>
                     <span class="subtitle">USERNAME:</span>
                     <br>
-                    <input type="text" name="username" value="">
+                    <input type="text" name="username" value="" asp-for="Username" />
                     <br>
                     <span class="subtitle">PASSWORD:</span>
                     <br>
-                    <input type="password" name="password" value="">
+                    <input type="password" name="pasword" value="" asp-for="Password" />
                     <br />
                     <span class="subtitle">ENTER YOUR EMAIL:</span>
                     <br />
-                    <input type="text" name="Email" value="" asp-for="EmailAddress" />
+                    <input type="text" name="email" value="" asp-for="EmailAddress" />
                     <br><br>
                     <button class="btn btn-outline-primary" type="submit">Login</button>
                     <a class="btn btn-outline-secondary" asp-action="Create">Create an Account</a>

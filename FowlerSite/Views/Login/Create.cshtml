@@ -1,4 +1,4 @@
-﻿@model Users
+﻿@model Login
 
 <!DOCTYPE html>
 <head>
@@ -8,7 +8,7 @@
     <div class="flex-container">
         <div class="content-container">
             <div class="form-container">
-                <form method="post" asp-action="Create">
+                <form method="post" asp-action="CreateUser">
                     <h1>
                         Create an Account:
                     </h1>
@@ -24,7 +24,7 @@
                     <br>
                     <span class="subtitle">ENTER YOUR EMAIL:</span>
                     <br />
-                    <input type="text" name="Email" value="" asp-for="EmailAddress"/>
+                    <input type="text" name="emailaddress" value="" asp-for="EmailAddress"/>
                     <br /><br />
                     <button class="btn btn-outline-primary">Create</button>
                 </form>
