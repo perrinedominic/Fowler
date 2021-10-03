@@ -37,5 +37,18 @@ namespace DataAccessLibrary.Models
         /// Gets or sets the user id.
         /// </summary>
         public Guid UserId { get; set; }
+
+        /// <summary>
+        /// Gets or sets the subtotal.
+        /// </summary>
+        public decimal Subtotal
+        {
+            get; set;
+        }
+
+        /// <summary>
+        /// Gets or sets the total.
+        /// </summary>
+        public decimal Total { get; set; }
     }
 }

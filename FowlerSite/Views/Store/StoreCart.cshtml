@@ -247,6 +247,8 @@
                     <form asp-action="StoreCart">
                         <table class="table nk-store-cart-products">
                             <tbody>
+                            @if (Model.Count() > 0)
+                            {
                                 <tr>
                                     <td class="font-weight-bold">
                                         Product:
@@ -277,13 +279,15 @@
                                 <td onclick="getItemSubtotal();" id="itemQuantity">
                                     <input type="number" class="form-control col-lg-3" value="@Html.DisplayFor(modelItem => item.Quantity)" min="1" max="10">
                                 </td>
-                                <td onload="getItemSubtotal();" id="itemSubtotal">
-
-                                </td>
                                 <td>
                                     <a asp-action="StoreCart" asp-route-id="-@item.ProductId" asp-controller="Store">Remove</a>
                                 </td>
                             </tr>
+                                }}
+                            else
+                            {
+                                    <tr><td>Your cart is empty. <a asp-controller="Games" asp-action="Index">Click here</a> to find games.</td></tr>
+                            }
                                     @*<tr>
                         <td colspan="5">
                             <h4 class="nk-feature-title text-main-1 d-flex justify-content-end">
@@ -294,7 +298,7 @@
                             </h4>
                         </td>
                     </tr>*@
-                                }
+                                
 
                                 @*<tr>
                     <td class="nk-product-cart-thumb">
@@ -419,7 +423,7 @@
                                         Subtotal
                                     </td>
                                     <td>
-
+                                        <span onload="getItemSubtotal();"></span>
                                     </td>
                                 </tr>
                                 <tr class="nk-store-cart-totals-shipping">

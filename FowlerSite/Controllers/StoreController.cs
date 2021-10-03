@@ -237,6 +237,7 @@ namespace FowlerSite.Controllers
         /// <returns></returns>
         public decimal GetSubtotal()
         {
+            ShoppingCartId = 1;
             decimal totalCost = 0;
             List<CartItem> items = this.GetCartItems();
 
@@ -247,6 +248,7 @@ namespace FowlerSite.Controllers
 
             return totalCost;
         }
+
 
         /// <summary>
         /// Used to cartch errors.
