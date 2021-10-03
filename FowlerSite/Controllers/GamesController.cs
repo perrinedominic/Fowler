@@ -15,20 +15,9 @@ namespace FowlerSite.Controllers
     public class GamesController : Controller
     {
         private readonly OESContext _context;
-
         public GamesController(OESContext context)
         {
             _context = context;
-        }
-
-        public void SetGameInfo(string[] info)
-        {
-            Game game = new Game();
-            game.Name = info[0];
-            game.Description = info[1];
-            game.Genre = info[2];
-            game.Price = Convert.ToDecimal(info[3]);
-            this.AddGame(game);
         }
 
         /// <summary>
@@ -56,7 +45,7 @@ namespace FowlerSite.Controllers
 
             foreach (Game g in deserializedGames)
             {
-                if (!games.Contains(g))
+                if (!games.Any(game => game.ProductID == g.ProductID))
                 {
                     AddGame(g);
                 }
