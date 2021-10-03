@@ -15,9 +15,12 @@ namespace FowlerSite.Controllers
     {
         private readonly OESContext _context;
 
+        public IEnumerable<Game> Games { get; set; }
+
         public GamesController(OESContext context)
         {
             _context = context;
+            Games = _context.Games.ToList();
         }
 
         public void SetGameInfo(string[] info)
@@ -42,10 +45,10 @@ namespace FowlerSite.Controllers
         // GET: Games also does a database check to see if all of your games exist.
         public async Task<IActionResult> Index()
         {
-            List<Game> games = await _context.Games.ToListAsync();
+            var games = _context.Games.ToList();
 
             // Gets the games from the txt file.
-            string[] lines = System.IO.File.ReadAllLines(@"Games.txt");
+            string[] lines = await System.IO.File.ReadAllLinesAsync(@"Games.txt");
 
             if (games.Count != lines.Length - 1)
             {
@@ -179,14 +182,23 @@ namespace FowlerSite.Controllers
             return RedirectToAction(nameof(Index));
         }
 
-        public IActionResult Find(Game game)
-        {
-            return View(game);
-        }
-
         private bool GameExists(int id)
         {
             return _context.Games.Any(e => e.ProductID == id);
+        }
+
+        public IActionResult Filter(string name, string genre, decimal lowPrice, decimal highPrice)
+        {
+            if (name != null)
+                Games = from x in _context.Games where x.Name.Contains(name) select x;
+
+            if (genre != null)
+                Games = from x in _context.Games where (x.Genre == genre) select x;
+
+            if (lowPrice >= 0 && lowPrice !> highPrice)
+                Games = from x in _context.Games where ((x.Price >= lowPrice) && (x.Price <= highPrice)) select x;
+
+            return RedirectToAction("Index");
         }
     }
 }
