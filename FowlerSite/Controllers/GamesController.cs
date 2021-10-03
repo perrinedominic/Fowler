@@ -8,31 +8,29 @@ using Microsoft.EntityFrameworkCore;
 using DataAccessLibrary.DataAccess;
 using DataAccessLibrary.Models;
 using System.IO;
+using Newtonsoft.Json;
 
 namespace FowlerSite.Controllers
 {
     public class GamesController : Controller
     {
         private readonly OESContext _context;
+<<<<<<< HEAD
 
         public IEnumerable<Game> Games { get; set; }
 
+=======
+>>>>>>> TF-10-Game-Additions
         public GamesController(OESContext context)
         {
             _context = context;
             Games = _context.Games.ToList();
         }
 
-        public void SetGameInfo(string[] info)
-        {
-            Game game = new Game();
-            game.Name = info[0];
-            game.Description = info[1];
-            game.Genre = info[2];
-            game.Price = Convert.ToDecimal(info[3]);
-            this.AddGame(game);
-        }
-
+        /// <summary>
+        /// The method that adds a game to the database.
+        /// </summary>
+        /// <param name="game">The game being added.</param>
         public void AddGame([Bind("ProductID,Name,Description,Price,Genre")] Game game)
         {
             if (ModelState.IsValid)
@@ -42,23 +40,47 @@ namespace FowlerSite.Controllers
             }
         }
 
-        // GET: Games also does a database check to see if all of your games exist.
-        public async Task<IActionResult> Index()
+        /// <summary>
+        /// The method to compare the json in the games.txt file to your existing database.
+        /// </summary>
+        public async void JsonCompare()
         {
             var games = _context.Games.ToList();
 
+<<<<<<< HEAD
             // Gets the games from the txt file.
             string[] lines = await System.IO.File.ReadAllLinesAsync(@"Games.txt");
+=======
+            string serializedGames = System.IO.File.ReadAllText(@"Games.txt");
+            List<Game> deserializedGames = JsonConvert.DeserializeObject<List<Game>>(serializedGames);
+>>>>>>> TF-10-Game-Additions
 
-            if (games.Count != lines.Length - 1)
+            foreach (Game g in deserializedGames)
             {
-                // Loop through the text file.
-                for (int i = games.Count; i < lines.Length - 1; i++)
+                if (!games.Any(game => game.ProductID == g.ProductID))
                 {
-                    string[] gameInfo = lines[i + 1].Split('`');
-                    this.SetGameInfo(gameInfo);
+                    AddGame(g);
                 }
             }
+        }
+
+        /// <summary>
+        /// The method to add a new game to the json text.
+        /// </summary>
+        public void UpdateTextJson(Game game)
+        {
+            var gameJson = JsonConvert.SerializeObject(game);
+
+            System.IO.File.WriteAllText(@"Games.txt", gameJson);
+        }
+
+        // GET: Games also does a database check to see if all of your games exist.
+        public async Task<IActionResult> Index()
+        {
+            List<Game> games = await _context.Games.ToListAsync();
+
+            JsonCompare();
+
             return View(games);
         }
 
@@ -99,6 +121,7 @@ namespace FowlerSite.Controllers
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
+            UpdateTextJson(game);
             return View(game);
         }
 
@@ -182,7 +205,16 @@ namespace FowlerSite.Controllers
             return RedirectToAction(nameof(Index));
         }
 
+<<<<<<< HEAD
         private bool GameExists(int id)
+=======
+        /// <summary>
+        /// The method to find a game and go to that page.
+        /// </summary>
+        /// <param name="game">The game that needs to be found.</param>
+        /// <returns>Returns a view.</returns>
+        public IActionResult Find(Game game)
+>>>>>>> TF-10-Game-Additions
         {
             return _context.Games.Any(e => e.ProductID == id);
         }
