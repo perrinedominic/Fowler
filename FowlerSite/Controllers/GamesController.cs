@@ -8,6 +8,7 @@ using Microsoft.EntityFrameworkCore;
 using DataAccessLibrary.DataAccess;
 using DataAccessLibrary.Models;
 using System.IO;
+using Newtonsoft.Json;
 
 namespace FowlerSite.Controllers
 {
@@ -30,6 +31,10 @@ namespace FowlerSite.Controllers
             this.AddGame(game);
         }
 
+        /// <summary>
+        /// The method that adds a game to the database.
+        /// </summary>
+        /// <param name="game">The game being added.</param>
         public void AddGame([Bind("ProductID,Name,Description,Price,Genre")] Game game)
         {
             if (ModelState.IsValid)
@@ -39,23 +44,42 @@ namespace FowlerSite.Controllers
             }
         }
 
+        /// <summary>
+        /// The method to compare the json in the games.txt file to your existing database.
+        /// </summary>
+        public async void JsonCompare()
+        {
+            List<Game> games = await _context.Games.ToListAsync();
+
+            string serializedGames = System.IO.File.ReadAllText(@"Games.txt");
+            List<Game> deserializedGames = JsonConvert.DeserializeObject<List<Game>>(serializedGames);
+
+            foreach (Game g in deserializedGames)
+            {
+                if (!games.Contains(g))
+                {
+                    AddGame(g);
+                }
+            }
+        }
+
+        /// <summary>
+        /// The method to add a new game to the json text.
+        /// </summary>
+        public void UpdateTextJson(Game game)
+        {
+            var gameJson = JsonConvert.SerializeObject(game);
+
+            System.IO.File.WriteAllText(@"Games.txt", gameJson);
+        }
+
         // GET: Games also does a database check to see if all of your games exist.
         public async Task<IActionResult> Index()
         {
             List<Game> games = await _context.Games.ToListAsync();
 
-            // Gets the games from the txt file.
-            string[] lines = System.IO.File.ReadAllLines(@"Games.txt");
+            JsonCompare();
 
-            if (games.Count != lines.Length - 1)
-            {
-                // Loop through the text file.
-                for (int i = games.Count; i < lines.Length - 1; i++)
-                {
-                    string[] gameInfo = lines[i + 1].Split('`');
-                    this.SetGameInfo(gameInfo);
-                }
-            }
             return View(games);
         }
 
@@ -96,6 +120,7 @@ namespace FowlerSite.Controllers
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
+            UpdateTextJson(game);
             return View(game);
         }
 
@@ -179,6 +204,11 @@ namespace FowlerSite.Controllers
             return RedirectToAction(nameof(Index));
         }
 
+        /// <summary>
+        /// The method to find a game and go to that page.
+        /// </summary>
+        /// <param name="game">The game that needs to be found.</param>
+        /// <returns>Returns a view.</returns>
         public IActionResult Find(Game game)
         {
             return View(game);
