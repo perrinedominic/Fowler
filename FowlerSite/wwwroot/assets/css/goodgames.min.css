@@ -3826,8 +3826,8 @@ img.rounded {
         line-height: 1.4
     }
 
-.nk-widget-categories {
-    color: #fff
+.nk-widget-categories select {
+    color: black;
 }
 
     .nk-widget-categories, .nk-widget-categories ul {

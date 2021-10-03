@@ -8,6 +8,7 @@ using Microsoft.EntityFrameworkCore;
 using DataAccessLibrary.DataAccess;
 using DataAccessLibrary.Models;
 using System.IO;
+using Newtonsoft.Json;
 
 namespace FowlerSite.Controllers
 {
@@ -15,21 +16,18 @@ namespace FowlerSite.Controllers
     {
         private readonly OESContext _context;
 
+        public IEnumerable<Game> Games { get; set; }
+
         public GamesController(OESContext context)
         {
             _context = context;
+            Games = _context.Games.ToList();
         }
 
-        public void SetGameInfo(string[] info)
-        {
-            Game game = new Game();
-            game.Name = info[0];
-            game.Description = info[1];
-            game.Genre = info[2];
-            game.Price = Convert.ToDecimal(info[3]);
-            this.AddGame(game);
-        }
-
+        /// <summary>
+        /// The method that adds a game to the database.
+        /// </summary>
+        /// <param name="game">The game being added.</param>
         public void AddGame([Bind("ProductID,Name,Description,Price,Genre")] Game game)
         {
             if (ModelState.IsValid)
@@ -39,23 +37,44 @@ namespace FowlerSite.Controllers
             }
         }
 
+        /// <summary>
+        /// The method to compare the json in the games.txt file to your existing database.
+        /// </summary>
+        public async void JsonCompare()
+        {
+            var games = _context.Games.ToList();
+
+            // Gets the games from the txt file.
+            string[] lines = await System.IO.File.ReadAllLinesAsync(@"Games.txt");
+            string serializedGames = System.IO.File.ReadAllText(@"Games.txt");
+            List<Game> deserializedGames = JsonConvert.DeserializeObject<List<Game>>(serializedGames);
+
+            foreach (Game g in deserializedGames)
+            {
+                if (!games.Any(game => game.ProductID == g.ProductID))
+                {
+                    AddGame(g);
+                }
+            }
+        }
+
+        /// <summary>
+        /// The method to add a new game to the json text.
+        /// </summary>
+        public void UpdateTextJson(Game game)
+        {
+            var gameJson = JsonConvert.SerializeObject(game);
+
+            System.IO.File.WriteAllText(@"Games.txt", gameJson);
+        }
+
         // GET: Games also does a database check to see if all of your games exist.
         public async Task<IActionResult> Index()
         {
             List<Game> games = await _context.Games.ToListAsync();
 
-            // Gets the games from the txt file.
-            string[] lines = System.IO.File.ReadAllLines(@"Games.txt");
+            JsonCompare();
 
-            if (games.Count != lines.Length - 1)
-            {
-                // Loop through the text file.
-                for (int i = games.Count; i < lines.Length - 1; i++)
-                {
-                    string[] gameInfo = lines[i + 1].Split('`');
-                    this.SetGameInfo(gameInfo);
-                }
-            }
             return View(games);
         }
 
@@ -96,6 +115,7 @@ namespace FowlerSite.Controllers
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
+            UpdateTextJson(game);
             return View(game);
         }
 
@@ -179,14 +199,28 @@ namespace FowlerSite.Controllers
             return RedirectToAction(nameof(Index));
         }
 
-        public IActionResult Find(Game game)
-        {
-            return View(game);
-        }
-
+        /// <summary>
+        /// The method to find a game and go to that page.
+        /// </summary>
+        /// <param name="game">The game that needs to be found.</param>
+        /// <returns>Returns a view.</returns>
         private bool GameExists(int id)
         {
             return _context.Games.Any(e => e.ProductID == id);
+        }
+
+        public IActionResult Filter(string name, string genre, decimal lowPrice, decimal highPrice)
+        {
+            if (name != null)
+                Games = from x in _context.Games where x.Name.Contains(name) select x;
+
+            if (genre != null)
+                Games = from x in _context.Games where (x.Genre == genre) select x;
+
+            if (lowPrice >= 0 && lowPrice !> highPrice)
+                Games = from x in _context.Games where ((x.Price >= lowPrice) && (x.Price <= highPrice)) select x;
+
+            return RedirectToAction("Index");
         }
     }
 }
