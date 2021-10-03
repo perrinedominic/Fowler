@@ -1,7 +1,7 @@
 ﻿@model IEnumerable<DataAccessLibrary.Models.CartItem>
 
 @{
-    //ViewBag.Title = "StoreCart";
+//ViewBag.Title = "StoreCart";
 }
 <!DOCTYPE html>
 
@@ -276,9 +276,13 @@
                                 <td id="itemPrice">
                                     $@Html.DisplayFor(modelItem => item.Game.Price)
                                 </td>
-                                <td onclick="getItemSubtotal();" id="itemQuantity">
+                                <td id="itemQuantity">
                                     <input type="number" class="form-control col-lg-3" value="@Html.DisplayFor(modelItem => item.Quantity)" min="1" max="10">
                                 </td>
+                                
+                                    
+                                    
+                                
                                 <td>
                                     <a asp-action="StoreCart" asp-route-id="-@item.ProductId" asp-controller="Store">Remove</a>
                                 </td>
@@ -380,7 +384,7 @@
                     <!-- END: Products in Cart -->
                 </div>
                 <div class="nk-gap-1"></div>
-                <a class="nk-btn nk-btn-rounded nk-btn-color-white float-right" href="#">Update Cart</a>
+                <a class="nk-btn nk-btn-rounded nk-btn-color-white float-right">Update Cart</a>
 
                 <div class="clearfix"></div>
                 <div class="nk-gap-2"></div>
@@ -423,15 +427,26 @@
                                         Subtotal
                                     </td>
                                     <td>
-                                        <span onload="getItemSubtotal();"></span>
+                                        @{decimal sum = 0;
+
+                                            foreach (var x in Model)
+                                            {
+
+                                                sum += x.Game.Price;
+
+                                            }
+                                            Output.WriteLine(sum);}
                                     </td>
                                 </tr>
                                 <tr class="nk-store-cart-totals-shipping">
                                     <td>
-                                        Shipping
+                                        Tax
                                     </td>
                                     <td>
-                                        Free Shipping
+                                        @{ decimal tax = .055m;
+                                            decimal taxTotal = sum * tax;
+                                            Output.WriteLine("$" + Math.Round(taxTotal, 2));
+                                            }
                                     </td>
                                 </tr>
                                 <tr class="nk-store-cart-totals-total">
@@ -439,7 +454,10 @@
                                         Total
                                     </td>
                                     <td>
-                                        $ 52.00
+                                        @{ 
+                                            decimal total = sum + taxTotal;
+                                            Output.WriteLine("$" + Math.Round(total, 2));
+                                        }
                                     </td>
                                 </tr>
                             </tbody>

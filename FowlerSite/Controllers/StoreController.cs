@@ -24,6 +24,16 @@ namespace FowlerSite.Controllers
         /// </summary>
         public int ShoppingCartId { get; set; }
 
+        public decimal Subtotal
+        {
+            get
+            {
+                return GetSubtotal();
+            }
+            set { }
+        }
+
+
         private OESContext _db;
 
         /// <summary>
