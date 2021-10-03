@@ -15,12 +15,9 @@ namespace FowlerSite.Controllers
     public class GamesController : Controller
     {
         private readonly OESContext _context;
-<<<<<<< HEAD
 
         public IEnumerable<Game> Games { get; set; }
 
-=======
->>>>>>> TF-10-Game-Additions
         public GamesController(OESContext context)
         {
             _context = context;
@@ -47,13 +44,10 @@ namespace FowlerSite.Controllers
         {
             var games = _context.Games.ToList();
 
-<<<<<<< HEAD
             // Gets the games from the txt file.
             string[] lines = await System.IO.File.ReadAllLinesAsync(@"Games.txt");
-=======
             string serializedGames = System.IO.File.ReadAllText(@"Games.txt");
             List<Game> deserializedGames = JsonConvert.DeserializeObject<List<Game>>(serializedGames);
->>>>>>> TF-10-Game-Additions
 
             foreach (Game g in deserializedGames)
             {
@@ -205,16 +199,12 @@ namespace FowlerSite.Controllers
             return RedirectToAction(nameof(Index));
         }
 
-<<<<<<< HEAD
-        private bool GameExists(int id)
-=======
         /// <summary>
         /// The method to find a game and go to that page.
         /// </summary>
         /// <param name="game">The game that needs to be found.</param>
         /// <returns>Returns a view.</returns>
-        public IActionResult Find(Game game)
->>>>>>> TF-10-Game-Additions
+        private bool GameExists(int id)
         {
             return _context.Games.Any(e => e.ProductID == id);
         }
