@@ -3,5 +3,5 @@ function getItemSubtotal() {
     var quantity = Number(document.getElementById("itemQuantity").querySelector('input').value);
     var itemTotal = price * quantity;
 
-    document.getElementById("itemSubtotal").innerHTML = itemTotal;
+    return itemTotal;
 }

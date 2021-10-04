@@ -74,12 +74,13 @@ namespace FowlerSite.Controllers
                 {
                     while (dataReader.Read())
                     {
+                        int id = user.
                         Login user = new Login();
 
                         user.Username = Convert.ToString(dataReader["UserName"]);
                         user.EmailAddress = Convert.ToString(dataReader["EmailAddress"]);
                         user.Password = Convert.ToString(dataReader["Password"]);
-
+                        userList.Add(user);
                         if (user.Username == "Admin")
                         {
                             username = user.Username;
@@ -92,8 +93,6 @@ namespace FowlerSite.Controllers
                         {
                             emailAddress = user.EmailAddress;
                         }
-
-                        userList.Add(user);
                     }
                 }
                 connection.Close();
@@ -178,13 +177,13 @@ namespace FowlerSite.Controllers
                 }
             }
 
-            return View("Create");
+            return View("Login");
         }
 
         public IActionResult Create()
         {
             return View();
-        } 
+        }
 
         public IActionResult Login()
         {
