@@ -240,11 +240,12 @@
 
         <div class="container">
             <div class="nk-store nk-store-cart">
-                <div class="table-responsive">
 
                     <!-- START: Products in Cart -->
 
-                    <form asp-action="StoreCart">
+                    @using(Html.BeginForm("Update", "Store", FormMethod.Post)) { 
+
+                <div class="table-responsive">
                         <table class="table nk-store-cart-products">
                             <tbody>
                             @if (Model.Count() > 0)
@@ -277,16 +278,20 @@
                                     $@Html.DisplayFor(modelItem => item.Game.Price)
                                 </td>
                                 <td id="itemQuantity">
-                                    <input type="number" class="form-control col-lg-3" value="@Html.DisplayFor(modelItem => item.Quantity)" min="1" max="10">
-                                </td>
-                                
-                                    
-                                    
-                                
-                                <td>
-                                    <a asp-action="StoreCart" asp-route-id="-@item.ProductId" asp-controller="Store">Remove</a>
-                                </td>
-                            </tr>
+                                    <input name="quantity" asp-data-id="@item.Quantity" type="number" value="@Html.DisplayFor(modelItem => item.Quantity)" class="form-control col-lg-3" min="1" max="10"  >
+          </td>
+
+
+
+
+
+          <td>
+
+              <a asp-action="StoreCart" asp-route-id="-@item.ProductId" asp-controller="Store">Remove</a>
+
+          </td>
+
+      </tr>
                                 }}
                             else
                             {
@@ -380,19 +385,20 @@
 
                             </tbody>
                         </table>
-                    </form>
+                    
                     <!-- END: Products in Cart -->
                 </div>
                 <div class="nk-gap-1"></div>
-                <a class="nk-btn nk-btn-rounded nk-btn-color-white float-right">Update Cart</a>
 
+                <input type="submit" class="nk-btn nk-btn-rounded nk-btn-color-white float-right" value="Update Cart" />
+                }
                 <div class="clearfix"></div>
                 <div class="nk-gap-2"></div>
                 <div class="row vertical-gap">
                     <div class="col-md-6">
 
                         <!-- START: Calculate Shipping -->
-                        <h3 class="nk-title h4">Calculate Shipping</h3>
+                        @*<h3 class="nk-title h4">Calculate Shipping</h3>
                         <form action="#" class="nk-form">
                             <label for="country-sel">Country <span class="text-main-1">*</span>:</label>
                             <select name="country" class="form-control required" id="country-sel">
@@ -413,7 +419,7 @@
 
                             <div class="nk-gap-1"></div>
                             <a class="nk-btn nk-btn-rounded nk-btn-color-white float-right" href="#">Update Totals</a>
-                        </form>
+                        </form>*@
                         <!-- END: Calculate Shipping -->
 
                     </div>
@@ -432,7 +438,7 @@
                                             foreach (var x in Model)
                                             {
 
-                                                sum += x.Game.Price;
+                                                sum += x.Quantity * x.Game.Price;
 
                                             }
                                             Output.WriteLine(sum);}

@@ -23,6 +23,7 @@ namespace DataAccessLibrary.Models
         /// <summary>
         /// Gets or sets the quantity of items in the cart.
         /// </summary>
+        [Required]
         public int Quantity { get; set; }
 
         /// <summary>
