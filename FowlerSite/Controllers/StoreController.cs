@@ -11,6 +11,8 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.Extensions.Configuration;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.AspNetCore.Http;
+using System.Collections.Specialized;
 
 namespace FowlerSite.Controllers
 {
@@ -23,6 +25,18 @@ namespace FowlerSite.Controllers
         /// Gets or sets the shopping cart id.
         /// </summary>
         public int ShoppingCartId { get; set; }
+
+        public int Quantity { get; set; }
+
+        public decimal Subtotal
+        {
+            get
+            {
+                return GetSubtotal();
+            }
+            set { }
+        }
+
 
         private OESContext _db;
 
@@ -78,6 +92,16 @@ namespace FowlerSite.Controllers
             return View(items);
         }
 
+        //[HttpPost]
+        //public ActionResult StoreCart(int quantity)
+        //{
+        //    IEnumerable <CartItem> cartItems = GetCartItems();
+        //    foreach(CartItem c in cartItems)
+        //    {
+
+        //    }
+        //}
+
         /// <summary>
         /// Navigates to the store checkout page.
         /// </summary>
@@ -103,6 +127,25 @@ namespace FowlerSite.Controllers
         public IActionResult StoreCatalog()
         {
             return View();
+        }
+
+        public IActionResult Update(IFormCollection fc)
+        {
+            string[] quantities = fc["quantity"];
+            List<CartItem> items = GetCartItems();
+            for(int i = 0; i < items.Count; i++)
+            {
+                items[i].Quantity = Convert.ToInt32(quantities[i]);
+                foreach(CartItem c in _db.ShoppingCartItems)
+                {
+                    if (c.ProductId == items[i].ProductId)
+                    {
+                        c.Quantity = items[i].Quantity;
+                    }
+                }
+                _db.SaveChanges();
+            }
+            return Redirect("StoreCart/0");
         }
 
         /// <summary>
@@ -237,6 +280,7 @@ namespace FowlerSite.Controllers
         /// <returns></returns>
         public decimal GetSubtotal()
         {
+            ShoppingCartId = 1;
             decimal totalCost = 0;
             List<CartItem> items = this.GetCartItems();
 
@@ -247,6 +291,7 @@ namespace FowlerSite.Controllers
 
             return totalCost;
         }
+
 
         /// <summary>
         /// Used to cartch errors.

@@ -1,7 +1,7 @@
 ﻿@model IEnumerable<DataAccessLibrary.Models.CartItem>
 
 @{
-    //ViewBag.Title = "StoreCart";
+//ViewBag.Title = "StoreCart";
 }
 <!DOCTYPE html>
 
@@ -240,13 +240,16 @@
 
         <div class="container">
             <div class="nk-store nk-store-cart">
-                <div class="table-responsive">
 
                     <!-- START: Products in Cart -->
 
-                    <form asp-action="StoreCart">
+                    @using(Html.BeginForm("Update", "Store", FormMethod.Post)) { 
+
+                <div class="table-responsive">
                         <table class="table nk-store-cart-products">
                             <tbody>
+                            @if (Model.Count() > 0)
+                            {
                                 <tr>
                                     <td class="font-weight-bold">
                                         Product:
@@ -274,16 +277,26 @@
                                 <td id="itemPrice">
                                     $@Html.DisplayFor(modelItem => item.Game.Price)
                                 </td>
-                                <td onclick="getItemSubtotal();" id="itemQuantity">
-                                    <input type="number" class="form-control col-lg-3" value="@Html.DisplayFor(modelItem => item.Quantity)" min="1" max="10">
-                                </td>
-                                <td onload="getItemSubtotal();" id="itemSubtotal">
+                                <td id="itemQuantity">
+                                    <input name="quantity" asp-data-id="@item.Quantity" type="number" value="@Html.DisplayFor(modelItem => item.Quantity)" class="form-control col-lg-3" min="1" max="10"  >
+          </td>
 
-                                </td>
-                                <td>
-                                    <a asp-action="StoreCart" asp-route-id="-@item.ProductId" asp-controller="Store">Remove</a>
-                                </td>
-                            </tr>
+
+
+
+
+          <td>
+
+              <a asp-action="StoreCart" asp-route-id="-@item.ProductId" asp-controller="Store">Remove</a>
+
+          </td>
+
+      </tr>
+                                }}
+                            else
+                            {
+                                    <tr><td>Your cart is empty. <a asp-controller="Games" asp-action="Index">Click here</a> to find games.</td></tr>
+                            }
                                     @*<tr>
                         <td colspan="5">
                             <h4 class="nk-feature-title text-main-1 d-flex justify-content-end">
@@ -294,7 +307,7 @@
                             </h4>
                         </td>
                     </tr>*@
-                                }
+                                
 
                                 @*<tr>
                     <td class="nk-product-cart-thumb">
@@ -372,19 +385,20 @@
 
                             </tbody>
                         </table>
-                    </form>
+                    
                     <!-- END: Products in Cart -->
                 </div>
                 <div class="nk-gap-1"></div>
-                <a class="nk-btn nk-btn-rounded nk-btn-color-white float-right" href="#">Update Cart</a>
 
+                <input type="submit" class="nk-btn nk-btn-rounded nk-btn-color-white float-right" value="Update Cart" />
+                }
                 <div class="clearfix"></div>
                 <div class="nk-gap-2"></div>
                 <div class="row vertical-gap">
                     <div class="col-md-6">
 
                         <!-- START: Calculate Shipping -->
-                        <h3 class="nk-title h4">Calculate Shipping</h3>
+                        @*<h3 class="nk-title h4">Calculate Shipping</h3>
                         <form action="#" class="nk-form">
                             <label for="country-sel">Country <span class="text-main-1">*</span>:</label>
                             <select name="country" class="form-control required" id="country-sel">
@@ -405,7 +419,7 @@
 
                             <div class="nk-gap-1"></div>
                             <a class="nk-btn nk-btn-rounded nk-btn-color-white float-right" href="#">Update Totals</a>
-                        </form>
+                        </form>*@
                         <!-- END: Calculate Shipping -->
 
                     </div>
@@ -419,15 +433,26 @@
                                         Subtotal
                                     </td>
                                     <td>
+                                        @{decimal sum = 0;
 
+                                            foreach (var x in Model)
+                                            {
+
+                                                sum += x.Quantity * x.Game.Price;
+
+                                            }
+                                            Output.WriteLine(sum);}
                                     </td>
                                 </tr>
                                 <tr class="nk-store-cart-totals-shipping">
                                     <td>
-                                        Shipping
+                                        Tax
                                     </td>
                                     <td>
-                                        Free Shipping
+                                        @{ decimal tax = .055m;
+                                            decimal taxTotal = sum * tax;
+                                            Output.WriteLine("$" + Math.Round(taxTotal, 2));
+                                            }
                                     </td>
                                 </tr>
                                 <tr class="nk-store-cart-totals-total">
@@ -435,7 +460,10 @@
                                         Total
                                     </td>
                                     <td>
-                                        $ 52.00
+                                        @{ 
+                                            decimal total = sum + taxTotal;
+                                            Output.WriteLine("$" + Math.Round(total, 2));
+                                        }
                                     </td>
                                 </tr>
                             </tbody>
