@@ -11,6 +11,7 @@ using Microsoft.Data.SqlClient;
 using Microsoft.Extensions.Configuration;
 using System.Data;
 using FowlerSite.Models;
+using FowlerSite.Services;
 
 namespace FowlerSite.Controllers
 {
@@ -58,10 +59,6 @@ namespace FowlerSite.Controllers
         public IActionResult UserLogin()
         {
             List<Login> userList = new List<Login>();
-            string username = null;
-            string password = null;
-            string emailAddress = null;
-            ViewResult result = null;
 
             using (SqlConnection connection = new SqlConnection(this.connectionString))
             {
@@ -77,35 +74,16 @@ namespace FowlerSite.Controllers
                         Login user = new Login();
 
                         user.Username = Convert.ToString(dataReader["UserName"]);
+                        user.Users = new ListService(Configuration).GetUserLoginList(user.Username);
                         user.EmailAddress = Convert.ToString(dataReader["EmailAddress"]);
                         user.Password = Convert.ToString(dataReader["Password"]);
                         userList.Add(user);
-                        if (user.Username == "Admin")
-                        {
-                            username = user.Username;
-                        }
-                        if (user.Password == "PWD")
-                        {
-                            password = user.Password;
-                        }
-                        if (user.EmailAddress == "admin@email.com")
-                        {
-                            emailAddress = user.EmailAddress;
-                        }
                     }
                 }
                 connection.Close();
             }
-            if (username == "Admin" && password == "PWD" && emailAddress == "admin@email.com")
-            {
-                result = View("Admin");
-            }
-            else
-            {
-                result = View("User");
-            }
 
-            return result;
+            return View(userList);
         }
 
         // GET: Users/Details/5
@@ -132,7 +110,7 @@ namespace FowlerSite.Controllers
         /// <param name="user">The user being created.</param>
         /// <returns>Redirects to the login function once the user has been created.</returns>
         [HttpPost]
-        public IActionResult CreateUser(Login user)
+        public IActionResult CreateUser(Login login)
         {
             using (SqlConnection connection = new SqlConnection(this.connectionString))
             {
@@ -146,7 +124,7 @@ namespace FowlerSite.Controllers
                     SqlParameter parameter = new SqlParameter
                     {
                         ParameterName = "@Username",
-                        Value = user.Username,
+                        Value = login.Username,
                         SqlDbType = SqlDbType.VarChar,
                         Size = 450
                     };
@@ -155,7 +133,7 @@ namespace FowlerSite.Controllers
                     parameter = new SqlParameter
                     {
                         ParameterName = "@Password",
-                        Value = user.Password,
+                        Value = login.Password,
                         SqlDbType = SqlDbType.VarChar,
                         Size = 100
                     };
@@ -164,7 +142,7 @@ namespace FowlerSite.Controllers
                     parameter = new SqlParameter
                     {
                         ParameterName = "@EmailAddress",
-                        Value = user.EmailAddress,
+                        Value = login.EmailAddress,
                         SqlDbType = SqlDbType.VarChar,
                         Size = 100
                     };
