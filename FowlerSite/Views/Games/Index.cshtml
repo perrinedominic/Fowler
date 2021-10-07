@@ -55,13 +55,27 @@
                         <!--Price filter-->
                         <h4 class="nk-widget-title"><span><span class="text-main-1">Price</span></span></h4>
                         <div id="price" class="nk-widget-content">
-                            <div id="lowPrice" class="input-group">
-                                Between <input name="lowPrice" type="number" step="any" class="form-control" placeholder="Lowest price...">
+                            <div class="row">
+                                <div id="lowPrice" class="input-group">
+                                    <div class="col-6">
+                                        <p>Low</p>
+                                    </div>
+                                    <div class="col-6">
+                                        <input name="lowPrice" type="number" step="any" class="form-control" value="0" placeholder="Lowest price..." />
+                                    </div>
+                                </div>
                             </div>
-                            <div id="highPrice" class="input-group">
-                                and <input name="highPrice" type="number" step="any" class="form-control" placeholder="Highest price...">
+                            <div class="row">
+                                <div id="highPrice" class="input-group">
+                                    <div class="col-6">
+                                        <p>High</p>
+                                    </div>
+                                    <div class="col-6">
+                                        <input name="highPrice" type="number" step="any" class="form-control" value="500" placeholder="Highest price..." />
+                                    </div>
+                                </div>
+                                <div class="clearfix"></div>
                             </div>
-                            <div class="clearfix"></div>
                         </div>
 
                         <div id="apply" class="nk-widget-content">

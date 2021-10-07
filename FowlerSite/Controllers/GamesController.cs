@@ -228,7 +228,7 @@ namespace FowlerSite.Controllers
                 Games = Games.Where(g => g.Genre == genre).ToList();
 
             if (lowPrice >= 0 && !(lowPrice > highPrice))
-                Games = Games.Where(g => (g.Price >= lowPrice) && (g.Price < highPrice));
+                Games = Games.Where(g => (g.Price >= lowPrice) && (g.Price < highPrice)).ToList();
                 //Games = from x in Games where ((x.Price >= lowPrice) && (x.Price <= highPrice)) select x;
 
             return View(Games);
