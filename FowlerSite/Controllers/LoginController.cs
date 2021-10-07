@@ -74,7 +74,6 @@ namespace FowlerSite.Controllers
                 {
                     while (dataReader.Read())
                     {
-                        int id = user.
                         Login user = new Login();
 
                         user.Username = Convert.ToString(dataReader["UserName"]);
