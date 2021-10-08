@@ -58,32 +58,38 @@ namespace FowlerSite.Controllers
         /// <returns>The view for successfully logging in.</returns>
         public IActionResult UserLogin()
         {
-            List<Login> userList = new List<Login>();
+            Login login = new Login();
+            ViewResult view = null;
 
             using (SqlConnection connection = new SqlConnection(this.connectionString))
             {
                 connection.Open();
 
-                string sql = "SELECT * FROM Users";
+                string sql = "SELECT * FROM Login";
                 SqlCommand command = new SqlCommand(sql, connection);
 
                 using (SqlDataReader dataReader = command.ExecuteReader())
                 {
                     while (dataReader.Read())
                     {
-                        Login user = new Login();
-
-                        user.Username = Convert.ToString(dataReader["UserName"]);
-                        user.Users = new ListService(Configuration).GetUserLoginList(user.Username);
-                        user.EmailAddress = Convert.ToString(dataReader["EmailAddress"]);
-                        user.Password = Convert.ToString(dataReader["Password"]);
-                        userList.Add(user);
+                        login.Username = Convert.ToString(dataReader["UserName"]);
+                        login.Users = new ListService(Configuration).GetUserLoginList(login.Id);
+                        login.Password = Convert.ToString(dataReader["Password"]);
+                        login.Admin = Convert.ToInt32(dataReader["Admin"]);
                     }
                 }
                 connection.Close();
             }
+            if (login.Admin == 0)
+            {
+                view = View("User");
+            }
+            if (login.Admin == 1)
+            {
+                view = View("Admin");
+            }
 
-            return View(userList);
+            return view;
         }
 
         // GET: Users/Details/5
@@ -102,59 +108,6 @@ namespace FowlerSite.Controllers
             }
 
             return View(user);
-        }
-
-        /// <summary>
-        /// Creates the new user.
-        /// </summary>
-        /// <param name="user">The user being created.</param>
-        /// <returns>Redirects to the login function once the user has been created.</returns>
-        [HttpPost]
-        public IActionResult CreateUser(Login login)
-        {
-            using (SqlConnection connection = new SqlConnection(this.connectionString))
-            {
-                string sql = "INSERT INTO Users (Username, Password, EmailAddress) Values (@Username, @Password , @EmailAddress)";
-
-                using (SqlCommand command = new SqlCommand(sql, connection))
-                {
-                    command.CommandType = CommandType.Text;
-
-                    // Add the parameters to the db.
-                    SqlParameter parameter = new SqlParameter
-                    {
-                        ParameterName = "@Username",
-                        Value = login.Username,
-                        SqlDbType = SqlDbType.VarChar,
-                        Size = 450
-                    };
-                    command.Parameters.Add(parameter);
-
-                    parameter = new SqlParameter
-                    {
-                        ParameterName = "@Password",
-                        Value = login.Password,
-                        SqlDbType = SqlDbType.VarChar,
-                        Size = 100
-                    };
-                    command.Parameters.Add(parameter);
-
-                    parameter = new SqlParameter
-                    {
-                        ParameterName = "@EmailAddress",
-                        Value = login.EmailAddress,
-                        SqlDbType = SqlDbType.VarChar,
-                        Size = 100
-                    };
-                    command.Parameters.Add(parameter);
-
-                    connection.Open();
-                    command.ExecuteNonQuery();
-                    connection.Close();
-                }
-            }
-
-            return View("Login");
         }
 
         public IActionResult Create()

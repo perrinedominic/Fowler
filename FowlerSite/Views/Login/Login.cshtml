@@ -1,4 +1,4 @@
-﻿@model Login
+﻿@model Users
 
 <!DOCTYPE html>
 <head>
@@ -21,10 +21,6 @@
                     <span class="subtitle">PASSWORD:</span>
                     <br>
                     <input type="password" name="pasword" value="" asp-for="Password" />
-                    <br />
-                    <span class="subtitle">ENTER YOUR EMAIL:</span>
-                    <br />
-                    <input type="text" name="email" value="" asp-for="EmailAddress" />
                     <br><br>
                     <button class="btn btn-outline-primary" type="submit">Login</button>
                     <a class="btn btn-outline-secondary" asp-action="Create">Create an Account</a>

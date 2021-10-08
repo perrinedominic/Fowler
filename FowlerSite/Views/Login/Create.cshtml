@@ -1,4 +1,4 @@
-﻿@model Login
+﻿@model Users
 
 <!DOCTYPE html>
 <head>
@@ -8,25 +8,34 @@
     <div class="flex-container">
         <div class="content-container">
             <div class="form-container">
-                <form method="post" asp-action="CreateUser">
+                <form method="post" asp-controller="Users" asp-action="CreateUser">
                     <h1>
                         Create an Account:
                     </h1>
                     <br>
                     <br>
+                    <span class="subtitle">FIRST NAME:</span>
+                    <br>
+                    <input type="text" name="FirstName" value="" asp-for="FirstName" />
+                    <br />
+                    <span class="subtitle">LAST NAME:</span>
+                    <br>
+                    <input type="text" name="LastName" value="" asp-for="LastName" />
+                    <br />
                     <span class="subtitle">CREATE USERNAME:</span>
                     <br>
-                    <input type="text" name="username" value="" asp-for="Username"/>
+                    <input type="text" name="username" value="" asp-for="Username" />
                     <br>
                     <span class="subtitle">CREATE PASSWORD:</span>
                     <br>
-                    <input type="password" name="password" value="" asp-for="Password"/>
+                    <input type="password" name="password" value="" asp-for="Password" />
                     <br>
                     <span class="subtitle">ENTER YOUR EMAIL:</span>
                     <br />
-                    <input type="text" name="emailaddress" value="" asp-for="EmailAddress"/>
+                    <input type="text" name="emailaddress" value="" asp-for="EmailAddress" />
+                    <input type="hidden" name="Admin" value="0" asp-for="Admin" />
                     <br /><br />
-                    <button class="btn btn-outline-primary">Create</button>
+                    <button class="btn btn-outline-primary" type="submit">Create</button>
                 </form>
             </div>
         </div>

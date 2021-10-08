@@ -44,5 +44,19 @@ namespace FowlerSite.Models
         /// Gets or sets hte uesr login.
         /// </summary>
         public Login Login { get; set; }
+
+        /// <summary>
+        /// Gets or sets whether the user is an admin.
+        /// </summary>
+        public int Admin { get; set; }
+
+        /// <summary>
+        /// Overrides the original tostring method.
+        /// </summary>
+        /// <returns>The first and last name of the user.</returns>
+        public override string ToString()
+        {
+            return $"{FirstName} {LastName}";
+        }
     }
 }

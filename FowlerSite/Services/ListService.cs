@@ -59,7 +59,6 @@ namespace FowlerSite.Services
                         {
                             Username = Convert.ToString(dr["Username"]),
                             Password = Convert.ToString(dr["Password"]),
-                            EmailAddress = Convert.ToString(dr["EmailAddress"])
                         });
                 }
 
@@ -73,7 +72,7 @@ namespace FowlerSite.Services
         /// </summary>
         /// <param name="username">The username for the user.</param>
         /// <returns></returns>
-        public IEnumerable<Users> GetUserLoginList(string username)
+        public IEnumerable<Users> GetUserLoginList(int id)
         {
             List<Users> users = new List<Users>();
 
@@ -82,7 +81,7 @@ namespace FowlerSite.Services
                 var logins = new ListService(Configuration).GetLoginList();
                 DataTable dataTable = new DataTable();
 
-                string sql = $"Select * from Users Where Username = {username}";
+                string sql = $"Select * from Users Where Id = {id}";
                 SqlCommand command = new SqlCommand(sql, connection);
 
                 SqlDataAdapter dataAdapter = new SqlDataAdapter(command);
@@ -96,12 +95,14 @@ namespace FowlerSite.Services
                         new Users
                         {
                             Username = Convert.ToString(dr["Username"]),
+                            Password = Convert.ToString(dr["Password"]),
+                            EmailAddress = Convert.ToString(dr["EmailAddress"]),
                             FirstName = Convert.ToString(dr["FirstName"]),
                             LastName = Convert.ToString(dr["LastName"]),
-                            Login = logins.Where(l => l.Username == username).FirstOrDefault()
+                            
+                            Login = logins.Where(l => l.Id == id).FirstOrDefault()
                         });
                 }
-
             }
 
             return users;

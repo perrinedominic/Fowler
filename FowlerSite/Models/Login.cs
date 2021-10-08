@@ -23,9 +23,9 @@ namespace FowlerSite.Models
         public string Password { get; set; }
 
         /// <summary>
-        /// Gets or sets the email address of the user.
+        /// Gets or sets whether the login is an admin.
         /// </summary>
-        public string EmailAddress { get; set; }
+        public int Admin { get; set; }
 
         /// <summary>
         /// Gets or sets the user.
