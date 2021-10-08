@@ -48,12 +48,11 @@ namespace FowlerSite.Controllers
         /// <param name="user">The user being created.</param>
         /// <returns>Redirects to the login function once the user has been created.</returns>
         [HttpPost]
-        public IActionResult CreateUser(Users user, Login login)
+        public IActionResult CreateUser(Users user)
         {
             using (SqlConnection connection = new SqlConnection(this.connectionString))
             {
                 string sql = "INSERT INTO Users (Username, Password, FirstName, LastName, EmailAddress, Admin) Values (@Username, @Password, @FirstName, @LastName, @EmailAddress, @Admin)";
-                string loginSql = "INSERT INTO Login (Username, Password, Admin) VALUES (@Username, @Password, @Admin)";
 
                 using (SqlCommand command = new SqlCommand(sql, connection))
                 {
@@ -117,44 +116,36 @@ namespace FowlerSite.Controllers
                     command.ExecuteNonQuery();
                     connection.Close();
                 }
-
-                using (SqlCommand command = new SqlCommand(loginSql, connection))
-                {
-                    command.CommandType = CommandType.Text;
-
-                    SqlParameter parameter = new SqlParameter
-                    {
-                        ParameterName = "@Username",
-                        Value = login.Username,
-                        SqlDbType = SqlDbType.VarChar,
-                        Size = 450
-                    };
-                    command.Parameters.Add(parameter);
-
-                    parameter = new SqlParameter
-                    {
-                        ParameterName = "@Password",
-                        Value = login.Password,
-                        SqlDbType = SqlDbType.VarChar,
-                        Size = 100
-                    };
-                    command.Parameters.Add(parameter);
-
-                    parameter = new SqlParameter
-                    {
-                        ParameterName = "@Admin",
-                        Value = login.Admin,
-                        SqlDbType = SqlDbType.Int,
-                    };
-                    command.Parameters.Add(parameter);
-
-                    connection.Open();
-                    command.ExecuteNonQuery();
-                    connection.Close();
-                }
             }
 
-            return RedirectToAction("Login", "Login");
+            return RedirectToAction("ReadUser");
+        }
+
+        public IActionResult ReadUser(Users user)
+        {
+            using (SqlConnection connection = new SqlConnection(this.connectionString))
+            {
+                connection.Open();
+
+                string sql = "SELECT * FROM Users";
+                SqlCommand command = new SqlCommand(sql, connection);
+
+                using (SqlDataReader dataReader = command.ExecuteReader())
+                {
+                    while (dataReader.Read())
+                    {
+                        user.Id = Convert.ToInt32(dataReader["Id"]);
+                        user.FirstName = Convert.ToString(dataReader["FirstName"]);
+                        user.LastName = Convert.ToString(dataReader["LastName"]);
+                        user.EmailAddress = Convert.ToString(dataReader["EmailAddress"]);
+                        user.Username = Convert.ToString(dataReader["Username"]);
+                        user.Password = Convert.ToString(dataReader["Password"]);
+                    }
+                }
+                connection.Close();
+            }
+
+            return RedirectToAction("CreateLogin", "Login", new { id = user.Id });
         }
 
         public IActionResult Index()

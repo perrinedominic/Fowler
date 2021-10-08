@@ -1,2 +1,22 @@
-﻿<h4>Future user page coming soon!</h4>
+﻿@model IEnumerable<Users>
 
+<table class="table table-bordered table-sm table-striped">
+    <thead>
+        <tr>
+            <th>User</th>
+        </tr>
+    </thead>
+    <tbody>
+        @if (Model == null)
+        {
+            <tr><td>User Login Failed</td></tr>
+        }
+        else
+        {
+            @foreach (var u in Model)
+            {
+
+            }
+        }
+    </tbody>
+</table>
