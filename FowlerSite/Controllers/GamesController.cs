@@ -37,11 +37,11 @@ namespace FowlerSite.Controllers
             }
         }
 
-        /// <summary>
-        /// The method to compare the json in the games.txt file to your existing database.
-        /// </summary>
-        public async void JsonCompare()
-        {
+        /////// <summary>
+        /////// The method to compare the json in the games.txt file to your existing database.
+        /////// </summary>
+        public async void JsonCompare() { 
+        
             var games = _context.Games.ToList();
 
             // Gets the games from the txt file.

@@ -108,7 +108,10 @@ namespace FowlerSite.Controllers
         /// <returns>Returns the view for the store checkout.</returns>
         public IActionResult StoreCheckout()
         {
-            return View();
+            int cardId = 1;
+            IEnumerable<CartItem> items = _db.ShoppingCartItems.Include(x => x.Game).Where(x => x.CartId == cardId).ToList();
+
+            return View(items);
         }
 
         /// <summary>

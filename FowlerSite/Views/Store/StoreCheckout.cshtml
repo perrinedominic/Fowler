@@ -1,4 +1,6 @@
-﻿@{
+﻿@model IEnumerable<DataAccessLibrary.Models.CartItem>
+@{
+
     ViewBag.Title = "StoreCheckout";
 }
 <!DOCTYPE html>
@@ -137,9 +139,9 @@
                         <li>
                             <span class="nk-cart-toggle">
                                 <span class="fa fa-shopping-cart"></span>
-                                <span class="nk-badge">27</span>
+                                @*<span class="nk-badge">27</span>*@
                             </span>
-                            <div class="nk-cart-dropdown">
+                            @*<div class="nk-cart-dropdown">
 
                                 <div class="nk-widget-post">
                                     <a asp-action="StoreProduct" class="nk-post-image">
@@ -169,7 +171,7 @@
                                 <div class="text-center">
                                     <a asp-action="StoreCheckout" class="nk-btn nk-btn-rounded nk-btn-color-main-1 nk-btn-hover-color-white">Proceed to Checkout</a>
                                 </div>
-                            </div>
+                            </div>*@
                         </li>
 
                     </ul>
@@ -330,51 +332,67 @@
                         <thead class="thead-default">
                             <tr>
                                 <th class="nk-product-cart-title">Product</th>
+                                <th class="nk-product-cart-total">Quantity</th>
                                 <th class="nk-product-cart-total">Total</th>
                             </tr>
                         </thead>
                         <tbody>
-
+                            @foreach (var x in Model)
+                            {
+                                decimal quantity = x.Quantity;
                             <tr>
                                 <td class="nk-product-cart-title">
-                                    However, I have reason &times; 1
+                                    @Html.DisplayName(x.Game.Name)
                                 </td>
                                 <td class="nk-product-cart-total">
-                                    $ 32.00
+                                    @Html.DisplayFor(modelItem => x.Quantity)
+                                </td>
+                                <td class="nk-product-cart-total">
+                                    @Html.DisplayFor(modelItem => x.Game.Price)
                                 </td>
                             </tr>
+                            }
 
-                            <tr>
-                                <td class="nk-product-cart-title">
-                                    She was bouncing &times; 1
-                                </td>
-                                <td class="nk-product-cart-total">
-                                    $ 20.00
-                                </td>
-                            </tr>
 
                             <tr class="nk-store-cart-totals-subtotal">
+                                <td></td>
                                 <td>
                                     Subtotal
                                 </td>
                                 <td>
-                                    $ 52.00
+                                    @{decimal sum = 0;
+
+                                        foreach (var x in Model)
+                                        {
+
+                                            sum += x.Quantity * x.Game.Price;
+
+                                        }
+                                        Output.WriteLine(sum);}
                                 </td>
                             </tr>
                             <tr class="nk-store-cart-totals-shipping">
+                                <td></td>
                                 <td>
-                                    Shipping
+                                    Tax
                                 </td>
                                 <td>
-                                    Free Shipping
+                                    @{ decimal tax = .055m;
+                                        decimal taxTotal = sum * tax;
+                                        Output.WriteLine("$" + Math.Round(taxTotal, 2));
+                                    }
                                 </td>
                             </tr>
                             <tr class="nk-store-cart-totals-total">
+                                <td></td>
                                 <td>
                                     Total
                                 </td>
                                 <td>
-                                    $ 52.00
+                                    @{
+                                        decimal total = sum + taxTotal;
+                                        Output.WriteLine("$" + Math.Round(total, 2));
+                                    }
                                 </td>
                             </tr>
                         </tbody>
