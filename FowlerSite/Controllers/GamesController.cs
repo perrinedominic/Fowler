@@ -9,6 +9,8 @@ using DataAccessLibrary.DataAccess;
 using DataAccessLibrary.Models;
 using System.IO;
 using Newtonsoft.Json;
+using Microsoft.Extensions.Configuration;
+using FowlerSite.Services;
 
 namespace FowlerSite.Controllers
 {
@@ -16,13 +18,34 @@ namespace FowlerSite.Controllers
     {
         private readonly OESContext _context;
 
+        /// <summary>
+        /// Gets or sets the Games, used for the filter.
+        /// </summary>
         public IEnumerable<Game> Games { get; set; }
 
-        public GamesController(OESContext context)
+        public GamesController(OESContext context, IConfiguration configuration)
         {
             _context = context;
             if (Games == null)
                 Games = _context.Games.ToList();
+
+            this.Configuration = configuration;
+        }
+
+        /// <summary>
+        /// Gets the key/value application configuration properties.
+        /// </summary>
+        public IConfiguration Configuration { get; }
+
+        /// <summary>
+        /// Gets the IEnumerable for all games.
+        /// </summary>
+        public IEnumerable<Game> AllGames
+        {
+            get
+            {
+                return new ListService(this.Configuration).GetGames();
+            }
         }
 
         /// <summary>
@@ -43,7 +66,7 @@ namespace FowlerSite.Controllers
         /// </summary>
         public async void JsonCompare()
         {
-            var games = _context.Games.ToList();
+            var games = AllGames.ToList();
 
             // Gets the games from the txt file.
             string[] lines = await System.IO.File.ReadAllLinesAsync(@"Games.txt");
