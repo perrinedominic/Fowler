@@ -21,7 +21,8 @@ namespace FowlerSite.Controllers
         public GamesController(OESContext context)
         {
             _context = context;
-            Games = _context.Games.ToList();
+            if (Games == null)
+                Games = _context.Games.ToList();
         }
 
         /// <summary>
@@ -71,7 +72,7 @@ namespace FowlerSite.Controllers
         // GET: Games also does a database check to see if all of your games exist.
         public async Task<IActionResult> Index()
         {
-            List<Game> games = await _context.Games.ToListAsync();
+            List<Game> games = Games.ToList();
 
             JsonCompare();
 
@@ -209,18 +210,28 @@ namespace FowlerSite.Controllers
             return _context.Games.Any(e => e.ProductID == id);
         }
 
+        /// <summary>
+        /// Filters games from Games based on user input.
+        /// </summary>
+        /// <param name="name">The name of the Game the user is looking for.</param>
+        /// <param name="genre">The genre of the game the user is looking for.</param>
+        /// <param name="lowPrice">The lowest price the user will pay.</param>
+        /// <param name="highPrice">The highest price the user will pay.</param>
+        /// <returns></returns>
         public IActionResult Filter(string name, string genre, decimal lowPrice, decimal highPrice)
         {
             if (name != null)
-                Games = from x in _context.Games where x.Name.Contains(name) select x;
+                //Games = from x in Games where x.Name.Contains(name) select x;
+                Games = Games.Where(g => g.Name.Contains(name)).ToList();
 
             if (genre != null)
-                Games = from x in _context.Games where (x.Genre == genre) select x;
+                Games = Games.Where(g => g.Genre == genre).ToList();
 
-            if (lowPrice >= 0 && lowPrice !> highPrice)
-                Games = from x in _context.Games where ((x.Price >= lowPrice) && (x.Price <= highPrice)) select x;
+            if (lowPrice >= 0 && !(lowPrice > highPrice))
+                Games = Games.Where(g => (g.Price >= lowPrice) && (g.Price < highPrice)).ToList();
+                //Games = from x in Games where ((x.Price >= lowPrice) && (x.Price <= highPrice)) select x;
 
-            return RedirectToAction("Index");
+            return View(Games);
         }
     }
 }
