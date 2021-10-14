@@ -1,4 +1,5 @@
-﻿using FowlerSite.Models;
+﻿using DataAccessLibrary.Models;
+using FowlerSite.Models;
 using Microsoft.Data.SqlClient;
 using Microsoft.Extensions.Configuration;
 using System;
@@ -106,6 +107,44 @@ namespace FowlerSite.Services
             }
 
             return users;
+        }
+
+        /// <summary>
+        /// Returns a list of games that can be used as an IEnumerable.
+        /// </summary>
+        /// <returns>Returns a list of games.</returns>
+        public IEnumerable<Game> GetGames()
+        {
+            List<Game> games = new List<Game>();
+
+            using (SqlConnection connection = new SqlConnection(this.connectionString))
+            {
+                DataTable dataTable = new DataTable();
+
+                string sql = "Select * from Games";
+                SqlCommand command = new SqlCommand(sql, connection);
+
+                SqlDataAdapter dataAdapter = new SqlDataAdapter(command);
+
+                dataAdapter.Fill(dataTable);
+
+                foreach (DataRow dr in dataTable.Rows)
+                {
+                    games.Add(
+                        new Game
+                        {
+                            ProductID = Convert.ToInt32(dr["ProductID"]),
+                            Name = Convert.ToString(dr["Name"]),
+                            Description = Convert.ToString(dr["Description"]),
+                            Price = Convert.ToDecimal(dr["Price"]),
+                            Genre = Convert.ToString(dr["Genre"]),
+                            Rating = Convert.ToInt32(dr["Rating"]),
+                            Platforms = Convert.ToString(dr["Platforms"])
+                        });
+                }
+            }
+
+            return games;
         }
     }
 }
