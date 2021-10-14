@@ -302,5 +302,10 @@ namespace FowlerSite.Controllers
         {
             return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
         }
+
+        public IActionResult PlaceOrder()
+        {
+            return this.View();
+        }
     }
 }
