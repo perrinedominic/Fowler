@@ -36,7 +36,7 @@ namespace FowlerSite.Controllers
         {
             _context = context;
 
-            Configuration = configuration;
+            this.Configuration = configuration;
 
             this.connectionString = Configuration["ConnectionStrings:DefaultConnection"];
         }
