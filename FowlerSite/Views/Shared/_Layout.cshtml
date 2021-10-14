@@ -58,64 +58,92 @@
     <script src="~/assets/vendor/jquery/dist/jquery.min.js"></script>
 </head>
 <body>
-    <header>
+    <header class="nk-header nk-header-opaque">
         <nav class="nk-navbar nk-navbar-top nk-navbar-sticky nk-navbar-autohide">
             <div class="container">
                 <div class="nk-nav-table">
 
-                    <a href="index.html" class="nk-nav-logo">
-                        <img src="~/assets/images/logo.png" alt="GoodGames" width="199">
-                    </a>
+                <a href="index.html" class="nk-nav-logo">
+                    <img src="~/assets/images/logo.png" alt="GoodGames" width="199">
+                </a>
 
-                    <ul class="nk-nav nk-nav-center d-none d-md-table-cell" data-nav-mobile="#nk-nav-mobile">
+                <ul class="nk-nav nk-nav-center d-none d-md-table-cell" data-nav-mobile="#nk-nav-mobile">
 
-                        <li class=" nk-drop-item">
-                            <a asp-controller="Home" asp-action="Index">Home</a>
-                        </li>
-                        <li class=" nk-drop-item">
-                            <a asp-area="" asp-controller="Games" asp-action="Index">Games</a>
-                        </li>
-                        <li class=" nk-drop-item">
-                            <a asp-controller="Store" asp-action="Index">Store</a>
-                        </li>
-                        <!--li class=" nk-drop-item">
-                            <a asp-controller="Store" asp-action="StoreCatalog">Catalog</a>
-                        </!--li>
-                        <li class=" nk-drop-item">
-                            <a asp-area="" asp-controller="Store" asp-action="StoreCart">Cart</a>
-                        </li>
-                        <li class=" nk-drop-item">
-                            <a asp-area="" asp-controller="Store" asp-action="StoreCheckout">Checkout</a>
-                        </li-->
-                        <li class=" nk-drop-item">
-                            <a asp-controller="Store" asp-action="StoreProduct">Product</a>
-                        </li>
-                        <li class=" nk-drop-item">
-                            <a asp-controller="Home" asp-action="ContactUs">Contact Us</a>
-                        </li>
-                    </ul>
-                    <ul class="nk-nav nk-nav-right nk-nav-icons">
+                    <li class=" nk-drop-item">
+                        <a asp-controller="Home" asp-action="Index">Home</a>
+                    </li>
+                    <li class=" nk-drop-item">
+                        <a asp-area="" asp-controller="Games" asp-action="Index">Games</a>
+                    </li>
+                    <li class=" nk-drop-item">
+                        <a asp-controller="Store" asp-action="Index">Store</a>
+                    </li>
+                    <li class=" nk-drop-item">
+                        <a asp-controller="Store" asp-action="StoreProduct">Product</a>
+                    </li>
+                    <li class=" nk-drop-item">
+                        <a asp-controller="Home" asp-action="ContactUs">Contact Us</a>
+                    </li>
+                </ul>
+                <ul class="nk-nav nk-nav-right nk-nav-icons">
 
-                        <li class="single-icon d-lg-none">
-                            <a href="#" class="no-link-effect" data-nav-toggle="#nk-nav-mobile">
-                                <span class="nk-icon-burger">
-                                    <span class="nk-t-1"></span>
-                                    <span class="nk-t-2"></span>
-                                    <span class="nk-t-3"></span>
-                                </span>
-                            </a>
-                        </li>
-                    </ul>
+                    <li class="single-icon d-lg-none">
+                        <a href="#" class="no-link-effect" data-nav-toggle="#nk-nav-mobile">
+                            <span class="nk-icon-burger">
+                                <span class="nk-t-1"></span>
+                                <span class="nk-t-2"></span>
+                                <span class="nk-t-3"></span>
+                            </span>
+                        </a>
+                    </li>
+                </ul>
                 </div>
             </div>
         </nav>
     </header>
     <div class="container">
         <main role="main" class="pb-3">
+            <!-- START: Top Contacts -->
+            <div class="nk-contacts-top">
+                <div class="container">
+                    <div class="nk-contacts-left">
+                        <ul class="nk-social-links">
+                            <li><a class="nk-social-twitch" href="#"><span class="fab fa-twitch"></span></a></li>
+                            <li><a class="nk-social-steam" href="#"><span class="fab fa-steam"></span></a></li>
+                            <li><a class="nk-social-facebook" href="#"><span class="fab fa-facebook"></span></a></li>
+                            <li><a class="nk-social-twitter" href="#" target="_blank"><span class="fab fa-twitter"></span></a></li>
+                            <li><a class="nk-social-pinterest" href="#"><span class="fab fa-pinterest-p"></span></a></li>
+                        </ul>
+                    </div>
+                    <div class="nk-contacts-right">
+                        <ul class="nk-contacts-icons">
+                            <li>
+                                <a href="#" data-toggle="modal" data-target="#modalSearch">
+                                    <span class="fa fa-search"></span>
+                                </a>
+                            </li>
+                            <li>
+                                <a asp-controller="Login" asp-action="Login">
+                                    <span class="fa fa-user"></span>
+                                </a>
+                            </li>
+                            <li>
+                                <a asp-controller="Store" asp-action="StoreCart" asp-route-id="0">
+                                    <span class="nk-cart-toggle">
+                                        <span class="fa fa-shopping-cart"></span>
+                                        @*<span class="nk-badge"></span>*@
+                                    </span>
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <!-- END: Top Contacts -->
+
             @RenderBody()
         </main>
     </div>
-    </body>
     <footer class="border-top footer text-muted">
         <div class="container">
             &copy; 2021 - FowlerSite - <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
@@ -184,4 +212,5 @@
         <script src="~/assets/js/goodgames-init.js"></script>
     </footer>
     @RenderSection("Scripts", required: false)
+</body>
 </html>
