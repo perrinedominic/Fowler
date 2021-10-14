@@ -83,7 +83,31 @@ namespace FowlerSite.Controllers
 
         public IActionResult AdminPage(int id)
         {
-            return View();
+            Users user = new Users();
+
+            using (SqlConnection connection = new SqlConnection(this.connectionString))
+            {
+                connection.Open();
+
+                string sql = $"SELECT * FROM Users Where Id = {id}";
+                SqlCommand command = new SqlCommand(sql, connection);
+
+                using (SqlDataReader dataReader = command.ExecuteReader())
+                {
+                    while (dataReader.Read())
+                    {
+                        user.Id = id;
+                        user.FirstName = Convert.ToString(dataReader["FirstName"]);
+                        user.LastName = Convert.ToString(dataReader["LastName"]);
+                        user.Username = Convert.ToString(dataReader["Username"]);
+                        user.Password = Convert.ToString(dataReader["Password"]);
+                        user.EmailAddress = Convert.ToString(dataReader["EmailAddress"]);
+                    }
+                }
+                connection.Close();
+            }
+
+            return View("Admin");
         }
 
         /// <summary>
