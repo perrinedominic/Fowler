@@ -6,6 +6,10 @@ using System.Threading.Tasks;
 using FowlerSite.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
+using DataAccessLibrary.Models;
+using Microsoft.Data.SqlClient;
+using FowlerSite.Services;
+using Microsoft.Extensions.Configuration;
 
 namespace FowlerSite.Controllers
 {
@@ -13,14 +17,22 @@ namespace FowlerSite.Controllers
     {
         private readonly ILogger<HomeController> _logger;
 
-        public HomeController(ILogger<HomeController> logger)
+        public HomeController(ILogger<HomeController> logger, IConfiguration configuration)
         {
             _logger = logger;
+            this.Configuration = configuration;
         }
+
+        /// <summary>
+        /// Gets the key/value application configuration properties.
+        /// </summary>
+        public IConfiguration Configuration { get; }
 
         public IActionResult Index()
         {
-            return View();
+            var gameList = new ListService(Configuration).GetGames();
+
+            return View(gameList);
         }
 
         public IActionResult ContactUs()

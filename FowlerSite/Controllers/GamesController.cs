@@ -240,11 +240,11 @@ namespace FowlerSite.Controllers
         /// <param name="genre">The genre of the game the user is looking for.</param>
         /// <param name="lowPrice">The lowest price the user will pay.</param>
         /// <param name="highPrice">The highest price the user will pay.</param>
+        /// <param name="platform">The platform the user wants to shop for.</param>
         /// <returns></returns>
-        public IActionResult Filter(string name, string genre, decimal lowPrice, decimal highPrice)
+        public IActionResult Filter(string name, string genre, decimal lowPrice, decimal highPrice, string platform)
         {
             if (name != null)
-                //Games = from x in Games where x.Name.Contains(name) select x;
                 Games = Games.Where(g => g.Name.Contains(name)).ToList();
 
             if (genre != null)
@@ -252,7 +252,9 @@ namespace FowlerSite.Controllers
 
             if (lowPrice >= 0 && !(lowPrice > highPrice))
                 Games = Games.Where(g => (g.Price >= lowPrice) && (g.Price < highPrice)).ToList();
-                //Games = from x in Games where ((x.Price >= lowPrice) && (x.Price <= highPrice)) select x;
+
+            if (platform != null)
+                Games = Games.Where(g => g.Platforms.Contains(platform)).ToList();
 
             return View(Games);
         }
