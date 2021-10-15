@@ -78,7 +78,7 @@ namespace FowlerSite.Controllers
                 connection.Close();
             }
 
-            return View("User");
+            return View("User", user);
         }
 
         public IActionResult AdminPage(int id)
@@ -114,16 +114,15 @@ namespace FowlerSite.Controllers
         /// The method used to add users to a login list.
         /// </summary>
         /// <returns>The view for successfully logging in.</returns>
-        public IActionResult UserLogin()
+        public IActionResult UserLogin(Login login)
         {
-            Login login = new Login();
             RedirectToActionResult view = null;
 
             using (SqlConnection connection = new SqlConnection(this.connectionString))
             {
                 connection.Open();
 
-                string sql = "SELECT * FROM Login";
+                string sql = $"SELECT * FROM Login WHERE Username = {login.Username}";
                 SqlCommand command = new SqlCommand(sql, connection);
 
                 using (SqlDataReader dataReader = command.ExecuteReader())
@@ -131,9 +130,7 @@ namespace FowlerSite.Controllers
                     while (dataReader.Read())
                     {
                         login.Id = Convert.ToInt32(dataReader["Id"]);
-                        login.Username = Convert.ToString(dataReader["UserName"]);
                         login.Users = new ListService(Configuration).GetUserLoginList(login.Id);
-                        login.Password = Convert.ToString(dataReader["Password"]);
                         login.Admin = Convert.ToInt32(dataReader["Admin"]);
                         login.UserId = Convert.ToInt32(dataReader["UserId"]);
                     }

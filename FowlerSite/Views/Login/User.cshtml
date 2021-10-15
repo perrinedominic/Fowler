@@ -1,4 +1,4 @@
-﻿@model IEnumerable<Users>
+﻿@model Users
 
 <table class="table table-bordered table-sm table-striped">
     <thead>
@@ -7,16 +7,6 @@
         </tr>
     </thead>
     <tbody>
-        @if (Model == null)
-        {
-            <tr><td>User Login Failed</td></tr>
-        }
-        else
-        {
-            @foreach (var u in Model)
-            {
-
-            }
-        }
+        <tr><td style="color:white;">@Model.FirstName</td></tr>
     </tbody>
 </table>

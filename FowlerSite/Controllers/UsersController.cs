@@ -115,19 +115,25 @@ namespace FowlerSite.Controllers
                     connection.Open();
                     command.ExecuteNonQuery();
                     connection.Close();
+
+                    TempData["Admin"] = user.Admin;
+                    TempData["Username"] = user.Username;
+                    TempData["Password"] = user.Password;
                 }
             }
 
-            return RedirectToAction("ReadUser");
+            return RedirectToAction("ReadUser", new { id = user.Id });
         }
 
-        public IActionResult ReadUser(Users user)
+        public IActionResult ReadUser(int id)
         {
+            string username = (string)TempData["Username"];
+            Users user = new Users();
             using (SqlConnection connection = new SqlConnection(this.connectionString))
             {
                 connection.Open();
 
-                string sql = "SELECT * FROM Users";
+                string sql = $"SELECT * FROM Users ORDER BY Id ASC";
                 SqlCommand command = new SqlCommand(sql, connection);
 
                 using (SqlDataReader dataReader = command.ExecuteReader())
