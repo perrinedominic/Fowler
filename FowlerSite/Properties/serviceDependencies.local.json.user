@@ -1,23 +1,15 @@
 {
   "dependencies": {
-    "mssql2": {
+    "secrets1": {
       "restored": true,
-      "restoreTime": "2021-10-15T18:05:25.0408584Z"
+      "restoreTime": "2021-10-15T18:28:12.5273782Z"
     },
     "mssql1": {
       "restored": true,
-      "restoreTime": "2021-10-15T01:09:54.8477702Z"
+      "restoreTime": "2021-10-15T18:28:26.7286598Z"
     }
   },
   "parameters": {
-    "mssql2.subscriptionId": {
-      "Type": "subscription",
-      "Value": "ee3fe163-4905-407e-b6af-a36d161b7004"
-    },
-    "mssql2.resourceGroupName": {
-      "Type": "resourceGroup",
-      "Value": "FowlerSiteResourceGroup"
-    },
     "mssql1.subscriptionId": {
       "Type": "subscription",
       "Value": "ee3fe163-4905-407e-b6af-a36d161b7004"

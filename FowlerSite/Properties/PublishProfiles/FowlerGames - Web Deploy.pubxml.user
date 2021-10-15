@@ -8,4 +8,9 @@ by editing this MSBuild file. In order to learn more about this please visit htt
     <TimeStampOfAssociatedLegacyPublishXmlFile />
     <EncryptedPassword>AQAAANCMnd8BFdERjHoAwE/Cl+sBAAAAtPSWSSFpyE2A9wN0QLgiTwAAAAACAAAAAAAQZgAAAAEAACAAAAAaIaRkqvD1J2MhottO41l57WeNRKeQcaHVjxsWOOy13wAAAAAOgAAAAAIAACAAAADz1weRKsaRu8utPUodnuF911tQN8rT4UhXmTXjpcL9mIAAAAAQ2pugW466iuIrQYzL0w5VnOXX3JrAn0bCBnMeYs+yMloCihq4T4ZJwm4TzfFZLhb8rl3uCzKdq08V0enhfUKy+mRKfBbF6CmCFUs/OHkYXuticNrzxj5DTe1pSh1utyvYrgxf631jRZ36rGN6eCzFI+yBKkHIT7UB1a6qDMRSP0AAAADRJsMPPGTYc0qWOu34QWlg2hitdPR0039OIqXrl+v9cHGrXW+QL295qftYguYxUJsqe3Hx05Zsy4nKTAkfVdq7</EncryptedPassword>
   </PropertyGroup>
+  <ItemGroup>
+    <DestinationConnectionStrings Include="DefaultConnection">
+      <Value>Data Source=tcp:fowlersitedbserver.database.windows.net,1433%3bInitial Catalog=FowlerSite_db%3bUser Id=admin%40fowlersitedbserver%3bPassword=admin</Value>
+    </DestinationConnectionStrings>
+  </ItemGroup>
 </Project>
