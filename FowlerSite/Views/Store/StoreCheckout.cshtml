@@ -356,10 +356,10 @@
 
                             <tr class="nk-store-cart-totals-subtotal">
                                 <td></td>
-                                <td>
+                                <td class="nk-product-cart-total">
                                     Subtotal
                                 </td>
-                                <td>
+                                <td class="nk-product-cart-total">
                                     @{decimal sum = 0;
 
                                         foreach (var x in Model)
@@ -373,10 +373,10 @@
                             </tr>
                             <tr class="nk-store-cart-totals-shipping">
                                 <td></td>
-                                <td>
+                                <td class="nk-product-cart-total">
                                     Tax
                                 </td>
-                                <td>
+                                <td class="nk-product-cart-total">
                                     @{ decimal tax = .055m;
                                         decimal taxTotal = sum * tax;
                                         Output.WriteLine("$" + Math.Round(taxTotal, 2));
@@ -385,10 +385,10 @@
                             </tr>
                             <tr class="nk-store-cart-totals-total">
                                 <td></td>
-                                <td>
+                                <td class="nk-product-cart-total">
                                     Total
                                 </td>
-                                <td>
+                                <td class="nk-product-cart-total">
                                     @{
                                         decimal total = sum + taxTotal;
                                         Output.WriteLine("$" + Math.Round(total, 2));

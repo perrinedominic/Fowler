@@ -73,7 +73,7 @@ namespace FowlerSite.Controllers
         {
             List<Game> games = await _context.Games.ToListAsync();
 
-            JsonCompare();
+            // JsonCompare();
 
             return View(games);
         }

@@ -70,6 +70,12 @@ namespace FowlerSite.Controllers
             return View();
         }
 
+        [Route("pay")]
+        public Task<dynamic> Pay(Models.Payment payment)
+        {
+            return MakePayment.PayAsync(payment.CardNumber, payment.Month, payment.Year, payment.Cvc, payment.Value);
+        }
+
         /// <summary>
         /// Stores the cart.
         /// </summary>
