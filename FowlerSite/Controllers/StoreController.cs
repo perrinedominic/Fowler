@@ -301,6 +301,16 @@ namespace FowlerSite.Controllers
             return totalCost;
         }
 
+        public ActionResult CheckOut(FormCollection frc)
+        {
+            return View("StoreCheckout");
+        }
+
+        public IActionResult ProcessOrder(FormCollection frc)
+        {
+            return View("OrderSuccess");
+        }
+
 
         /// <summary>
         /// Used to cartch errors.
