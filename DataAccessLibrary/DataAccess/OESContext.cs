@@ -17,6 +17,12 @@ namespace DataAccessLibrary.DataAccess
         {
         }
 
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
+        {
+            modelBuilder.Entity<OrderDetail>()
+                .HasKey(o => new { o.OrderID, o.ProductID });
+        }
+
         /// <summary>
         /// Gets or sets the DbSet of the games.
         /// </summary>
@@ -36,5 +42,9 @@ namespace DataAccessLibrary.DataAccess
         /// Gets or sets the DbSet of the Users.
         /// </summary>
         public DbSet<User> Users { get; set; }
+
+        public DbSet<Order> Order { get; set; }
+
+        public DbSet<OrderDetail> OrderDetail { get; set; }
     }
 }

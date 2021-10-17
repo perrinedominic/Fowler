@@ -3,6 +3,16 @@
   <PropertyGroup>
     <TargetFramework>netcoreapp3.1</TargetFramework>
   </PropertyGroup>
+
+  <ItemGroup>
+    <Compile Remove="DataSet.Designer.cs" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Remove="DataSet.xsc" />
+    <None Remove="DataSet.xsd" />
+    <None Remove="DataSet.xss" />
+  </ItemGroup>
   <ItemGroup>
     <PackageReference Include="Microsoft.EntityFrameworkCore.Sqlite" Version="3.1.18" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="3.1.18" />

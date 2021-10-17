@@ -208,7 +208,7 @@ namespace FowlerSite.Controllers
                     Game = _db.Games.SingleOrDefault(
                         p => p.ProductID == productId),
                     Quantity = 1,
-                    DateCreated = DateTime.Now
+                    DateCreated = DateTime.Now,
                 };
 
                 _db.ShoppingCartItems.Add(cartItem);
@@ -306,9 +306,28 @@ namespace FowlerSite.Controllers
             return View("StoreCheckout");
         }
 
-        public IActionResult ProcessOrder(FormCollection frc)
+        public ActionResult ProcessOrder(IFormCollection frc)
         {
-            return View("OrderSuccess");
+            int ShoppingCartId = 1;
+            List<CartItem> items = GetCartItems();
+                // Save to the order table.
+                Order order = new Order()
+                {
+                    CustomerName = frc["fname" + ", lname"],
+                    CustomerAddress = frc["phone"],
+                    CustomerEmail = frc["email"],
+                    CustomerPhone = frc["address"],
+                    OrderDate = DateTime.Now,
+                    PaymentType = "Card",
+                    Status = "Processing"
+                };
+
+                _db.Order.Add(order);
+                _db.SaveChanges();                
+
+                // Remove Shopping Cart Session.
+
+                return View("OrderSuccess");
         }
 
 

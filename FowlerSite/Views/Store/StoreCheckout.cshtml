@@ -273,7 +273,7 @@
                 <div class="nk-gap-2"></div>
                 <h3 class="nk-decorated-h-2"><span><span class="text-main-1">Billing</span> Details</span></h3>
                 <div class="nk-gap"></div>
-                @using (Html.BeginForm("ProcessOrder", "ShoppingCart", FormMethod.Post, new { id = "customer-form" }))
+                @using (Html.BeginForm("ProcessOrder", "Store", FormMethod.Post, new { id = "customer-form" }))
                 {
                     <div class="row vertical-gap">
                         <div class="col-lg-6">
@@ -308,6 +308,9 @@
                             <label for="country-sel">Country <span class="text-main-1">*</span>:</label>
                             <select name="country" class="form-control required" id="country-sel">
                                 <option value="">Select a country...</option>
+                                <option value="US">'Merica</option>
+                                <option value="Other">Not 'Merica</option>
+
                             </select>
                         </div>
                         <div class="col-lg-6">
@@ -321,7 +324,7 @@
                             <div class="nk-gap-1"></div>
                             <div class="row vertical-gap">
                                 <div class="col-sm-6">
-                                    <label for="state">State / Country <span class="text-main-1">*</span>:</label>
+                                    <label for="state">State<span class="text-main-1">*</span>:</label>
                                     <input type="text" class="form-control required" name="state" id="state">
                                 </div>
                                 <div class="col-sm-6">
@@ -334,10 +337,10 @@
                             <label class="custom-control custom-checkbox">
                                 <input type="checkbox" class="custom-control-input">
                                 <span class="custom-control-indicator"></span>
-                                Ship to different address?
                             </label>
                         </div>
-                        <a class="nk-btn nk-btn-rounded nk-btn-color-main-1" href="#">Place Order</a>
+
+                        <input class="nk-btn nk-btn-rounded nk-btn-color-main-1" type="submit" value="Place Order">
 
                     </div>
                 }
