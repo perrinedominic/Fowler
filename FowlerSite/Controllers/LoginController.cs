@@ -122,7 +122,7 @@ namespace FowlerSite.Controllers
             {
                 connection.Open();
 
-                string sql = $"SELECT * FROM Login WHERE Username = {login.Username}";
+                string sql = $"SELECT * FROM Login WHERE Username = '{login.Username}' and Password = '{login.Password}'";
                 SqlCommand command = new SqlCommand(sql, connection);
 
                 using (SqlDataReader dataReader = command.ExecuteReader())
