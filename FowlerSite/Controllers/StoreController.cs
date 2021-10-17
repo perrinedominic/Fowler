@@ -13,6 +13,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.AspNetCore.Http;
 using System.Collections.Specialized;
+using Microsoft.Data.SqlClient;
 
 namespace FowlerSite.Controllers
 {
@@ -21,6 +22,26 @@ namespace FowlerSite.Controllers
     /// </summary>
     public class StoreController : Controller
     {
+        /// <summary>
+        /// The string that establishes the database connection.
+        /// </summary>
+        private string connectionString;
+
+        /// <summary>
+        /// Initializes a new instance of the StoreController class.
+        /// </summary>
+        /// <param name="context">The context used by the controller.</param>
+        /// <param name="logger">The logger that is used by the controller.</param>
+        public StoreController(OESContext context, ILogger<StoreController> logger, IConfiguration configuration)
+        {
+            _db = context;
+            _logger = logger;
+            this.Configuration = configuration;
+            this.connectionString = Configuration["ConnectionStrings:DefaultConnection"];
+        }
+
+        public IConfiguration Configuration { get; set; }
+
         /// <summary>
         /// Gets or sets the shopping cart id.
         /// </summary>
@@ -49,17 +70,6 @@ namespace FowlerSite.Controllers
         /// The logger for the controller.
         /// </summary>
         private readonly ILogger<StoreController> _logger;
-
-        /// <summary>
-        /// Initializes a new instance of the StoreController class.
-        /// </summary>
-        /// <param name="context">The context used by the controller.</param>
-        /// <param name="logger">The logger that is used by the controller.</param>
-        public StoreController(OESContext context, ILogger<StoreController> logger)
-        {
-            _db = context;
-            _logger = logger;
-        }
 
         /// <summary>
         /// 
@@ -303,9 +313,23 @@ namespace FowlerSite.Controllers
             return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
         }
 
-        public IActionResult PlaceOrder()
-        {
-            return this.View();
-        }
+        // TODO -- need to revisit the ERD before continuing.
+        //[HttpPost]
+        //public IActionResult PlaceOrder()
+        //{
+        //    string customerUsername = "Test";
+        //    DateTime today = DateTime.Now;
+        //    using (SqlConnection connection = new SqlConnection(this.connectionString))
+        //    {
+        //        string sql = $"Insert Into [Order_Details] (Sub_Total, Total, Address, Shipping_ID, Game_Id) Values ({this.GetSubtotal()}, )";
+        //        using (SqlCommand command = new SqlCommand(sql, connection))
+        //        {
+        //            command.CommandType = System.Data.CommandType.Text;
+        //            connection.Open();
+        //            command.ExecuteNonQuery();
+        //        }
+        //    }
+        //        return this.View();
+        //}
     }
 }
