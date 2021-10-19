@@ -1,0 +1,34 @@
+﻿@model Users
+
+<!DOCTYPE html>
+<head>
+    <link href="~/assets/css/login.css" rel="stylesheet" />
+</head>
+<body>
+    <div class="flex-container">
+        <div class="content-container">
+            <div class="form-container">
+                <form method="post" asp-controller="Users" asp-action="UpdateCard">
+                    <h1>
+                        Create an Account:
+                    </h1>
+                    <br>
+                    <br>
+                    <span class="subtitle">Card Number:</span>
+                    <br>
+                    <input type="text" name="CardNumber" value="" asp-for="CardNumber" />
+                    <br />
+                    <span class="subtitle">Card Expiration:</span>
+                    <br>
+                    <input type="text" name="CardExpire" value="" asp-for="CardExpire" />
+                    <br />
+                    <span class="subtitle">Card CVC</span>
+                    <br>
+                    <input type="text" name="cardcvc" value="" asp-for="CardCvc" />
+                    <br /><br />
+                    <button class="btn btn-outline-primary" type="submit">Update</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</body>

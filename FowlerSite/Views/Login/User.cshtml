@@ -1,12 +1,45 @@
 ﻿@model Users
 
-<table class="table table-bordered table-sm table-striped">
+<!DOCTYPE html>
+<head>
+    <link href="~/assets/css/login.css" rel="stylesheet" />
+</head>
+<table class="nk-table">
     <thead>
         <tr>
-            <th>User</th>
+            <th colspan="3">User Information</th>
         </tr>
     </thead>
     <tbody>
-        <tr><td style="color:white;">@Model.FirstName</td></tr>
+        <tr>
+            <th>Name</th>
+            <th>Username</th>
+            <th>Email</th>
+        </tr>
+        <tr>
+            <td>@Model.FirstName  @Model.LastName</td>
+            <td>@Model.Username</td>
+            <td>@Model.EmailAddress</td>
+        </tr>
+    </tbody>
+</table>
+<table class="nk-table">
+    <thead>
+        <tr>
+            <th colspan="3">Payment Information</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <th>Card Number</th>
+            <th>Expiration</th>
+            <th>CVC</th>
+        </tr>
+        <tr>
+            <td>@Model.CardNumber</td>
+            <td>@Model.CardExpire</td>
+            <td>@Model.CardCvc</td>
+            <td><a class="nk-btn nk-btn-rounded nk-btn-color-main-1" asp-action="UpdateCard">Update</a></td>
+        </tr>
     </tbody>
 </table>

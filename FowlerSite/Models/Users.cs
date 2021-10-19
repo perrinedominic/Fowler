@@ -51,6 +51,21 @@ namespace FowlerSite.Models
         public int Admin { get; set; }
 
         /// <summary>
+        /// Gets or sets the card number.
+        /// </summary>
+        public string CardNumber { get; set; }
+
+        /// <summary>
+        /// Gets or sets the card expiration date.
+        /// </summary>
+        public string CardExpire { get; set; }
+
+        /// <summary>
+        /// Gets or sets the card cvc.
+        /// </summary>
+        public string CardCvc { get; set; }
+
+        /// <summary>
         /// Overrides the original tostring method.
         /// </summary>
         /// <returns>The first and last name of the user.</returns>

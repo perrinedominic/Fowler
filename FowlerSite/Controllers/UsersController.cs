@@ -122,10 +122,10 @@ namespace FowlerSite.Controllers
                 }
             }
 
-            return RedirectToAction("ReadUser", new { id = user.Id });
+            return RedirectToAction("ReadUser");
         }
 
-        public IActionResult ReadUser(int id)
+        public IActionResult ReadUser()
         {
             string username = (string)TempData["Username"];
             Users user = new Users();
@@ -152,6 +152,50 @@ namespace FowlerSite.Controllers
             }
 
             return RedirectToAction("CreateLogin", "Login", new { id = user.Id });
+        }
+
+        [HttpGet]
+        public IActionResult UpdateCard(int id)
+        {
+            Users user = new Users();
+
+            using (SqlConnection connection = new SqlConnection(this.connectionString))
+            {
+                string sql = $"Select * From Users Where Id='{id}'";
+                SqlCommand command = new SqlCommand(sql, connection);
+
+                connection.Open();
+
+                using (SqlDataReader dataReader = command.ExecuteReader())
+                {
+                    while (dataReader.Read())
+                    {
+                        user.CardNumber = Convert.ToString(dataReader["CardNumber"]);
+                        user.CardExpire = Convert.ToString(dataReader["CardExpire"]);
+                        user.CardCvc = Convert.ToString(dataReader["CardCvc"]);
+                    }
+                }
+                connection.Close();
+            }
+            return View(user);
+        }
+
+        [HttpPost]
+        public IActionResult UpdateCard(Users user, int id)
+        {
+            using (SqlConnection connection = new SqlConnection(this.connectionString))
+            {
+                string sql = $"Update Users SET CardNumber = '{user.CardNumber}', CardExpire = '{user.CardExpire}', CardCVC = '{user.CardCvc}'";
+
+                using (SqlCommand command = new SqlCommand(sql, connection))
+                {
+                    connection.Open();
+                    command.ExecuteNonQuery();
+                    connection.Close();
+                }
+            }
+
+            return RedirectToAction("UserPage", "Login", new { id });
         }
 
         public IActionResult Index()
