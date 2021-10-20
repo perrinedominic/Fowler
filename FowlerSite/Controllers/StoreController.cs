@@ -313,23 +313,26 @@ namespace FowlerSite.Controllers
             return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
         }
 
-        // TODO -- need to revisit the ERD before continuing.
-        //[HttpPost]
-        //public IActionResult PlaceOrder()
-        //{
-        //    string customerUsername = "Test";
-        //    DateTime today = DateTime.Now;
-        //    using (SqlConnection connection = new SqlConnection(this.connectionString))
-        //    {
-        //        string sql = $"Insert Into [Order_Details] (Sub_Total, Total, Address, Shipping_ID, Game_Id) Values ({this.GetSubtotal()}, )";
-        //        using (SqlCommand command = new SqlCommand(sql, connection))
-        //        {
-        //            command.CommandType = System.Data.CommandType.Text;
-        //            connection.Open();
-        //            command.ExecuteNonQuery();
-        //        }
-        //    }
-        //        return this.View();
-        //}
+        /// <summary>
+        /// The method to handle the placement of an order.
+        /// </summary>
+        /// <returns>Returns an IActionResult.</returns>
+       [HttpPost]
+        public IActionResult PlaceOrder()
+        {
+            int customerID = 5;
+            DateTime today = DateTime.Now;
+            using (SqlConnection connection = new SqlConnection(this.connectionString))
+            {
+                string sql = $"Insert Into [Order] (Order_Date, Cust_ID) Values ({today}, {customerID})";
+                using (SqlCommand command = new SqlCommand(sql, connection))
+                {
+                    command.CommandType = System.Data.CommandType.Text;
+                    connection.Open();
+                    command.ExecuteNonQuery();
+                }
+            }
+            return this.RedirectToAction("User", "Login", new { id = customerID });
+        }
     }
 }
