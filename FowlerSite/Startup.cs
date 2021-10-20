@@ -1,3 +1,4 @@
+using Stripe;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -6,15 +7,19 @@ using DataAccessLibrary.DataAccess;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using Stripe.BillingPortal;
+using Stripe.Checkout;
 
 namespace FowlerSite
 {
     public class Startup
     {
+
         public Startup(IConfiguration configuration)
         {
             Configuration = configuration;
@@ -36,6 +41,7 @@ namespace FowlerSite
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
+            StripeConfiguration.ApiKey = "sk_test_51Jl6muIX515m6kcZvnqzyC32yGpP2a3EDRrBxC2LEnJtCX11BUEON8AixcxEambtpMlFpVjQiPbN63fi6NMbQc7N00DxZ945tT";
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();

@@ -1,20 +1,17 @@
 ﻿using DataAccessLibrary.DataAccess;
 using DataAccessLibrary.Models;
 using FowlerSite.Models;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
+using Newtonsoft.Json;
 using System;
-using System.Web;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
 using System.Threading.Tasks;
-using Microsoft.Extensions.Configuration;
-using Microsoft.EntityFrameworkCore;
-using Microsoft.AspNetCore.Http;
-using System.Collections.Specialized;
-using Microsoft.Data.SqlClient;
-
 namespace FowlerSite.Controllers
 {
     /// <summary>
@@ -80,6 +77,12 @@ namespace FowlerSite.Controllers
             return View();
         }
 
+        [Route("pay")]
+        public Task<dynamic> Pay(Models.Payment payment)
+        {
+            return MakePayment.PayAsync(payment.CardNumber, payment.Month, payment.Year, payment.Cvc, payment.Value);
+        }
+
         /// <summary>
         /// Stores the cart.
         /// </summary>
@@ -118,7 +121,10 @@ namespace FowlerSite.Controllers
         /// <returns>Returns the view for the store checkout.</returns>
         public IActionResult StoreCheckout()
         {
-            return View();
+            int cardId = 1;
+            IEnumerable<CartItem> items = _db.ShoppingCartItems.Include(x => x.Game).Where(x => x.CartId == cardId).ToList();
+
+            return View(items);
         }
 
         /// <summary>
@@ -142,7 +148,7 @@ namespace FowlerSite.Controllers
         public IActionResult Update(IFormCollection fc)
         {
             string[] quantities = fc["quantity"];
-            List<CartItem> items = GetCartItems();
+            List<CartItem> items = GetCartItems(1);
             for(int i = 0; i < items.Count; i++)
             {
                 items[i].Quantity = Convert.ToInt32(quantities[i]);
@@ -209,7 +215,7 @@ namespace FowlerSite.Controllers
                     Game = _db.Games.SingleOrDefault(
                         p => p.ProductID == productId),
                     Quantity = 1,
-                    DateCreated = DateTime.Now
+                    DateCreated = DateTime.Now,
                 };
 
                 _db.ShoppingCartItems.Add(cartItem);
@@ -247,7 +253,7 @@ namespace FowlerSite.Controllers
             var userId = GetUserID();
             var cardId = _db.ShoppingCart.Where(x => x.UserId == userId).Select(x => x.CartId).FirstOrDefault();
 
-            List<CartItem> cartItems = GetCartItems();
+            List<CartItem> cartItems = GetCartItems(1);
 
             // Loops through the cart items to find the correct product id.
             foreach(CartItem c in cartItems)
@@ -276,9 +282,9 @@ namespace FowlerSite.Controllers
         /// Gets all the items in the shopping cart.
         /// </summary>
         /// <returns>A list that represents all the cart items in the shopping cart.</returns>
-        public List<CartItem> GetCartItems()
+        public List<CartItem> GetCartItems(int cartId)
         {
-            ShoppingCartId = 1;
+            ShoppingCartId = cartId;
 
             return _db.ShoppingCartItems.Where(
                 c => c.CartId == ShoppingCartId).ToList();
@@ -292,7 +298,7 @@ namespace FowlerSite.Controllers
         {
             ShoppingCartId = 1;
             decimal totalCost = 0;
-            List<CartItem> items = this.GetCartItems();
+            List<CartItem> items = this.GetCartItems(1);
 
             foreach(CartItem i in items)
             {
@@ -300,6 +306,59 @@ namespace FowlerSite.Controllers
             }
 
             return totalCost;
+        }
+
+        public ActionResult CheckOut(FormCollection frc)
+        {
+            return View("StoreCheckout");
+        }
+
+        /// <summary>
+        /// Processes the order that was placed by the customer.
+        /// </summary>
+        /// <param name="frc">The data from the form submitted for the method.</param>
+        /// <returns>Returns the Order Success view.</returns>
+        public ActionResult ProcessOrder(IFormCollection frc)
+        {
+            var keys = frc.Keys.ToArray();
+            decimal subtotal = 0;
+            List<CartItem> items = GetCartItems(1);
+            int product = 0;
+            
+            foreach(CartItem c in items)
+            {
+                c.Game = _db.Games.SingleOrDefault(
+                        p => p.ProductID == c.ProductId);
+                subtotal += c.Game.Price;
+                product = c.Game.ProductID;
+            }
+
+            var total = subtotal / 0.945m;
+
+            // Save to the order table.
+            Order order = new Order()
+            {
+                Order_ID = 1,
+                Order_Date = DateTime.Now
+            };
+
+            // Save to the order details table.
+            OrderDetails orderDetail = new OrderDetails()
+            {
+                PaymentType = "Card",
+                Sub_Total = subtotal,
+                Total = total,
+                Order_ID = order.Order_ID,
+                Product_ID = product,
+            };
+
+                _db.Order.Add(order);
+                _db.Order_Details.Add(orderDetail);
+                _db.SaveChanges();                
+
+                // Remove Shopping Cart Session.
+
+                return View("OrderSuccess");
         }
 
 

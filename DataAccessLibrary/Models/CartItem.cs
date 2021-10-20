@@ -38,13 +38,8 @@ namespace DataAccessLibrary.Models
         public int ProductId { get; set; }
 
         /// <summary>
-        /// Gets or sets the Game in the cart.
-        /// </summary>
-        public virtual Game Game { get; set; }
-
-        /// <summary>
         /// Gets or sets the cart that is being used.
         /// </summary>
-        public virtual Cart Cart { get; set; }
+        public virtual Game Game { get; set; }
     }
 }

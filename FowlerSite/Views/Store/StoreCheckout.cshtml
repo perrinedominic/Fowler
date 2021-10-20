@@ -1,4 +1,6 @@
-﻿@{
+﻿@model IEnumerable<DataAccessLibrary.Models.CartItem>
+@{
+
     ViewBag.Title = "StoreCheckout";
 }
 <!DOCTYPE html>
@@ -55,7 +57,7 @@
     <!-- END: Styles -->
     <!-- jQuery -->
     <script src="~/assets/vendor/jquery/dist/jquery.min.js"></script>
-
+    <script src="~/assets/vendor/jquery-validation/dist/jquery.validate.min.js"></script>
 
 </head>
 
@@ -65,95 +67,6 @@
         .nk-page-boxed
 -->
 <body>
-
-
-
-
-
-    <!--
-        Additional Classes:
-            .nk-header-opaque
-    -->
-    <header class="nk-header nk-header-opaque">
-
-
-
-        <!-- START: Top Contacts -->
-        <div class="nk-contacts-top">
-            <div class="container">
-                <div class="nk-contacts-left">
-                    <ul class="nk-social-links">
-                        <li><a class="nk-social-rss" href="#"><span class="fa fa-rss"></span></a></li>
-                        <li><a class="nk-social-twitch" href="#"><span class="fab fa-twitch"></span></a></li>
-                        <li><a class="nk-social-steam" href="#"><span class="fab fa-steam"></span></a></li>
-                        <li><a class="nk-social-facebook" href="#"><span class="fab fa-facebook"></span></a></li>
-                        <li><a class="nk-social-google-plus" href="#"><span class="fab fa-google-plus"></span></a></li>
-                        <li><a class="nk-social-twitter" href="#" target="_blank"><span class="fab fa-twitter"></span></a></li>
-                        <li><a class="nk-social-pinterest" href="#"><span class="fab fa-pinterest-p"></span></a></li>
-                    </ul>
-                </div>
-                <div class="nk-contacts-right">
-                    <ul class="nk-contacts-icons">
-
-                        <li>
-                            <a href="#" data-toggle="modal" data-target="#modalSearch">
-                                <span class="fa fa-search"></span>
-                            </a>
-                        </li>
-
-
-                        <li>
-                            <a href="#" data-toggle="modal" data-target="#modalLogin">
-                                <span class="fa fa-user"></span>
-                            </a>
-                        </li>
-
-
-                        <li>
-                            <span class="nk-cart-toggle">
-                                <span class="fa fa-shopping-cart"></span>
-                                <span class="nk-badge">27</span>
-                            </span>
-                            <div class="nk-cart-dropdown">
-
-                                <div class="nk-widget-post">
-                                    <a asp-action="StoreProduct" class="nk-post-image">
-                                        <img src="~/assets/images/product-5-xs.jpg" alt="In all revolutions of">
-                                    </a>
-                                    <h3 class="nk-post-title">
-                                        <a href="#" class="nk-cart-remove-item"><span class="ion-android-close"></span></a>
-                                        <a asp-action="StoreProduct">In all revolutions of</a>
-                                    </h3>
-                                    <div class="nk-gap-1"></div>
-                                    <div class="nk-product-price">$ 23.00</div>
-                                </div>
-
-                                <div class="nk-widget-post">
-                                    <a asp-action="StoreProduct" class="nk-post-image">
-                                        <img src="~/assets/images/product-7-xs.jpg" alt="With what mingled joy">
-                                    </a>
-                                    <h3 class="nk-post-title">
-                                        <a href="#" class="nk-cart-remove-item"><span class="ion-android-close"></span></a>
-                                        <a asp-action="StoreProduct">With what mingled joy</a>
-                                    </h3>
-                                    <div class="nk-gap-1"></div>
-                                    <div class="nk-product-price">$ 14.00</div>
-                                </div>
-
-                                <div class="nk-gap-2"></div>
-                                <div class="text-center">
-                                    <a asp-action="StoreCheckout" class="nk-btn nk-btn-rounded nk-btn-color-main-1 nk-btn-hover-color-white">Proceed to Checkout</a>
-                                </div>
-                            </div>
-                        </li>
-
-                    </ul>
-                </div>
-            </div>
-        </div>
-    </header>
-
-
 
     <!--
         START: Navbar Mobile
@@ -185,7 +98,6 @@
     <div class="nk-main">
 
         <!-- START: Breadcrumbs -->
-        <div class="nk-gap-1"></div>
         <div class="container">
             <ul class="nk-breadcrumbs">
 
@@ -218,11 +130,92 @@
         <div class="container">
 
             <div class="nk-store nk-store-checkout">
-                <h3 class="nk-decorated-h-2"><span><span class="text-main-1">Billing</span> Details</span></h3>
 
-                <!-- START: Billing Details -->
+
+                <!-- START: Order Products -->
+                <div class="nk-gap-3"></div>
+                <h3 class="nk-decorated-h-2"><span><span class="text-main-1">Your</span> Order</span></h3>
                 <div class="nk-gap"></div>
-                <form action="#" class="nk-form">
+                <div class="table-responsive">
+                    <table class="nk-table nk-table-sm">
+                        <thead class="thead-default">
+                            <tr>
+                                <th class="nk-product-cart-title">Product</th>
+                                <th class="nk-product-cart-total">Quantity</th>
+                                <th class="nk-product-cart-total">Total</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var x in Model)
+                            {
+                                decimal quantity = x.Quantity;
+                                <tr>
+                                    <td class="nk-product-cart-title">
+                                        @Html.DisplayName(x.Game.Name)
+                                    </td>
+                                    <td class="nk-product-cart-total">
+                                        @Html.DisplayFor(modelItem => x.Quantity)
+                                    </td>
+                                    <td class="nk-product-cart-total">
+                                        @Html.DisplayFor(modelItem => x.Game.Price)
+                                    </td>
+                                </tr>
+                            }
+
+
+                            <tr class="nk-store-cart-totals-subtotal">
+                                <td></td>
+                                <td class="nk-product-cart-total">
+                                    Subtotal
+                                </td>
+                                <td class="nk-product-cart-total">
+                                    @{decimal sum = 0;
+
+                                        foreach (var x in Model)
+                                        {
+
+                                            sum += x.Quantity * x.Game.Price;
+
+                                        }
+                                        Output.WriteLine(sum);}
+                                </td>
+                            </tr>
+                            <tr class="nk-store-cart-totals-shipping">
+                                <td></td>
+                                <td class="nk-product-cart-total">
+                                    Tax
+                                </td>
+                                <td class="nk-product-cart-total">
+                                    @{ decimal tax = .055m;
+                                        decimal taxTotal = sum * tax;
+                                        Output.WriteLine("$" + Math.Round(taxTotal, 2));
+                                    }
+                                </td>
+                            </tr>
+                            <tr class="nk-store-cart-totals-total">
+                                <td></td>
+                                <td class="nk-product-cart-total">
+                                    Total
+                                </td>
+                                <td class="nk-product-cart-total">
+                                    @{
+                                        decimal total = sum + taxTotal;
+                                        Output.WriteLine("$" + Math.Round(total, 2));
+                                    }
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <div class="nk-gap-1"></div>
+
+                <!-- END: Order Products -->
+                <!-- START: Billing Details -->
+                <div class="nk-gap-2"></div>
+                <h3 class="nk-decorated-h-2"><span><span class="text-main-1">Billing</span> Details</span></h3>
+                <div class="nk-gap"></div>
+                @using (Html.BeginForm("ProcessOrder", "Store", FormMethod.Post, new { id = "customer-form" }))
+                {
                     <div class="row vertical-gap">
                         <div class="col-lg-6">
                             <div class="row vertical-gap">
@@ -256,6 +249,9 @@
                             <label for="country-sel">Country <span class="text-main-1">*</span>:</label>
                             <select name="country" class="form-control required" id="country-sel">
                                 <option value="">Select a country...</option>
+                                <option value="US">'Merica</option>
+                                <option value="Other">Not 'Merica</option>
+
                             </select>
                         </div>
                         <div class="col-lg-6">
@@ -269,7 +265,7 @@
                             <div class="nk-gap-1"></div>
                             <div class="row vertical-gap">
                                 <div class="col-sm-6">
-                                    <label for="state">State / Country <span class="text-main-1">*</span>:</label>
+                                    <label for="state">State<span class="text-main-1">*</span>:</label>
                                     <input type="text" class="form-control required" name="state" id="state">
                                 </div>
                                 <div class="col-sm-6">
@@ -282,83 +278,38 @@
                             <label class="custom-control custom-checkbox">
                                 <input type="checkbox" class="custom-control-input">
                                 <span class="custom-control-indicator"></span>
-                                Ship to different address?
                             </label>
                         </div>
+
+                        <input class="nk-btn nk-btn-rounded nk-btn-color-main-1" type="submit" value="Place Order">
+
                     </div>
-                </form>
+                }
+
+                <script type="text/javascript">
+                    $("#custom-form").validate({
+                        rules: {
+                            fname: {
+                                required: true
+                            },
+                            lname: {
+                                required: true
+                            },
+                            phone: {
+                                required: true
+                            },
+                            email: {
+                                required: true
+                            },
+                            address: {
+                                required: true
+                            },
+                        }
+                    });
+                </script>
                 <!-- END: Billing Details -->
 
                 <div class="nk-gap-2"></div>
-                <form action="#" class="nk-form">
-                    <div class="nk-gap-1"></div>
-                    <label for="notes">Order Notes:</label>
-                    <textarea class="form-control" name="notes" id="notes" placeholder="Order Notes" rows="6"></textarea>
-                </form>
-
-                <!-- START: Order Products -->
-                <div class="nk-gap-3"></div>
-                <h3 class="nk-decorated-h-2"><span><span class="text-main-1">Your</span> Order</span></h3>
-                <div class="nk-gap"></div>
-                <div class="table-responsive">
-                    <table class="nk-table nk-table-sm">
-                        <thead class="thead-default">
-                            <tr>
-                                <th class="nk-product-cart-title">Product</th>
-                                <th class="nk-product-cart-total">Total</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-
-                            <tr>
-                                <td class="nk-product-cart-title">
-                                    However, I have reason &times; 1
-                                </td>
-                                <td class="nk-product-cart-total">
-                                    $ 32.00
-                                </td>
-                            </tr>
-
-                            <tr>
-                                <td class="nk-product-cart-title">
-                                    She was bouncing &times; 1
-                                </td>
-                                <td class="nk-product-cart-total">
-                                    $ 20.00
-                                </td>
-                            </tr>
-
-                            <tr class="nk-store-cart-totals-subtotal">
-                                <td>
-                                    Subtotal
-                                </td>
-                                <td>
-                                    $ 52.00
-                                </td>
-                            </tr>
-                            <tr class="nk-store-cart-totals-shipping">
-                                <td>
-                                    Shipping
-                                </td>
-                                <td>
-                                    Free Shipping
-                                </td>
-                            </tr>
-                            <tr class="nk-store-cart-totals-total">
-                                <td>
-                                    Total
-                                </td>
-                                <td>
-                                    $ 52.00
-                                </td>
-                            </tr>
-                        </tbody>
-                    </table>
-                </div>
-                <!-- END: Order Products -->
-
-                <div class="nk-gap-2"></div>
-                <a class="nk-btn nk-btn-rounded nk-btn-color-main-1" asp-action="PlaceOrder">Place Order</a>
             </div>
         </div>
         <div class="nk-gap-2"></div>

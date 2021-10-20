@@ -1,6 +1,6 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Text;
+using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace DataAccessLibrary.Models
 {
@@ -12,16 +12,18 @@ namespace DataAccessLibrary.Models
         /// <summary>
         /// Gets or sets the order id.
         /// </summary>
-        public int OrderId { get; set; }
+        [Key, DatabaseGenerated(DatabaseGeneratedOption.Identity)]
+        public int Order_ID { get; set; }
 
         /// <summary>
         /// Gets or sets the order date.
         /// </summary>
-        public DateTime OrderDate { get; set; }
+        public DateTime Order_Date { get; set; }
 
         /// <summary>
         /// Gets or sets the customer.
         /// </summary>
-        public User Customer { get; set; }
+        public int Cust_ID { get; set; }
+
     }
 }
