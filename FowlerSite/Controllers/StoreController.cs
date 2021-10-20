@@ -13,6 +13,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.AspNetCore.Http;
 using System.Collections.Specialized;
+using Newtonsoft.Json;
 
 namespace FowlerSite.Controllers
 {
@@ -306,20 +307,42 @@ namespace FowlerSite.Controllers
             return View("StoreCheckout");
         }
 
+        /// <summary>
+        /// Processes the order that was placed by the customer.
+        /// </summary>
+        /// <param name="frc">The data from the form submitted for the method.</param>
+        /// <returns>Returns the Order Success view.</returns>
         public ActionResult ProcessOrder(IFormCollection frc)
         {
             int ShoppingCartId = 1;
+            decimal subtotal = 0;
             List<CartItem> items = GetCartItems();
-                // Save to the order table.
-                Order order = new Order()
+            List<int> products = new List<int>();
+            
+            foreach(CartItem c in items)
+            {
+                c.Game = _db.Games.SingleOrDefault(
+                        p => p.ProductID == c.ProductId);
+                subtotal += c.Game.Price;
+                products.Add(c.ProductId);
+            }
+
+            var total = subtotal / 0.945m;
+
+            var json = JsonConvert.SerializeObject(products);
+
+            // Save to the order table.
+            Order order = new Order()
+            {
+                OrderDate = DateTime.Now,
+            };
+
+            // Save to the order details table.
+            OrderDetails orderDetail = new OrderDetails()
                 {
-                    CustomerName = frc["fname" + ", lname"],
-                    CustomerAddress = frc["phone"],
-                    CustomerEmail = frc["email"],
-                    CustomerPhone = frc["address"],
-                    OrderDate = DateTime.Now,
                     PaymentType = "Card",
-                    Status = "Processing"
+                    Sub_Total = subtotal,
+                    Total =  total,
                 };
 
                 _db.Order.Add(order);

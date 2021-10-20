@@ -19,7 +19,7 @@ namespace DataAccessLibrary.DataAccess
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            modelBuilder.Entity<OrderDetail>()
+            modelBuilder.Entity<OrderDetails>()
                 .HasKey(o => new { o.OrderID, o.ProductID });
         }
 
@@ -45,6 +45,6 @@ namespace DataAccessLibrary.DataAccess
 
         public DbSet<Order> Order { get; set; }
 
-        public DbSet<OrderDetail> OrderDetail { get; set; }
+        public DbSet<OrderDetails> OrderDetails { get; set; }
     }
 }
