@@ -142,7 +142,7 @@ namespace FowlerSite.Controllers
         public IActionResult Update(IFormCollection fc)
         {
             string[] quantities = fc["quantity"];
-            List<CartItem> items = GetCartItems();
+            List<CartItem> items = GetCartItems(1);
             for(int i = 0; i < items.Count; i++)
             {
                 items[i].Quantity = Convert.ToInt32(quantities[i]);
@@ -247,7 +247,7 @@ namespace FowlerSite.Controllers
             var userId = GetUserID();
             var cardId = _db.ShoppingCart.Where(x => x.UserId == userId).Select(x => x.CartId).FirstOrDefault();
 
-            List<CartItem> cartItems = GetCartItems();
+            List<CartItem> cartItems = GetCartItems(1);
 
             // Loops through the cart items to find the correct product id.
             foreach(CartItem c in cartItems)
@@ -276,9 +276,9 @@ namespace FowlerSite.Controllers
         /// Gets all the items in the shopping cart.
         /// </summary>
         /// <returns>A list that represents all the cart items in the shopping cart.</returns>
-        public List<CartItem> GetCartItems()
+        public List<CartItem> GetCartItems(int cartId)
         {
-            ShoppingCartId = 1;
+            ShoppingCartId = cartId;
 
             return _db.ShoppingCartItems.Where(
                 c => c.CartId == ShoppingCartId).ToList();
@@ -292,7 +292,7 @@ namespace FowlerSite.Controllers
         {
             ShoppingCartId = 1;
             decimal totalCost = 0;
-            List<CartItem> items = this.GetCartItems();
+            List<CartItem> items = this.GetCartItems(1);
 
             foreach(CartItem i in items)
             {
@@ -314,9 +314,8 @@ namespace FowlerSite.Controllers
         /// <returns>Returns the Order Success view.</returns>
         public ActionResult ProcessOrder(IFormCollection frc)
         {
-            int ShoppingCartId = 1;
             decimal subtotal = 0;
-            List<CartItem> items = GetCartItems();
+            List<CartItem> items = GetCartItems(1);
             List<int> products = new List<int>();
             
             foreach(CartItem c in items)
