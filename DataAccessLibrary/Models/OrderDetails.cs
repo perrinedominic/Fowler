@@ -1,49 +1,42 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
+using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace DataAccessLibrary.Models
 {
     /// <summary>
-    /// The class representing the order details.
+    /// The class which is used to represent Order Details.
     /// </summary>
     public class OrderDetails
-    {
-        /// <summary>
-        /// Gets or sets the order id.
-        /// </summary>
-        public int OrderId { get; set; }
+	{
+		/// <summary>
+		/// The ID of the order.
+		/// </summary>
+		[Required]
+		[Column(TypeName = "int")]
+		public int Order_ID { get; set; }
 
-        /// <summary>
-        /// Gets or sets the quantity.
-        /// </summary>
-        public int Quantity { get; set; }
+		/// <summary>
+		/// The subtotal of the order.
+		/// </summary>
+		[Column(TypeName = "float")]
+		public decimal Sub_Total { get; set; }
 
-        /// <summary>
-        /// Gets or sets the subtotal.
-        /// </summary>
-        public decimal SubTotal { get; set; }
+		/// <summary>
+		/// The total of the order
+		/// </summary>
+		[Column(TypeName = "float")]
+		public decimal Total { get; set; }
+		
+		/// <summary>
+		/// The id of a product.
+		/// </summary>
+		[Required]
+		[Column(TypeName = "int")]
+		public int Product_ID { get; set; }
 
-        /// <summary>
-        /// Gets or sets the total.
-        /// </summary>
-        public decimal Total { get; set; }
-
-        /// <summary>
-        /// Gets or sets the address of the user.
-        /// </summary>
-        public string Address { get; }
-
-        /// <summary>
-        /// Gets or sets the Games.
-        /// </summary>
-        public Game Game { get; set; }
-
-        /// <summary>
-        /// Gets or sets the order.
-        /// </summary>
-        public Order Order { get; set; }
-
-
-    }
+		/// <summary>
+		/// The type of payment used for the order.
+		/// </summary>
+		public string PaymentType { get; set; }
+	}
 }
