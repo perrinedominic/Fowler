@@ -39,7 +39,7 @@
             <td>@Model.CardNumber</td>
             <td>@Model.CardExpire</td>
             <td>@Model.CardCvc</td>
-            <td><a class="nk-btn nk-btn-rounded nk-btn-color-main-1" asp-action="UpdateCard">Update</a></td>
+            <td><a class="nk-btn nk-btn-rounded nk-btn-color-main-1" asp-controller="Users" asp-action="UpdateCard" asp-route-id="@Model.Id">Update Card</a></td>
         </tr>
     </tbody>
 </table>

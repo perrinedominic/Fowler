@@ -73,12 +73,15 @@ namespace FowlerSite.Controllers
                         user.Username = Convert.ToString(dataReader["Username"]);
                         user.Password = Convert.ToString(dataReader["Password"]);
                         user.EmailAddress = Convert.ToString(dataReader["EmailAddress"]);
+                        user.CardNumber = Convert.ToString(dataReader["CardNumber"]);
+                        user.CardExpire = Convert.ToString(dataReader["CardExpire"]);
+                        user.CardCvc = Convert.ToString(dataReader["CardCVC"]);
                     }
                 }
                 connection.Close();
             }
 
-            return View("User", user);
+            return View("Users/User", user);
         }
 
         public IActionResult AdminPage(int id)

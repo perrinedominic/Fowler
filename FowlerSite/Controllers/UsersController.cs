@@ -146,6 +146,9 @@ namespace FowlerSite.Controllers
                         user.EmailAddress = Convert.ToString(dataReader["EmailAddress"]);
                         user.Username = Convert.ToString(dataReader["Username"]);
                         user.Password = Convert.ToString(dataReader["Password"]);
+                        user.CardNumber = Convert.ToString(dataReader["CardNumber"]);
+                        user.CardExpire = Convert.ToString(dataReader["CardExpire"]);
+                        user.CardCvc = Convert.ToString(dataReader["CardCVC"]);
                     }
                 }
                 connection.Close();
@@ -154,7 +157,6 @@ namespace FowlerSite.Controllers
             return RedirectToAction("CreateLogin", "Login", new { id = user.Id });
         }
 
-        [HttpGet]
         public IActionResult UpdateCard(int id)
         {
             Users user = new Users();
@@ -177,7 +179,7 @@ namespace FowlerSite.Controllers
                 }
                 connection.Close();
             }
-            return View(user);
+            return View("../Login/Users/UpdateCard", user);
         }
 
         [HttpPost]
@@ -185,7 +187,7 @@ namespace FowlerSite.Controllers
         {
             using (SqlConnection connection = new SqlConnection(this.connectionString))
             {
-                string sql = $"Update Users SET CardNumber = '{user.CardNumber}', CardExpire = '{user.CardExpire}', CardCVC = '{user.CardCvc}'";
+                string sql = $"Update Users SET CardNumber = '{user.CardNumber}', CardExpire = '{user.CardExpire}', CardCVC = '{user.CardCvc}' WHERE Id='{id}'";
 
                 using (SqlCommand command = new SqlCommand(sql, connection))
                 {
