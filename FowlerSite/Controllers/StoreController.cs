@@ -339,7 +339,7 @@ namespace FowlerSite.Controllers
             // Save to the order table.
             Order order = new Order()
             {
-                Order_ID = 1,
+                Order_ID = 2,
                 Order_Date = DateTime.Now
             };
 
@@ -353,13 +353,13 @@ namespace FowlerSite.Controllers
                 Product_ID = product,
             };
 
-                _db.Order.Add(order);
-                _db.Order_Details.Add(orderDetail);
-                _db.SaveChanges();                
+            _db.Order.Add(order);
+            _db.Order_Details.Add(orderDetail);
+            _db.SaveChanges();
 
-                // Remove Shopping Cart Session.
+            // Remove Shopping Cart Session.
 
-                return View("OrderSuccess");
+            return View("OrderSuccess");
         }
 
 
