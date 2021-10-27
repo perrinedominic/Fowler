@@ -12,7 +12,7 @@ namespace DataAccessLibrary.Models
         /// <summary>
         /// Gets or sets the order id.
         /// </summary>
-        [Key, DatabaseGenerated(DatabaseGeneratedOption.Identity)]
+        [Key]
         public int Order_ID { get; set; }
 
         /// <summary>

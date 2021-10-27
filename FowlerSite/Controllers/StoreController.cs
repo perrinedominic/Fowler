@@ -330,16 +330,20 @@ namespace FowlerSite.Controllers
             {
                 c.Game = _db.Games.SingleOrDefault(
                         p => p.ProductID == c.ProductId);
-                subtotal += c.Game.Price;
+                var price = c.Game.Price;
+                subtotal += price * c.Quantity;
                 product = c.Game.ProductID;
             }
+
+            var orderid = _db.Order.ToList().LastOrDefault().Order_ID;
+            orderid++;
 
             var total = subtotal / 0.945m;
 
             // Save to the order table.
             Order order = new Order()
             {
-                Order_ID = 2,
+                Order_ID = orderid,
                 Order_Date = DateTime.Now
             };
 
