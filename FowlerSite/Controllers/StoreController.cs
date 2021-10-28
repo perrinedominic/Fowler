@@ -344,7 +344,7 @@ namespace FowlerSite.Controllers
             Order order = new Order()
             {
                 Order_ID = orderid,
-                Order_Date = DateTime.Now
+                Order_Date = DateTime.Now,
             };
 
             // Save to the order details table.
