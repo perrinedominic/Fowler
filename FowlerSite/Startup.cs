@@ -18,6 +18,7 @@ using Microsoft.Extensions.Azure;
 using Azure.Storage.Queues;
 using Azure.Storage.Blobs;
 using Azure.Core.Extensions;
+using FowlerSite.Models;
 
 namespace FowlerSite
 {
@@ -45,6 +46,8 @@ namespace FowlerSite
                 builder.AddBlobServiceClient(Configuration["FowlerGameImages:blob"], preferMsi: true);
                 builder.AddQueueServiceClient(Configuration["FowlerGameImages:queue"], preferMsi: true);
             });
+
+            services.Configure<AzureStorageConfig>(Configuration.GetSection("AzureStorageConfig"));
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
