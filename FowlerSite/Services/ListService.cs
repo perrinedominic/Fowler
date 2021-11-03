@@ -69,6 +69,94 @@ namespace FowlerSite.Services
         }
 
         /// <summary>
+        /// Method to get the users order list.
+        /// </summary>
+        /// <param name="ID">The ID of the customer.</param>
+        /// <returns>Returns a Tuple like list using key value pair.</returns>
+        public IEnumerable<(Order, OrderDetails)> GetOrders(int ID)
+        {
+            var orders = new List<(Order, OrderDetails)>();
+            var user = new ListService(this.Configuration).GetUserList();
+
+            using (SqlConnection connection = new SqlConnection(this.connectionString))
+            {
+                DataTable dataTable = new DataTable();
+                string sql = $"SELECT [Order].[Order_ID], [Order].[Order_Date], [Order].[Cust_ID], [Order_Details].Total, [Order_Details].[Sub_Total], " +
+                    "[Order_Details].[Product_ID], [Order_Details].[PaymentType] FROM[Order] +" +
+                    $" INNER JOIN[Order_Details] ON[Order].Order_ID = [Order_Details].Order_ID WHERE Cust_ID={ID}";
+
+                SqlCommand command = new SqlCommand(sql, connection);
+
+                SqlDataAdapter dataAdapter = new SqlDataAdapter(command);
+
+                dataAdapter.Fill(dataTable);
+
+                foreach (DataRow dr in dataTable.Rows)
+                {
+                    orders.Add((
+                        new Order
+                        {
+                            Order_ID = Convert.ToInt32(dr["Order_ID"]),
+                            Order_Date = Convert.ToDateTime(dr["Order_Date"]),
+                            Cust_ID = Convert.ToInt32(dr["Cust_ID"])
+                        },
+                        new OrderDetails
+                        {
+                            Order_ID = Convert.ToInt32(dr["Order_ID"]),
+                            Sub_Total = Convert.ToDecimal(dr["Sub_Total"]),
+                            Total = Convert.ToDecimal(dr["Total"]),
+                            Product_ID = Convert.ToInt32(dr["Product_ID"]),
+                            PaymentType = Convert.ToString(dr["PaymentType"])
+                        }));
+                }
+
+                return orders;
+            }
+        }
+
+        /// <summary>
+        /// The method to get an iterable list of users.
+        /// </summary>
+        /// <returns>A list of users.</returns>
+        public IEnumerable<Users> GetUserList()
+        {
+            List<Users> users = new List<Users>();
+
+            using (SqlConnection connection = new SqlConnection(this.connectionString))
+            {
+                DataTable dataTable = new DataTable();
+
+                string sql = "Select * From Users";
+                SqlCommand command = new SqlCommand(sql, connection);
+
+                SqlDataAdapter dataAdapter = new SqlDataAdapter(command);
+
+                // filling records to DataTable
+                dataAdapter.Fill(dataTable);
+
+                foreach (DataRow dr in dataTable.Rows)
+                {
+                    users.Add(
+                        new Users
+                        {
+                            Username = Convert.ToString(dr["Username"]),
+                            Password = Convert.ToString(dr["Password"]),
+                            FirstName = Convert.ToString(dr["FirstName"]),
+                            LastName = Convert.ToString(dr["LastName"]),
+                            EmailAddress = Convert.ToString(dr["EmailAddress"]),
+                            Admin = Convert.ToInt32(dr["Admin"]),
+                            CardNumber = Convert.ToString(dr["CardNumber"]),
+                            CardExpire = Convert.ToString(dr["CardExpire"]),
+                            CardCvc = Convert.ToString(dr["CardCvc"])
+
+                        });
+                }
+            }
+
+            return users;
+        }
+
+        /// <summary>
         /// Gets the user login list.
         /// </summary>
         /// <param name="username">The username for the user.</param>
