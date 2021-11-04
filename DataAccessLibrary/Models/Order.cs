@@ -24,6 +24,5 @@ namespace DataAccessLibrary.Models
         /// Gets or sets the customer.
         /// </summary>
         public int Cust_ID { get; set; }
-
     }
 }

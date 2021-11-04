@@ -34,17 +34,17 @@
             <ul class="nk-breadcrumbs">
 
 
-                <li><a href="index.html">Home</a></li>
+                <li><a asp-action="Index">Home</a></li>
 
 
                 <li><span class="fa fa-angle-right"></span></li>
 
-                <li><a href="store.html">Store</a></li>
+                <li><a asp-action="Index">Store</a></li>
 
 
                 <li><span class="fa fa-angle-right"></span></li>
 
-                <li><a href="store-cart.html">Cart</a></li>
+                <li><a asp-action="StoreCart">Cart</a></li>
 
 
                 <li><span class="fa fa-angle-right"></span></li>
@@ -63,7 +63,119 @@
 
             <div class="nk-store nk-store-checkout">
 
+                <!-- START: Billing Details -->
+                <div class="nk-gap-2"></div>
+                <h3 class="nk-decorated-h-2"><span><span class="text-main-1">Billing</span> Details</span></h3>
+                <div class="nk-gap"></div>
+                @using (Html.BeginForm("ProcessOrder", "Store", FormMethod.Post, new { id = "customer-form" }))
+                {
+                    <div class="row vertical-gap">
+                        <div class="col-lg-6">
+                            <div class="row vertical-gap">
+                                <div class="col-sm-6">
+                                    <label for="fname">First Name <span class="text-main-1">*</span>:</label>
+                                    <input type="text" class="form-control required" name="fname" id="fname">
+                                </div>
+                                <div class="col-sm-6">
+                                    <label for="lname">Last Name <span class="text-main-1">*</span>:</label>
+                                    <input type="text" class="form-control required" name="lname" id="lname">
+                                </div>
+                            </div>
 
+                            <div class="nk-gap-1"></div>
+                            <label for="company">Company Name:</label>
+                            <input type="text" class="form-control" name="company" id="company">
+
+                            <div class="nk-gap-1"></div>
+                            <div class="row vertical-gap">
+                                <div class="col-sm-6">
+                                    <label for="email">Email Address <span class="text-main-1">*</span>:</label>
+                                    <input type="email" class="form-control required" name="email" id="email">
+                                </div>
+                                <div class="col-sm-6">
+                                    <label for="phone">Phone <span class="text-main-1">*</span>:</label>
+                                    <input type="tel" class="form-control required" name="phone" id="phone">
+                                </div>
+                            </div>
+
+                            <div class="nk-gap-1"></div>
+                            <label for="country-sel">Country <span class="text-main-1">*</span>:</label>
+                            <select name="country" class="form-control required" id="country-sel">
+                                <option value="">Select a country...</option>
+                                <option value="US">'Merica</option>
+                                <option value="Other">Not 'Merica</option>
+
+                            </select>
+                        </div>
+                        <div class="col-lg-6">
+                            <label for="address">Address <span class="text-main-1">*</span>:</label>
+                            <input type="text" class="form-control required" name="address" id="address">
+
+                            <div class="nk-gap-1"></div>
+                            <label for="city">Town / City <span class="text-main-1">*</span>:</label>
+                            <input type="text" class="form-control required" name="city" id="city">
+
+                            <div class="nk-gap-1"></div>
+                            <div class="row vertical-gap">
+                                <div class="col-sm-6">
+                                    <label for="state">State<span class="text-main-1">*</span>:</label>
+                                    <input type="text" class="form-control required" name="state" id="state">
+                                </div>
+                                <div class="col-sm-6">
+                                    <label for="zip">Postcode / ZIP <span class="text-main-1">*</span>:</label>
+                                    <input type="tel" class="form-control required" name="zip" id="zip">
+                                </div>
+                            </div>
+
+                            <div class="nk-gap-1"></div>
+                            <label class="custom-control custom-checkbox">
+                                <input type="checkbox" class="custom-control-input">
+                                <span class="custom-control-indicator"></span>
+                            </label>
+                        </div>
+
+                        <div class="nk-gap-2"></div>
+                    </div>
+                
+
+                <script type="text/javascript">
+                    $("#custom-form").validate({
+                        rules: {
+                            fname: {
+                                required: true,
+                                minlength: 2,
+                                rangelength: [2, 20]
+                            },
+                            lname: {
+                                required: true,
+                                minlength: 2,
+                                rangelength: [2, 20]
+                            },
+                            phone: {
+                                required: true
+                            },
+                            email: {
+                                required: true,
+                                email: true
+                            },
+                            address: {
+                                required: true
+                            }
+                        },
+                        messages: {
+                            fname: {
+                                required: "A first name must be entered.",
+                                minlength: "A valid name must be submitted"
+                            },
+                            lname: {
+                                required: "A last name must be entered.",
+                                minlength: "A valid name must be submitted"
+                            }
+                        }
+
+                    });
+                </script>
+                <!-- END: Billing Details -->
                 <!-- START: Order Products -->
                 <div class="nk-gap-3"></div>
                 <h3 class="nk-decorated-h-2"><span><span class="text-main-1">Your</span> Order</span></h3>
@@ -140,264 +252,17 @@
                     </table>
                 </div>
                 <div class="nk-gap-1"></div>
-
-                <!-- END: Order Products -->
-                <!-- START: Billing Details -->
-                <div class="nk-gap-2"></div>
-                <h3 class="nk-decorated-h-2"><span><span class="text-main-1">Billing</span> Details</span></h3>
-                <div class="nk-gap"></div>
-                @using (Html.BeginForm("ProcessOrder", "Store", FormMethod.Post, new { id = "customer-form" }))
-                {
-                    <div class="row vertical-gap">
-                        <div class="col-lg-6">
-                            <div class="row vertical-gap">
-                                <div class="col-sm-6">
-                                    <label for="fname">First Name <span class="text-main-1">*</span>:</label>
-                                    <input type="text" class="form-control required" name="fname" id="fname">
-                                </div>
-                                <div class="col-sm-6">
-                                    <label for="lname">Last Name <span class="text-main-1">*</span>:</label>
-                                    <input type="text" class="form-control required" name="lname" id="lname">
-                                </div>
-                            </div>
-
-                            <div class="nk-gap-1"></div>
-                            <label for="company">Company Name:</label>
-                            <input type="text" class="form-control" name="company" id="company">
-
-                            <div class="nk-gap-1"></div>
-                            <div class="row vertical-gap">
-                                <div class="col-sm-6">
-                                    <label for="email">Email Address <span class="text-main-1">*</span>:</label>
-                                    <input type="email" class="form-control required" name="email" id="email">
-                                </div>
-                                <div class="col-sm-6">
-                                    <label for="phone">Phone <span class="text-main-1">*</span>:</label>
-                                    <input type="tel" class="form-control required" name="phone" id="phone">
-                                </div>
-                            </div>
-
-                            <div class="nk-gap-1"></div>
-                            <label for="country-sel">Country <span class="text-main-1">*</span>:</label>
-                            <select name="country" class="form-control required" id="country-sel">
-                                <option value="">Select a country...</option>
-                                <option value="US">'Merica</option>
-                                <option value="Other">Not 'Merica</option>
-
-                            </select>
-                        </div>
-                        <div class="col-lg-6">
-                            <label for="address">Address <span class="text-main-1">*</span>:</label>
-                            <input type="text" class="form-control required" name="address" id="address">
-
-                            <div class="nk-gap-1"></div>
-                            <label for="city">Town / City <span class="text-main-1">*</span>:</label>
-                            <input type="text" class="form-control required" name="city" id="city">
-
-                            <div class="nk-gap-1"></div>
-                            <div class="row vertical-gap">
-                                <div class="col-sm-6">
-                                    <label for="state">State<span class="text-main-1">*</span>:</label>
-                                    <input type="text" class="form-control required" name="state" id="state">
-                                </div>
-                                <div class="col-sm-6">
-                                    <label for="zip">Postcode / ZIP <span class="text-main-1">*</span>:</label>
-                                    <input type="tel" class="form-control required" name="zip" id="zip">
-                                </div>
-                            </div>
-
-                            <div class="nk-gap-1"></div>
-                            <label class="custom-control custom-checkbox">
-                                <input type="checkbox" class="custom-control-input">
-                                <span class="custom-control-indicator"></span>
-                            </label>
-                        </div>
-
-                <div class="nk-gap-2"></div>
-                <form action="#" class="nk-form">
-                    <div class="nk-gap-1"></div>
-                    <label for="notes">Order Notes:</label>
-                    <textarea class="form-control" name="notes" id="notes" placeholder="Order Notes" rows="6"></textarea>
-                </form>
-
-                <!-- START: Order Products -->
-                <div class="nk-gap-3"></div>
-                <h3 class="nk-decorated-h-2"><span><span class="text-main-1">Your</span> Order</span></h3>
-                <div class="nk-gap"></div>
-                <div class="table-responsive">
-                    <table class="nk-table nk-table-sm">
-                        <thead class="thead-default">
-                            <tr>
-                                <th class="nk-product-cart-title">Product</th>
-                                <th class="nk-product-cart-total">Total</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr class="nk-store-cart-totals-subtotal">
-                                <td>
-                                    Subtotal
-                                </td>
-                                <td>
-                                    $ 52.00
-                                </td>
-                            </tr>
-                            <tr class="nk-store-cart-totals-shipping">
-                                <td>
-                                    Shipping
-                                </td>
-                                <td>
-                                    Free Shipping
-                                </td>
-                            </tr>
-                            <tr class="nk-store-cart-totals-total">
-                                <td>
-                                    Total
-                                </td>
-                                <td>
-                                    $ 52.00
-                                </td>
-                            </tr>
-                        </tbody>
-                    </table>
-                </div>
-                <!-- END: Order Products -->
-
-                <div class="nk-gap-2"></div>
-                        <input class="nk-btn nk-btn-rounded nk-btn-color-main-1" type="submit" value="Place Order">
+                @*<input class="nk-btn nk-btn-rounded nk-btn-color-main-1" type="submit" value="Place Order">*@
                 @*<button class="nk-btn nk-btn-rounded nk-btn-color-main-1" asp-action="PlaceOrder">Place Order</button>*@
                 <input class="nk-btn nk-btn-rounded nk-btn-color-main-1" type="submit" value="Place Order">
-                    </div>
-                }
+                                        }
+                <!-- END: Order Products -->
 
-                <script type="text/javascript">
-                    $("#custom-form").validate({
-                        rules: {
-                            fname: {
-                                required: true
-                            },
-                            lname: {
-                                required: true
-                            },
-                            phone: {
-                                required: true
-                            },
-                            email: {
-                                required: true
-                            },
-                            address: {
-                                required: true
-                            },
-                        }
-                    });
-                </script>
-                <!-- END: Billing Details -->
 
                 <div class="nk-gap-2"></div>
             </div>
         </div>
         <div class="nk-gap-2"></div>
-
-
-
-        <!-- START: Footer -->
-        <footer class="nk-footer">
-
-            <div class="container">
-                <div class="nk-gap-3"></div>
-                <div class="row vertical-gap">
-                    <div class="col-md-6">
-                        <div class="nk-widget">
-                            <h4 class="nk-widget-title"><span class="text-main-1">Contact</span> With Us</h4>
-                            <div class="nk-widget-content">
-                                <form action="php/ajax-contact-form.php" class="nk-form nk-form-ajax">
-                                    <div class="row vertical-gap sm-gap">
-                                        <div class="col-md-6">
-                                            <input type="email" class="form-control required" name="email" placeholder="Email *">
-                                        </div>
-                                        <div class="col-md-6">
-                                            <input type="text" class="form-control required" name="name" placeholder="Name *">
-                                        </div>
-                                    </div>
-                                    <div class="nk-gap"></div>
-                                    <textarea class="form-control required" name="message" rows="5" placeholder="Message *"></textarea>
-                                    <div class="nk-gap-1"></div>
-                                    <button class="nk-btn nk-btn-rounded nk-btn-color-white">
-                                        <span>Send</span>
-                                        <span class="icon"><i class="ion-paper-airplane"></i></span>
-                                    </button>
-                                    <div class="nk-form-response-success"></div>
-                                    <div class="nk-form-response-error"></div>
-                                </form>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-md-6">
-                        <div class="nk-widget">
-                            <h4 class="nk-widget-title"><span class="text-main-1">Latest</span> Posts</h4>
-                            <div class="nk-widget-content">
-                                <div class="row vertical-gap sm-gap">
-
-                                    <div class="col-lg-6">
-                                        <div class="nk-widget-post-2">
-                                            <a href="blog-article.html" class="nk-post-image">
-                                                <img src="~/assets/images/post-1-sm.jpg" alt="">
-                                            </a>
-                                            <div class="nk-post-title"><a href="blog-article.html">Smell magic in the air. Or maybe barbecue</a></div>
-                                            <div class="nk-post-date">
-                                                <span class="fa fa-calendar"></span> Sep 18, 2018
-                                                <span class="fa fa-comments"></span> <a href="#">4</a>
-                                            </div>
-                                        </div>
-                                    </div>
-
-                                    <div class="col-lg-6">
-                                        <div class="nk-widget-post-2">
-                                            <a href="blog-article.html" class="nk-post-image">
-                                                <img src="~/assets/images/post-2-sm.jpg" alt="">
-                                            </a>
-                                            <div class="nk-post-title"><a href="blog-article.html">Grab your sword and fight the Horde</a></div>
-                                            <div class="nk-post-date">
-                                                <span class="fa fa-calendar"></span> Sep 5, 2018
-                                                <span class="fa fa-comments"></span> <a href="#">7</a>
-                                            </div>
-                                        </div>
-                                    </div>
-
-                                </div>
-                            </div>
-                        </div>
-                        <div class="nk-widget">
-                            <h4 class="nk-widget-title"><span class="text-main-1">In</span> Twitter</h4>
-                            <div class="nk-widget-content">
-                                <div class="nk-twitter-list" data-twitter-count="1"></div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="nk-gap-3"></div>
-            </div>
-
-            <div class="nk-copyright">
-                <div class="container">
-                    <div class="nk-copyright-left">
-                        <a target="_blank" href="https://www.templateshub.net">Templates Hub</a>
-                    </div>
-                    <div class="nk-copyright-right">
-                        <ul class="nk-social-links-2">
-                            <li><a class="nk-social-rss" href="#"><span class="fa fa-rss"></span></a></li>
-                            <li><a class="nk-social-twitch" href="#"><span class="fab fa-twitch"></span></a></li>
-                            <li><a class="nk-social-steam" href="#"><span class="fab fa-steam"></span></a></li>
-                            <li><a class="nk-social-facebook" href="#"><span class="fab fa-facebook"></span></a></li>
-                            <li><a class="nk-social-google-plus" href="#"><span class="fab fa-google-plus"></span></a></li>
-                            <li><a class="nk-social-twitter" href="#" target="_blank"><span class="fab fa-twitter"></span></a></li>
-                            <li><a class="nk-social-pinterest" href="#"><span class="fab fa-pinterest-p"></span></a></li>
-                        </ul>
-                    </div>
-                </div>
-            </div>
-        </footer>
-        <!-- END: Footer -->
-
 
     </div>
 
@@ -407,7 +272,6 @@
     <!-- START: Page Background -->
 
     <img class="nk-page-background-top" src="~/assets/images/bg-top-4.png" alt="">
-    <img class="nk-page-background-bottom" src="~/assets/images/bg-bottom.png" alt="">
 
     <!-- END: Page Background -->
     <!-- START: Search Modal -->

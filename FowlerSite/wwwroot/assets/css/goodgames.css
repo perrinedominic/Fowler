@@ -5119,6 +5119,7 @@ img.rounded {
     -webkit-transition: .15s all;
     -o-transition: .15s all;
     transition: .15s all;
+    float: right;
 }
 
 .nk-btn, .nk-btn:hover, .nk-btn.hover, .nk-btn:active, .nk-btn.active, .nk-btn:focus {
