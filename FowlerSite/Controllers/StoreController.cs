@@ -124,7 +124,7 @@ namespace FowlerSite.Controllers
         {
             int cardId = 1;
             IEnumerable<CartItem> items = _db.ShoppingCartItems.Include(x => x.Game).Where(x => x.CartId == cardId).ToList();
-
+            
             return View(items);
         }
 
@@ -186,7 +186,7 @@ namespace FowlerSite.Controllers
                 {
                     AddedOn = DateTime.Now,
                     UpdatedOn = DateTime.Now,
-                    UserId = userId,
+                    UserId = userId
                 };
 
                 _db.ShoppingCart.Add(cart);
@@ -347,10 +347,19 @@ namespace FowlerSite.Controllers
                 Order_Date = DateTime.Now,
             };
 
+            PaymentInformation payment = new PaymentInformation()
+            {
+                CardNumber = Convert.ToInt32(frc["cardnumber"]),
+                CardProvider = frc["cardtype"],
+                SecurityCode = Convert.ToInt32(frc["cvc"]),
+                ExpDate = Convert.ToDateTime(frc["expdate"]),
+                PaymentInfoId = new Random().Next(1000)
+            };
+
             // Save to the order details table.
             OrderDetails orderDetail = new OrderDetails()
             {
-                PaymentType = "Card",
+                PaymentInfoId = payment.PaymentInfoId,
                 Sub_Total = subtotal,
                 Total = total,
                 Order_ID = order.Order_ID,

@@ -133,135 +133,187 @@
                                 <span class="custom-control-indicator"></span>
                             </label>
                         </div>
+                    </div>
+
+                    <div class="nk-gap-3"></div>
+                    <h3 class="nk-decorated-h-2"><span><span class="text-main-1">Payment</span> Information</span></h3>
+                    <div class="nk-gap"></div>
+
+                    <div class="row vertical-gap">
+
+                        <div class="col-lg-6">
+                                <label for="cardnumber">Cardholder Name(As Shown on Card)<span class="text-main-1">*</span>:</label>
+                                <input type="text" class="form-control required" name="cardname" id="cardname" />
+                            <div class="nk-gap-1"></div>
+                                <label for="cardnumber">Credit Card Number<span class="text-main-1">*</span>:</label>
+                                <input type="tel" required="required" data-parsley-creditcard="visa, mastercard" class="form-control required" name="cardnumber" id="cardnumber" />
+                        </div>
+                        <div class="col-lg-6">
+
+                            <div class="col-sm-3">
+                                <label for="cardnumber">Card Type<span class="text-main-1">*</span>:</label>
+                                <select class="form-control required" required name="cardtype" id="cardtype">
+                                    <option>VISA</option>
+                                    <option>MasterCard</option>
+                                </select>
+                            </div>
+                            <div class="nk-gap-1"></div>
+
+                            <div class="row vertical-gap">
+
+                                <div class="col-sm-6">
+                                    <label for="expdate">Expiration Date (mm/yy)<span class="text-main-1">*</span>:</label>
+                                    <input type="tel" data-parsley-cardexpiry="" class="form-control required" name="expdate" id="expdate" />
+                                </div>
+
+                                <div class="col-sm-6">
+                                    <label for="cvc">CVC Number<span class="text-main-1">*</span>:</label>
+                                    <input type="tel" data-parsley-cvv="" class="form-control required" name="cvc" id="cvc" />
+                                </div>
+                            </div>
+                        </div>
+                        </div>
+
+
+                        <script type="text/javascript">
+                            $("#custom-form").validate({
+                                rules: {
+                                    fname: {
+                                        required: true,
+                                        minlength: 2,
+                                        rangelength: [2, 20]
+                                    },
+                                    lname: {
+                                        required: true,
+                                        minlength: 2,
+                                        rangelength: [2, 20]
+                                    },
+                                    phone: {
+                                        required: true
+                                    },
+                                    email: {
+                                        required: true,
+                                        email: true
+                                    },
+                                    address: {
+                                        required: true
+                                    },
+                                    cardname: {
+                                        required: true
+                                    },
+                                    cardtype: {
+                                        required: true
+                                    },
+                                    cardnumber: {
+                                        required: true
+                                    },
+                                    expdate: {
+                                        required: true
+                                    },
+                                    cvc: {
+                                        required: true
+                                    }
+                                },
+                                messages: {
+                                    fname: {
+                                        required: "A first name must be entered.",
+                                        minlength: "A valid name must be submitted"
+                                    },
+                                    lname: {
+                                        required: "A last name must be entered.",
+                                        minlength: "A valid name must be submitted"
+                                    }
+                                }
+
+                            });
+                        </script>
+                        <!-- END: Billing Details -->
+                        <!-- START: Order Products -->
+                        <div class="nk-gap-3"></div>
+                        <h3 class="nk-decorated-h-2"><span><span class="text-main-1">Your</span> Order</span></h3>
+                        <div class="nk-gap"></div>
+                        <div class="table-responsive">
+                            <table class="nk-table nk-table-sm">
+                                <thead class="thead-default">
+                                    <tr>
+                                        <th class="nk-product-cart-title">Product</th>
+                                        <th class="nk-product-cart-total">Quantity</th>
+                                        <th class="nk-product-cart-total">Total</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @foreach (var x in Model)
+                                    {
+                                        decimal quantity = x.Quantity;
+                                        <tr>
+                                            <td class="nk-product-cart-title">
+                                                @Html.DisplayName(x.Game.Name)
+                                            </td>
+                                            <td class="nk-product-cart-total">
+                                                @Html.DisplayFor(modelItem => x.Quantity)
+                                            </td>
+                                            <td class="nk-product-cart-total">
+                                                @Html.DisplayFor(modelItem => x.Game.Price)
+                                            </td>
+                                        </tr>
+                                    }
+
+
+                                    <tr class="nk-store-cart-totals-subtotal">
+                                        <td></td>
+                                        <td class="nk-product-cart-total">
+                                            Subtotal
+                                        </td>
+                                        <td class="nk-product-cart-total">
+                                            @{decimal sum = 0;
+
+                                                foreach (var x in Model)
+                                                {
+
+                                                    sum += x.Quantity * x.Game.Price;
+
+                                                }
+                                                Output.WriteLine(sum);}
+                                        </td>
+                                    </tr>
+                                    <tr class="nk-store-cart-totals-shipping">
+                                        <td></td>
+                                        <td class="nk-product-cart-total">
+                                            Tax
+                                        </td>
+                                        <td class="nk-product-cart-total">
+                                            @{ decimal tax = .055m;
+                                                decimal taxTotal = sum * tax;
+                                                Output.WriteLine("$" + Math.Round(taxTotal, 2));
+                                            }
+                                        </td>
+                                    </tr>
+                                    <tr class="nk-store-cart-totals-total">
+                                        <td></td>
+                                        <td class="nk-product-cart-total">
+                                            Total
+                                        </td>
+                                        <td class="nk-product-cart-total">
+                                            @{
+                                                decimal total = sum + taxTotal;
+                                                Output.WriteLine("$" + Math.Round(total, 2));
+                                            }
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                        <div class="nk-gap-1"></div>
+                        @*<input class="nk-btn nk-btn-rounded nk-btn-color-main-1" type="submit" value="Place Order">*@
+                        @*<button class="nk-btn nk-btn-rounded nk-btn-color-main-1" asp-action="PlaceOrder">Place Order</button>*@
+                        <input class="nk-btn nk-btn-rounded nk-btn-color-main-1" type="submit" value="Place Order">
+                        }
+                        <!-- END: Order Products -->
+
 
                         <div class="nk-gap-2"></div>
                     </div>
-                
-
-                <script type="text/javascript">
-                    $("#custom-form").validate({
-                        rules: {
-                            fname: {
-                                required: true,
-                                minlength: 2,
-                                rangelength: [2, 20]
-                            },
-                            lname: {
-                                required: true,
-                                minlength: 2,
-                                rangelength: [2, 20]
-                            },
-                            phone: {
-                                required: true
-                            },
-                            email: {
-                                required: true,
-                                email: true
-                            },
-                            address: {
-                                required: true
-                            }
-                        },
-                        messages: {
-                            fname: {
-                                required: "A first name must be entered.",
-                                minlength: "A valid name must be submitted"
-                            },
-                            lname: {
-                                required: "A last name must be entered.",
-                                minlength: "A valid name must be submitted"
-                            }
-                        }
-
-                    });
-                </script>
-                <!-- END: Billing Details -->
-                <!-- START: Order Products -->
-                <div class="nk-gap-3"></div>
-                <h3 class="nk-decorated-h-2"><span><span class="text-main-1">Your</span> Order</span></h3>
-                <div class="nk-gap"></div>
-                <div class="table-responsive">
-                    <table class="nk-table nk-table-sm">
-                        <thead class="thead-default">
-                            <tr>
-                                <th class="nk-product-cart-title">Product</th>
-                                <th class="nk-product-cart-total">Quantity</th>
-                                <th class="nk-product-cart-total">Total</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            @foreach (var x in Model)
-                            {
-                                decimal quantity = x.Quantity;
-                                <tr>
-                                    <td class="nk-product-cart-title">
-                                        @Html.DisplayName(x.Game.Name)
-                                    </td>
-                                    <td class="nk-product-cart-total">
-                                        @Html.DisplayFor(modelItem => x.Quantity)
-                                    </td>
-                                    <td class="nk-product-cart-total">
-                                        @Html.DisplayFor(modelItem => x.Game.Price)
-                                    </td>
-                                </tr>
-                            }
-
-
-                            <tr class="nk-store-cart-totals-subtotal">
-                                <td></td>
-                                <td class="nk-product-cart-total">
-                                    Subtotal
-                                </td>
-                                <td class="nk-product-cart-total">
-                                    @{decimal sum = 0;
-
-                                        foreach (var x in Model)
-                                        {
-
-                                            sum += x.Quantity * x.Game.Price;
-
-                                        }
-                                        Output.WriteLine(sum);}
-                                </td>
-                            </tr>
-                            <tr class="nk-store-cart-totals-shipping">
-                                <td></td>
-                                <td class="nk-product-cart-total">
-                                    Tax
-                                </td>
-                                <td class="nk-product-cart-total">
-                                    @{ decimal tax = .055m;
-                                        decimal taxTotal = sum * tax;
-                                        Output.WriteLine("$" + Math.Round(taxTotal, 2));
-                                    }
-                                </td>
-                            </tr>
-                            <tr class="nk-store-cart-totals-total">
-                                <td></td>
-                                <td class="nk-product-cart-total">
-                                    Total
-                                </td>
-                                <td class="nk-product-cart-total">
-                                    @{
-                                        decimal total = sum + taxTotal;
-                                        Output.WriteLine("$" + Math.Round(total, 2));
-                                    }
-                                </td>
-                            </tr>
-                        </tbody>
-                    </table>
                 </div>
-                <div class="nk-gap-1"></div>
-                @*<input class="nk-btn nk-btn-rounded nk-btn-color-main-1" type="submit" value="Place Order">*@
-                @*<button class="nk-btn nk-btn-rounded nk-btn-color-main-1" asp-action="PlaceOrder">Place Order</button>*@
-                <input class="nk-btn nk-btn-rounded nk-btn-color-main-1" type="submit" value="Place Order">
-                                        }
-                <!-- END: Order Products -->
-
-
-                <div class="nk-gap-2"></div>
-            </div>
-        </div>
         <div class="nk-gap-2"></div>
 
     </div>
@@ -353,4 +405,4 @@
 
 
 </body>
-</html>
+
