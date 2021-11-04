@@ -34,17 +34,17 @@
             <ul class="nk-breadcrumbs">
 
 
-                <li><a href="index.html">Home</a></li>
+                <li><a asp-action="Index">Home</a></li>
 
 
                 <li><span class="fa fa-angle-right"></span></li>
 
-                <li><a href="store.html">Store</a></li>
+                <li><a asp-action="Index">Store</a></li>
 
 
                 <li><span class="fa fa-angle-right"></span></li>
 
-                <li><a href="store-cart.html">Cart</a></li>
+                <li><a asp-action="StoreCart">Cart</a></li>
 
 
                 <li><span class="fa fa-angle-right"></span></li>
@@ -63,7 +63,119 @@
 
             <div class="nk-store nk-store-checkout">
 
+                <!-- START: Billing Details -->
+                <div class="nk-gap-2"></div>
+                <h3 class="nk-decorated-h-2"><span><span class="text-main-1">Billing</span> Details</span></h3>
+                <div class="nk-gap"></div>
+                @using (Html.BeginForm("ProcessOrder", "Store", FormMethod.Post, new { id = "customer-form" }))
+                {
+                    <div class="row vertical-gap">
+                        <div class="col-lg-6">
+                            <div class="row vertical-gap">
+                                <div class="col-sm-6">
+                                    <label for="fname">First Name <span class="text-main-1">*</span>:</label>
+                                    <input type="text" class="form-control required" name="fname" id="fname">
+                                </div>
+                                <div class="col-sm-6">
+                                    <label for="lname">Last Name <span class="text-main-1">*</span>:</label>
+                                    <input type="text" class="form-control required" name="lname" id="lname">
+                                </div>
+                            </div>
 
+                            <div class="nk-gap-1"></div>
+                            <label for="company">Company Name:</label>
+                            <input type="text" class="form-control" name="company" id="company">
+
+                            <div class="nk-gap-1"></div>
+                            <div class="row vertical-gap">
+                                <div class="col-sm-6">
+                                    <label for="email">Email Address <span class="text-main-1">*</span>:</label>
+                                    <input type="email" class="form-control required" name="email" id="email">
+                                </div>
+                                <div class="col-sm-6">
+                                    <label for="phone">Phone <span class="text-main-1">*</span>:</label>
+                                    <input type="tel" class="form-control required" name="phone" id="phone">
+                                </div>
+                            </div>
+
+                            <div class="nk-gap-1"></div>
+                            <label for="country-sel">Country <span class="text-main-1">*</span>:</label>
+                            <select name="country" class="form-control required" id="country-sel">
+                                <option value="">Select a country...</option>
+                                <option value="US">'Merica</option>
+                                <option value="Other">Not 'Merica</option>
+
+                            </select>
+                        </div>
+                        <div class="col-lg-6">
+                            <label for="address">Address <span class="text-main-1">*</span>:</label>
+                            <input type="text" class="form-control required" name="address" id="address">
+
+                            <div class="nk-gap-1"></div>
+                            <label for="city">Town / City <span class="text-main-1">*</span>:</label>
+                            <input type="text" class="form-control required" name="city" id="city">
+
+                            <div class="nk-gap-1"></div>
+                            <div class="row vertical-gap">
+                                <div class="col-sm-6">
+                                    <label for="state">State<span class="text-main-1">*</span>:</label>
+                                    <input type="text" class="form-control required" name="state" id="state">
+                                </div>
+                                <div class="col-sm-6">
+                                    <label for="zip">Postcode / ZIP <span class="text-main-1">*</span>:</label>
+                                    <input type="tel" class="form-control required" name="zip" id="zip">
+                                </div>
+                            </div>
+
+                            <div class="nk-gap-1"></div>
+                            <label class="custom-control custom-checkbox">
+                                <input type="checkbox" class="custom-control-input">
+                                <span class="custom-control-indicator"></span>
+                            </label>
+                        </div>
+
+                        <div class="nk-gap-2"></div>
+                    </div>
+                
+
+                <script type="text/javascript">
+                    $("#custom-form").validate({
+                        rules: {
+                            fname: {
+                                required: true,
+                                minlength: 2,
+                                rangelength: [2, 20]
+                            },
+                            lname: {
+                                required: true,
+                                minlength: 2,
+                                rangelength: [2, 20]
+                            },
+                            phone: {
+                                required: true
+                            },
+                            email: {
+                                required: true,
+                                email: true
+                            },
+                            address: {
+                                required: true
+                            }
+                        },
+                        messages: {
+                            fname: {
+                                required: "A first name must be entered.",
+                                minlength: "A valid name must be submitted"
+                            },
+                            lname: {
+                                required: "A last name must be entered.",
+                                minlength: "A valid name must be submitted"
+                            }
+                        }
+
+                    });
+                </script>
+                <!-- END: Billing Details -->
                 <!-- START: Order Products -->
                 <div class="nk-gap-3"></div>
                 <h3 class="nk-decorated-h-2"><span><span class="text-main-1">Your</span> Order</span></h3>
@@ -140,126 +252,12 @@
                     </table>
                 </div>
                 <div class="nk-gap-1"></div>
-
-                <!-- END: Order Products -->
-                <!-- START: Billing Details -->
-                <div class="nk-gap-2"></div>
-                <h3 class="nk-decorated-h-2"><span><span class="text-main-1">Billing</span> Details</span></h3>
-                <div class="nk-gap"></div>
-                @using (Html.BeginForm("ProcessOrder", "Store", FormMethod.Post, new { id = "customer-form" }))
-                {
-                    <div class="row vertical-gap">
-                        <div class="col-lg-6">
-                            <div class="row vertical-gap">
-                                <div class="col-sm-6">
-                                    <label for="fname">First Name <span class="text-main-1">*</span>:</label>
-                                    <input type="text" class="form-control required" name="fname" id="fname">
-                                </div>
-                                <div class="col-sm-6">
-                                    <label for="lname">Last Name <span class="text-main-1">*</span>:</label>
-                                    <input type="text" class="form-control required" name="lname" id="lname">
-                                </div>
-                            </div>
-
-                            <div class="nk-gap-1"></div>
-                            <label for="company">Company Name:</label>
-                            <input type="text" class="form-control" name="company" id="company">
-
-                            <div class="nk-gap-1"></div>
-                            <div class="row vertical-gap">
-                                <div class="col-sm-6">
-                                    <label for="email">Email Address <span class="text-main-1">*</span>:</label>
-                                    <input type="email" class="form-control required" name="email" id="email">
-                                </div>
-                                <div class="col-sm-6">
-                                    <label for="phone">Phone <span class="text-main-1">*</span>:</label>
-                                    <input type="tel" class="form-control required" name="phone" id="phone">
-                                </div>
-                            </div>
-
-                            <div class="nk-gap-1"></div>
-                            <label for="country-sel">Country <span class="text-main-1">*</span>:</label>
-                            <select name="country" class="form-control required" id="country-sel">
-                                <option value="">Select a country...</option>
-                                <option value="US">'Merica</option>
-                                <option value="Other">Not 'Merica</option>
-
-                            </select>
-                        </div>
-                        <div class="col-lg-6">
-                            <label for="address">Address <span class="text-main-1">*</span>:</label>
-                            <input type="text" class="form-control required" name="address" id="address">
-
-                            <div class="nk-gap-1"></div>
-                            <label for="city">Town / City <span class="text-main-1">*</span>:</label>
-                            <input type="text" class="form-control required" name="city" id="city">
-
-                            <div class="nk-gap-1"></div>
-                            <div class="row vertical-gap">
-                                <div class="col-sm-6">
-                                    <label for="state">State<span class="text-main-1">*</span>:</label>
-                                    <input type="text" class="form-control required" name="state" id="state">
-                                </div>
-                                <div class="col-sm-6">
-                                    <label for="zip">Postcode / ZIP <span class="text-main-1">*</span>:</label>
-                                    <input type="tel" class="form-control required" name="zip" id="zip">
-                                </div>
-                            </div>
-
-                            <div class="nk-gap-1"></div>
-                            <label class="custom-control custom-checkbox">
-                                <input type="checkbox" class="custom-control-input">
-                                <span class="custom-control-indicator"></span>
-                            </label>
-                        </div>
-
-                <div class="nk-gap-2"></div>
-
-                <div class="nk-gap-2"></div>
-                        @*<input class="nk-btn nk-btn-rounded nk-btn-color-main-1" type="submit" value="Place Order">*@
+                @*<input class="nk-btn nk-btn-rounded nk-btn-color-main-1" type="submit" value="Place Order">*@
                 @*<button class="nk-btn nk-btn-rounded nk-btn-color-main-1" asp-action="PlaceOrder">Place Order</button>*@
                 <input class="nk-btn nk-btn-rounded nk-btn-color-main-1" type="submit" value="Place Order">
-                    </div>
-                }
+                                        }
+                <!-- END: Order Products -->
 
-                <script type="text/javascript">
-                    $("#custom-form").validate({
-                        rules: {
-                            fname: {
-                                required: true,
-                                minlength: 2,
-                                rangelength:[2,20]
-                            },
-                            lname: {
-                                required: true,
-                                minlength: 2,
-                                rangelength: [2, 20]
-                            },
-                            phone: {
-                                required: true
-                            },
-                            email: {
-                                required: true,
-                                email: true
-                            },
-                            address: {
-                                required: true
-                            }
-                        },
-                        messages: {
-                            fname: {
-                                required: "A first name must be entered.",
-                                minlength: "A valid name must be submitted,"
-                            },
-                            lname: {
-                                required: "A last name must be entered.",
-                                minlength: "A valid name must be submitted,"
-                            }
-                        }
-                        
-                    });
-                </script>
-                <!-- END: Billing Details -->
 
                 <div class="nk-gap-2"></div>
             </div>
@@ -274,7 +272,6 @@
     <!-- START: Page Background -->
 
     <img class="nk-page-background-top" src="~/assets/images/bg-top-4.png" alt="">
-    <img class="nk-page-background-bottom" src="~/assets/images/bg-bottom.png" alt="">
 
     <!-- END: Page Background -->
     <!-- START: Search Modal -->
