@@ -110,7 +110,7 @@ namespace FowlerSite.Controllers
                 connection.Close();
             }
 
-            return View("Admin");
+            return View("Admin", user);
         }
 
         /// <summary>
@@ -157,6 +157,7 @@ namespace FowlerSite.Controllers
             int admin = (int)TempData["Admin"];
             string username = (string)TempData["Username"];
             string password = (string)TempData["Password"];
+            RedirectToActionResult result = null;
 
             using (SqlConnection connection = new SqlConnection(this.connectionString))
             {
@@ -205,7 +206,9 @@ namespace FowlerSite.Controllers
                 }
             }
 
-            return RedirectToAction("Login");
+            result = RedirectToAction("Login");
+
+            return result;
         }
 
         // GET: Users/Details/5

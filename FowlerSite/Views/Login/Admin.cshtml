@@ -1,2 +1,36 @@
-﻿<h4>Admin Page Functionality Coming Soon!</h4>
+﻿@model Users
 
+<!DOCTYPE html>
+<head>
+    <link href="~/assets/css/login.css" rel="stylesheet" />
+</head>
+<table class="nk-table">
+    <thead>
+        <tr>
+            <th colspan="3">Admin Information</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <th>You Are Logged in as Admin:</th>
+        </tr>
+        <tr>
+            <td>@Model.Username</td>
+        </tr>
+    </tbody>
+</table>
+<table class="nk-table">
+    <thead>
+        <tr>
+            <th colspan="3">Create an Admin</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <th>Would you like to:</th>
+        </tr>
+        <tr>
+            <td><a class="btn btn-outline-primary" asp-action="CreateAdmin">Create an Admin</a></td>
+        </tr>
+    </tbody>
+</table>
