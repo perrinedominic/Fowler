@@ -59,7 +59,7 @@
                 @foreach (var g in Model)
                 {
                     <div class="nk-image-slider-item">
-                        <img src="@Url.Content(g.imagePath)" alt="" class="nk-image-slider-img" data-thumb="@Url.Content(g.imagePath)">
+                        <img src="@Url.Content(g.ImagePath)" alt="" class="nk-image-slider-img" data-thumb="@Url.Content(g.ImagePath)">
 
                         <div class="nk-image-slider-content">
 
@@ -129,7 +129,7 @@
                     <!-- START: Post -->
                     <div class="nk-blog-post">
                         <a href="blog-article.html" class="nk-post-img">
-                            <img src="@Url.Content(Model.ElementAt(count).imagePath)" alt="@Url.Content(Model.ElementAt(count).Name)">
+                            <img src="@Url.Content(Model.ElementAt(count).ImagePath)" alt="@Url.Content(Model.ElementAt(count).Name)">
                             <span class="nk-post-comments-count">13</span>
 
                             <span class="nk-post-categories">
@@ -165,7 +165,7 @@
                 <div class="col-md-6">
                     <div class="nk-product-cat">
                         <a class="nk-product-image" asp-action="StoreProduct">
-                            <img src="@Url.Content(Model.ElementAt(i).imagePath)" alt="@Model.ElementAt(i).Name">
+                            <img src="@Url.Content(Model.ElementAt(i).ImagePath)" alt="@Model.ElementAt(i).Name">
                         </a>
                         <div class="nk-product-cont">
                             <h3 class="nk-product-title h5"><a asp-action="StoreProduct">@Model.ElementAt(i).Name</a></h3>

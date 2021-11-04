@@ -1,19 +1,13 @@
-﻿using System;
+﻿using DataAccessLibrary.DataAccess;
+using DataAccessLibrary.Models;
+using FowlerSite.Services;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Configuration;
+using Newtonsoft.Json;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.Rendering;
-using Microsoft.EntityFrameworkCore;
-using DataAccessLibrary.DataAccess;
-using DataAccessLibrary.Models;
-using System.IO;
-using Newtonsoft.Json;
-using Microsoft.Extensions.Configuration;
-using FowlerSite.Services;
-using Azure.Storage;
-using Azure.Storage.Blobs;
-using FowlerSite.Models;
 
 namespace FowlerSite.Controllers
 {
@@ -144,35 +138,6 @@ namespace FowlerSite.Controllers
             }
             UpdateTextJson(game);
             return View(game);
-        }
-
-        /// <summary>
-        /// Uploads images to Azure storage service.
-        /// </summary>
-        /// <param name="fileStream"></param>
-        /// <param name="fileName">The name of the image file.</param>
-        /// <param name="_storageConfig">Config for uploading images.</param>
-        /// <returns></returns>
-        public static async Task<bool> UploadFileToStorage(Stream fileStream, string fileName, AzureStorageConfig _storageConfig)
-        {
-            // Create a URI to the blob
-            Uri blobUri = new Uri("https://" +
-                                  _storageConfig.AccountName +
-                                  ".blob.core.windows.net/" +
-                                  "gameimages/" + fileName);
-
-            // Create StorageSharedKeyCredentials object by reading
-            // the values from the configuration (appsettings.json)
-            StorageSharedKeyCredential storageCredentials =
-                new StorageSharedKeyCredential(_storageConfig.AccountName, _storageConfig.AccountKey);
-
-            // Create the blob client.
-            BlobClient blobClient = new BlobClient(blobUri, storageCredentials);
-
-            // Upload the file
-            await blobClient.UploadAsync(fileStream);
-
-            return await Task.FromResult(true);
         }
 
         // GET: Games/Edit/5

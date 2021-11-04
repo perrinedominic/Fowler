@@ -9,15 +9,9 @@ namespace DataAccessLibrary.Models
     public class Game
     {
         /// <summary>
-        /// The image path to uniquely identify the image associated with the game.
+        /// An Array of images for the game.
         /// </summary>
-        public string imagePath
-        {
-            get
-            {
-                return "~/assets/images/game-" + this.ProductID + ".jpg";
-            }
-        }
+        public string ImagePath { get; set; }
 
         /// <summary>
         /// The id that is associated with the product.

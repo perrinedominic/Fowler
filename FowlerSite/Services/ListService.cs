@@ -7,6 +7,8 @@ using System.Collections.Generic;
 using System.Data;
 using System.Linq;
 using System.Threading.Tasks;
+using Azure.Storage.Blobs;
+using Azure.Storage.Blobs.Models;
 
 namespace FowlerSite.Services
 {
@@ -17,6 +19,8 @@ namespace FowlerSite.Services
         /// </summary>
         private string connectionString;
 
+        private string blobConnectionString;
+
         /// <summary>
         /// Initializes a new instance of the List Service class. 
         /// </summary>
@@ -26,6 +30,7 @@ namespace FowlerSite.Services
             Configuration = configuration;
 
             this.connectionString = Configuration["ConnectionStrings:DefaultConnection"];
+            this.blobConnectionString = Configuration["AzureStorageConfig:ConnectionString"];
         }
 
         /// <summary>
@@ -130,6 +135,8 @@ namespace FowlerSite.Services
 
                 foreach (DataRow dr in dataTable.Rows)
                 {
+                    ImageService image = new ImageService(this.blobConnectionString, "gameimages");
+
                     games.Add(
                         new Game
                         {
@@ -139,7 +146,8 @@ namespace FowlerSite.Services
                             Price = Convert.ToDecimal(dr["Price"]),
                             Genre = Convert.ToString(dr["Genre"]),
                             Rating = Convert.ToInt32(dr["Rating"]),
-                            Platforms = Convert.ToString(dr["Platforms"])
+                            Platforms = Convert.ToString(dr["Platforms"]),
+                            ImagePath = "game-" + Convert.ToInt32(dr["ProductID"]) + ".jpg"
                         });
                 }
             }
