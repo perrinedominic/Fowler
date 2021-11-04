@@ -1,24 +1,17 @@
-using Stripe;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+using Azure.Core.Extensions;
+using Azure.Storage.Blobs;
+using Azure.Storage.Queues;
 using DataAccessLibrary.DataAccess;
+using FowlerSite.Services;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.HttpsPolicy;
-using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Azure;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using Stripe.BillingPortal;
-using Stripe.Checkout;
-using Microsoft.Extensions.Azure;
-using Azure.Storage.Queues;
-using Azure.Storage.Blobs;
-using Azure.Core.Extensions;
-using FowlerSite.Models;
+using Stripe;
+using System;
 
 namespace FowlerSite
 {
@@ -40,14 +33,12 @@ namespace FowlerSite
                 options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection"));
             });
 
-            services.AddControllersWithViews();
-            services.AddAzureClients(builder =>
-            {
-                builder.AddBlobServiceClient(Configuration["FowlerGameImages:blob"], preferMsi: true);
-                builder.AddQueueServiceClient(Configuration["FowlerGameImages:queue"], preferMsi: true);
-            });
+            services.AddSingleton(x =>
+                new BlobServiceClient(Configuration.GetConnectionString("AzureStorage")));
 
-            services.Configure<AzureStorageConfig>(Configuration.GetSection("AzureStorageConfig"));
+            services.AddSingleton<IBlobService, BlobService>();
+
+            services.AddControllersWithViews();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

@@ -31,6 +31,7 @@ namespace FowlerSite.Controllers
         public IActionResult Index()
         {
             var gameList = new ListService(Configuration).GetGames();
+            var imageList = new BlobService(Configuration.GetConnectionString("AzureStorage")).ListBlobsAsync();
 
             return View(gameList);
         }
