@@ -78,12 +78,15 @@ namespace FowlerSite.Services
             var orders = new List<(Order, OrderDetails)>();
             var user = new ListService(this.Configuration).GetUserList();
 
+            // Testing variable until database more fits needs for this app
+            int id = 0;
+
             using (SqlConnection connection = new SqlConnection(this.connectionString))
             {
                 DataTable dataTable = new DataTable();
                 string sql = $"SELECT [Order].[Order_ID], [Order].[Order_Date], [Order].[Cust_ID], [Order_Details].Total, [Order_Details].[Sub_Total], " +
                     "[Order_Details].[Product_ID], [Order_Details].[PaymentType] FROM[Order] +" +
-                    $" INNER JOIN[Order_Details] ON[Order].Order_ID = [Order_Details].Order_ID WHERE Cust_ID={ID}";
+                    $" INNER JOIN[Order_Details] ON[Order].Order_ID = [Order_Details].Order_ID WHERE Cust_ID={id}";
 
                 SqlCommand command = new SqlCommand(sql, connection);
 
@@ -115,10 +118,123 @@ namespace FowlerSite.Services
         }
 
         /// <summary>
-        /// The method to get an iterable list of users.
+        /// The method to get the list of orders.
         /// </summary>
-        /// <returns>A list of users.</returns>
-        public IEnumerable<Users> GetUserList()
+        /// <returns>Returns an IEnumerable</returns>
+        public IEnumerable<Order> GetOrderList()
+        {
+            List<Order> products = new List<Order>();
+
+            using (SqlConnection connection = new SqlConnection(this.connectionString))
+            {
+                DataTable dataTable = new DataTable();
+                string sql = $"SELECT * FROM [Order]";
+                SqlCommand command = new SqlCommand(sql, connection);
+
+                SqlDataAdapter dataAdapter = new SqlDataAdapter(command);
+
+                dataAdapter.Fill(dataTable);
+
+                foreach (DataRow dr in dataTable.Rows)
+                {
+                    products.Add(
+                        new Order
+                        {
+                            Order_ID = Convert.ToInt32(dr["Order_ID"]),
+                            Order_Date = Convert.ToDateTime(dr["Order_Date"]),
+                            Cust_ID = Convert.ToInt32(dr["Cust_ID"])
+                        });
+                }
+
+                return products;
+            }
+        }
+
+        /// <summary>
+        /// The method to get the order line or order detail.
+        /// </summary>
+        /// <param name="id">The id of the order.</param>
+        /// <returns>Returns an IEnumerable.</returns>
+        public IEnumerable<OrderDetails> GetOrderLineList(int id)
+        {
+            List<OrderDetails> orderLines = new List<OrderDetails>();
+            var orders = new ListService(this.Configuration).GetOrderList();
+            var products = new ListService(this.Configuration).GetProductList();
+
+            using (SqlConnection connection = new SqlConnection(this.connectionString))
+            {
+                DataTable dataTable = new DataTable();
+
+                string sql = $"Select * From [OrderLine] Where OrderId={id}";
+
+                SqlCommand command = new SqlCommand(sql, connection);
+
+                SqlDataAdapter dataAdapter = new SqlDataAdapter(command);
+
+                dataAdapter.Fill(dataTable);
+
+                foreach (DataRow dr in dataTable.Rows)
+                {
+                    orderLines.Add(
+                        new OrderDetails
+                        {
+                            Order_ID = Convert.ToInt32(dr["Order_ID"]),
+                            Sub_Total = Convert.ToDecimal(dr["Sub_Total"]),
+                            Total = Convert.ToDecimal(dr["Total"]),
+                            Product_ID = Convert.ToInt32(dr["Product_ID"]),
+                            PaymentType = Convert.ToString(dr["PaymentType"]),
+                            Order = orders.FirstOrDefault(o => o.Order_ID == Convert.ToInt32(dr["OrderID"])),
+                            Game = products.First(p => p.ProductID == Convert.ToInt32(dr["Product_Id"])),
+                        });
+                }
+            }
+
+            return orderLines;
+        }
+
+        /// <summary>
+        /// The method to get a list of products.
+        /// </summary>
+        /// <returns>Returns an IEnumerable.</returns>
+        public IEnumerable<Game> GetProductList()
+        {
+            List<Game> products = new List<Game>();
+
+            using (SqlConnection connection = new SqlConnection(this.connectionString))
+            {
+                DataTable dataTable = new DataTable();
+
+                string sql = $"Select * From Games";
+                SqlCommand command = new SqlCommand(sql, connection);
+
+                SqlDataAdapter dataAdapter = new SqlDataAdapter(command);
+
+                dataAdapter.Fill(dataTable);
+
+                foreach (DataRow dr in dataTable.Rows)
+                {
+                    products.Add(
+                        new Game
+                        {
+                            ProductID = Convert.ToInt32(dr["ProductID"]),
+                            Name = Convert.ToString(dr["Name"]),
+                            Description = Convert.ToString(dr["Description"]),
+                            Price = Convert.ToDecimal(dr["Price"]),
+                            Genre = Convert.ToString(dr["Genre"]),
+                            Rating = Convert.ToInt32(dr["Rating"]),
+                            Platforms = Convert.ToString(dr["Platforms"]),
+                        });
+                }
+
+                return products;
+            }
+        }
+
+            /// <summary>
+            /// The method to get an iterable list of users.
+            /// </summary>
+            /// <returns>A list of users.</returns>
+            public IEnumerable<Users> GetUserList()
         {
             List<Users> users = new List<Users>();
 

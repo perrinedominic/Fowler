@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
@@ -24,6 +25,11 @@ namespace DataAccessLibrary.Models
         /// Gets or sets the customer.
         /// </summary>
         public int Cust_ID { get; set; }
+
+        /// <summary>
+        /// The Order details attatched to the order.
+        /// </summary>
+        public IEnumerable<OrderDetails> Lines;
 
     }
 }

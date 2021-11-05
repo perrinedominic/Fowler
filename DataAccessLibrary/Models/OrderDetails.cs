@@ -38,5 +38,15 @@ namespace DataAccessLibrary.Models
 		/// The type of payment used for the order.
 		/// </summary>
 		public string PaymentType { get; set; }
+
+		/// <summary>
+		/// The Game that is on the order line.
+		/// </summary>
+		public Game Game { get; set; }
+
+		/// <summary>
+		/// The order line the Order is a part of.
+		/// </summary>
+		public Order Order { get; set; }
 	}
 }
