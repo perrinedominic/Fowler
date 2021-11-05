@@ -1,19 +1,26 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Text;
 
 namespace DataAccessLibrary.Models
 {
     public class PaymentInformation
     {
-        public int PaymentInfoId { get; set; }
+        [Key]
+        public int Payment_Info_Id { get; set; }
 
-        public int CardNumber { get; set; }
+        [Column(TypeName = "varchar(16)")]
+        public string Card_Number { get; set; }
 
-        public int SecurityCode { get; set; }
+        [Column(TypeName = "varchar(16)")]
+        public int Security_Code { get; set; }
+        
+        [Column(TypeName = "date")]
+        public DateTime Expiration_Date { get; set; }
 
-        public DateTime ExpDate { get; set; }
-
-        public string CardProvider { get; set; }
+        [Column(TypeName = "varchar(16)")]
+        public string Card_Provider { get; set; }
     }
 }

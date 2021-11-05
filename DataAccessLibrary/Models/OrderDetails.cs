@@ -38,6 +38,6 @@ namespace DataAccessLibrary.Models
 		/// The type of payment used for the order.
 		/// </summary>
 		[Column(TypeName = "int")]
-		public int PaymentInfoId { get; set; }
+		public int Payment_Info_Id { get; set; }
 	}
 }
