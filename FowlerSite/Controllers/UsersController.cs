@@ -5,6 +5,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using DataAccessLibrary.DataAccess;
 using FowlerSite.Models;
+using FowlerSite.Services;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Data.SqlClient;
 using Microsoft.Extensions.Configuration;
@@ -149,6 +150,7 @@ namespace FowlerSite.Controllers
                         user.CardNumber = Convert.ToString(dataReader["CardNumber"]);
                         user.CardExpire = Convert.ToString(dataReader["CardExpire"]);
                         user.CardCvc = Convert.ToString(dataReader["CardCVC"]);
+                        user.Orders = new ListService(this.Configuration).GetOrderList();
                     }
                 }
                 connection.Close();

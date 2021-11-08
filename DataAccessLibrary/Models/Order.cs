@@ -26,6 +26,8 @@ namespace DataAccessLibrary.Models
         /// </summary>
         public int Cust_ID { get; set; }
 
+        public User User { get; set; }
+
         /// <summary>
         /// The Order details attatched to the order.
         /// </summary>

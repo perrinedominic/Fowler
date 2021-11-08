@@ -60,6 +60,8 @@ namespace FowlerSite.Models
         /// </summary>
         public string CardExpire { get; set; }
 
+        public IEnumerable<DataAccessLibrary.Models.Order> Orders { get; set; }
+
         /// <summary>
         /// Gets or sets the card cvc.
         /// </summary>

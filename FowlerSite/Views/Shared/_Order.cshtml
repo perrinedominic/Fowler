@@ -1,0 +1,60 @@
+﻿@model Users
+
+<header>Orders</header>
+<div class="row">
+    <div class="col text-left">
+        <a class="btn btn-sm btn-primary" asp-controller="Order" asp-action="Create">Create New</a>
+    </div>
+    <div class="col text-right">
+
+    </div>
+</div>
+<table class="table table-bordered table-sm table-striped">
+    <thead>
+        <tr>
+            <th class="text-primary">Customer</th>
+        </tr>
+    </thead>
+    <tbody>
+        @if (Model == null)
+        {
+            <tr><td colspan="6" class="text-center">No Order Data</td></tr>
+        }
+        else
+        {
+            @foreach (var o in Model.Orders)
+            {
+                <tr>
+                    <td>@o.User</td>
+                    <td>
+                        <a class="btn btn-warning" asp-controller="Order" asp-action="Update" asp-route-id="@o.Order_ID">Edit</a>
+                    </td>
+                    @if (o.Lines == null)
+                    {
+                        <td>
+                            <form asp-action="Delete" asp-controller="Order" method="post" asp-route-id="@o.Order_ID">
+                                <button class="btn-sm btn-danger">Delete</button>
+                            </form>
+                        </td>
+                    }
+                    else
+                    {
+                        if (o.Lines.Count() <= 0)
+                        {
+                            <td>
+                                <form asp-action="Delete" asp-controller="Order" method="post" asp-route-id="@o.Order_ID">
+                                    <button class="btn-sm btn-danger">Delete</button>
+                                </form>
+                            </td>
+                        }
+                        else
+                        {
+                            <td>OrderLines Exist</td>
+                        }
+                    }
+                </tr>
+            }
+        }
+    </tbody>
+</table>
+

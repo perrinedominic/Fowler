@@ -1,11 +1,11 @@
 ﻿using DataAccessLibrary.Models;
 using Microsoft.EntityFrameworkCore;
-using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace DataAccessLibrary.DataAccess
 {
+    /// <summary>
+    /// The class which represents the OESContext.
+    /// </summary>
     public class OESContext: DbContext
     {
         /// <summary>
@@ -17,6 +17,10 @@ namespace DataAccessLibrary.DataAccess
         {
         }
 
+        /// <summary>
+        /// The method to run when models are created.
+        /// </summary>
+        /// <param name="modelBuilder">The model builder information.</param>
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.Entity<OrderDetails>()
