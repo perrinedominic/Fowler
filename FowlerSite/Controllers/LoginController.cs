@@ -12,6 +12,7 @@ using Microsoft.Extensions.Configuration;
 using System.Data;
 using FowlerSite.Models;
 using FowlerSite.Services;
+using System.Configuration;
 
 namespace FowlerSite.Controllers
 {
@@ -52,6 +53,11 @@ namespace FowlerSite.Controllers
             return View(await _context.Users.ToListAsync());
         }
 
+        /// <summary>
+        /// Gets the user that logged in for the user page.
+        /// </summary>
+        /// <param name="id">The id of the user.</param>
+        /// <returns>The user found.</returns>
         public IActionResult UserPage(int id)
         {
             Users user = new Users();
@@ -84,6 +90,11 @@ namespace FowlerSite.Controllers
             return View("Users/User", user);
         }
 
+        /// <summary>
+        /// Gets the admin that logged in for the user page.
+        /// </summary>
+        /// <param name="id">The id of the admin.</param>
+        /// <returns>The found admin that logged in.</returns>
         public IActionResult AdminPage(int id)
         {
             Users user = new Users();
@@ -116,16 +127,19 @@ namespace FowlerSite.Controllers
         /// <summary>
         /// The method used to add users to a login list.
         /// </summary>
+        /// <param name="login">The login for the user logging in.</param>
         /// <returns>The view for successfully logging in.</returns>
         public IActionResult UserLogin(Login login)
         {
             RedirectToActionResult view = null;
+            bool validate = false;
 
             using (SqlConnection connection = new SqlConnection(this.connectionString))
             {
                 connection.Open();
 
                 string sql = $"SELECT * FROM Login WHERE Username = '{login.Username}' and Password = '{login.Password}'";
+                string query = $"SELECT Username, Password FROM Login WHERE Username='{login.Username}' and Password='{login.Password}'";
                 SqlCommand command = new SqlCommand(sql, connection);
 
                 using (SqlDataReader dataReader = command.ExecuteReader())
@@ -136,6 +150,15 @@ namespace FowlerSite.Controllers
                         login.Users = new ListService(Configuration).GetUserLoginList(login.Id);
                         login.Admin = Convert.ToInt32(dataReader["Admin"]);
                         login.UserId = Convert.ToInt32(dataReader["UserId"]);
+                    }
+                }
+                command = new SqlCommand(query, connection);
+
+                using (SqlDataReader dataReader = command.ExecuteReader())
+                {
+                    if (dataReader.Read())
+                    {
+
                     }
                 }
                 connection.Close();
@@ -152,6 +175,11 @@ namespace FowlerSite.Controllers
             return view;
         }
 
+        /// <summary>
+        /// Creates a login from creating an account.
+        /// </summary>
+        /// <param name="id">The id of the login.</param>
+        /// <returns>Directs to the login view.</returns>
         public IActionResult CreateLogin(int id)
         {
             int admin = (int)TempData["Admin"];
@@ -229,11 +257,28 @@ namespace FowlerSite.Controllers
             return View(user);
         }
 
+        /// <summary>
+        /// The method for the create view.
+        /// </summary>
+        /// <returns>The create view.</returns>
         public IActionResult Create()
         {
             return View();
         }
 
+        /// <summary>
+        /// The method for the create admin view.
+        /// </summary>
+        /// <returns>The create admin view.</returns>
+        public IActionResult CreateAdmin()
+        {
+            return View();
+        }
+
+        /// <summary>
+        /// The method for the login view.
+        /// </summary>
+        /// <returns>The login view.</returns>
         public IActionResult Login()
         {
             return View();

@@ -125,6 +125,89 @@ namespace FowlerSite.Controllers
             return RedirectToAction("ReadUser");
         }
 
+        /// <summary>
+        /// Creates the new user.
+        /// </summary>
+        /// <param name="user">The user being created.</param>
+        /// <returns>Redirects to the login function once the user has been created.</returns>
+        [HttpPost]
+        public IActionResult CreateAdmin(Users user)
+        {
+            using (SqlConnection connection = new SqlConnection(this.connectionString))
+            {
+                string sql = "INSERT INTO Users (Username, Password, FirstName, LastName, EmailAddress, Admin) Values (@Username, @Password, @FirstName, @LastName, @EmailAddress, @Admin)";
+
+                using (SqlCommand command = new SqlCommand(sql, connection))
+                {
+                    command.CommandType = CommandType.Text;
+
+                    // Add the parameters to the db.
+                    SqlParameter parameter = new SqlParameter
+                    {
+                        ParameterName = "@Username",
+                        Value = user.Username,
+                        SqlDbType = SqlDbType.VarChar,
+                        Size = 450
+                    };
+                    command.Parameters.Add(parameter);
+
+                    parameter = new SqlParameter
+                    {
+                        ParameterName = "@Password",
+                        Value = user.Password,
+                        SqlDbType = SqlDbType.VarChar,
+                        Size = 100
+                    };
+                    command.Parameters.Add(parameter);
+
+                    parameter = new SqlParameter
+                    {
+                        ParameterName = "@FirstName",
+                        Value = user.FirstName,
+                        SqlDbType = SqlDbType.VarChar,
+                        Size = 100
+                    };
+                    command.Parameters.Add(parameter);
+
+                    parameter = new SqlParameter
+                    {
+                        ParameterName = "@LastName",
+                        Value = user.LastName,
+                        SqlDbType = SqlDbType.VarChar,
+                        Size = 100
+                    };
+                    command.Parameters.Add(parameter);
+
+                    parameter = new SqlParameter
+                    {
+                        ParameterName = "@EmailAddress",
+                        Value = user.EmailAddress,
+                        SqlDbType = SqlDbType.VarChar,
+                        Size = 100
+                    };
+                    command.Parameters.Add(parameter);
+
+                    parameter = new SqlParameter
+                    {
+                        ParameterName = "@Admin",
+                        Value = user.Admin,
+                        SqlDbType = SqlDbType.Int,
+                    };
+                    command.Parameters.Add(parameter);
+
+                    connection.Open();
+                    command.ExecuteNonQuery();
+                    connection.Close();
+
+                    TempData["Admin"] = user.Admin;
+                    TempData["Username"] = user.Username;
+                    TempData["Password"] = user.Password;
+                }
+            }
+
+            return RedirectToAction("ReadUser");
+        }
+
         public IActionResult ReadUser()
         {
             string username = (string)TempData["Username"];
@@ -198,6 +281,42 @@ namespace FowlerSite.Controllers
             }
 
             return RedirectToAction("UserPage", "Login", new { id });
+        }
+
+        /// <summary>
+        /// Gets the users for the admin page.
+        /// </summary>
+        public List<Users> GetUsers()
+        {
+            Users user = new Users();
+            List<Users> userList = new List<Users>();
+            using (SqlConnection connection = new SqlConnection(this.connectionString))
+            {
+                connection.Open();
+
+                string sql = $"SELECT * FROM Users";
+                SqlCommand command = new SqlCommand(sql, connection);
+
+                using (SqlDataReader dataReader = command.ExecuteReader())
+                {
+                    while (dataReader.Read())
+                    {
+                        user.Id = Convert.ToInt32(dataReader["Id"]);
+                        user.FirstName = Convert.ToString(dataReader["FirstName"]);
+                        user.LastName = Convert.ToString(dataReader["LastName"]);
+                        user.EmailAddress = Convert.ToString(dataReader["EmailAddress"]);
+                        user.Username = Convert.ToString(dataReader["Username"]);
+                        user.Password = Convert.ToString(dataReader["Password"]);
+                        user.CardNumber = Convert.ToString(dataReader["CardNumber"]);
+                        user.CardExpire = Convert.ToString(dataReader["CardExpire"]);
+                        user.CardCvc = Convert.ToString(dataReader["CardCVC"]);
+                        userList.Add(user);
+                    }
+                }
+                connection.Close();
+            }
+
+            return userList;
         }
 
         public IActionResult Index()
