@@ -142,7 +142,7 @@ namespace FowlerSite.Services
                             Genre = Convert.ToString(dr["Genre"]),
                             Rating = Convert.ToInt32(dr["Rating"]),
                             Platforms = Convert.ToString(dr["Platforms"]),
-                            ImagePath =  "game-" + Convert.ToInt32(dr["ProductID"]) + ".jpg"
+                            ImagePath =  Convert.ToString(dr["ImagePath"])
                         });
                 }
             }

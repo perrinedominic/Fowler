@@ -9,12 +9,10 @@ namespace FowlerSite.Models
 {
     public class BlobInfo
     {
-        private BlobDownloadInfo value;
-
-        public BlobInfo(BlobDownloadInfo value, string contentType)
+        public BlobInfo(Stream content, string contentType)
         {
-            this.value = value;
-            ContentType = contentType;
+            this.Content = content;
+            this.ContentType = contentType;
         }
 
         public Stream Content { get; set; }

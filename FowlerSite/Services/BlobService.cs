@@ -27,7 +27,7 @@ namespace FowlerSite.Services
             var blobClient = containerClient.GetBlobClient(name);
             var blobDownloadInfo = await blobClient.DownloadAsync();
 
-            return new Models.BlobInfo(blobDownloadInfo.Value, blobDownloadInfo.Value.ContentType);
+            return new Models.BlobInfo(blobDownloadInfo.Value.Content, blobDownloadInfo.Value.ContentType);
         }
 
         public async Task<IEnumerable<string>> ListBlobsAsync()
