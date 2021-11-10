@@ -11,6 +11,8 @@
 // Parsley is written in ECMAScript 6
 //
 
+console.log("loaded");
+
 (function (global, factory) {
     typeof exports === 'object' && typeof module !== 'undefined' ? module.exports = factory(require('jquery')) :
     typeof define === 'function' && define.amd ? define(['jquery'], factory) :
