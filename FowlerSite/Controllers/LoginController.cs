@@ -97,25 +97,25 @@ namespace FowlerSite.Controllers
         /// <returns>The found admin that logged in.</returns>
         public IActionResult AdminPage(int id)
         {
-            Users user = new Users();
+            Login user = new Login();
 
             using (SqlConnection connection = new SqlConnection(this.connectionString))
             {
                 connection.Open();
 
-                string sql = $"SELECT * FROM Users Where Id = {id}";
+                string sql = $"SELECT * FROM Login Where UserId = {id}";
                 SqlCommand command = new SqlCommand(sql, connection);
 
                 using (SqlDataReader dataReader = command.ExecuteReader())
                 {
                     while (dataReader.Read())
                     {
-                        user.Id = id;
-                        user.FirstName = Convert.ToString(dataReader["FirstName"]);
-                        user.LastName = Convert.ToString(dataReader["LastName"]);
+                        user.Id = Convert.ToInt32(dataReader["Id"]);
+                        user.Users = new ListService(Configuration).GetUserList();
                         user.Username = Convert.ToString(dataReader["Username"]);
                         user.Password = Convert.ToString(dataReader["Password"]);
-                        user.EmailAddress = Convert.ToString(dataReader["EmailAddress"]);
+                        user.Admin = Convert.ToInt32(dataReader["Admin"]);
+                        user.UserId = Convert.ToInt32(dataReader["UserId"]);
                     }
                 }
                 connection.Close();
@@ -147,7 +147,7 @@ namespace FowlerSite.Controllers
                     while (dataReader.Read())
                     {
                         login.Id = Convert.ToInt32(dataReader["Id"]);
-                        login.Users = new ListService(Configuration).GetUserLoginList(login.Id);
+                        login.Users = new ListService(Configuration).GetUserList();
                         login.Admin = Convert.ToInt32(dataReader["Admin"]);
                         login.UserId = Convert.ToInt32(dataReader["UserId"]);
                     }

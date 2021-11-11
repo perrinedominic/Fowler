@@ -33,6 +33,44 @@ namespace FowlerSite.Services
         /// </summary>
         public IConfiguration Configuration { get; set; }
 
+        public IEnumerable<Users> GetUserList()
+        {
+            List<Users> users = new List<Users>();
+
+            using (SqlConnection connection = new SqlConnection(this.connectionString))
+            {
+                DataTable dataTable = new DataTable();
+
+                string sql = $"Select * from Users";
+                SqlCommand command = new SqlCommand(sql, connection);
+
+                SqlDataAdapter dataAdapter = new SqlDataAdapter(command);
+
+                // Filling records to datatable.
+                dataAdapter.Fill(dataTable);
+
+                foreach (DataRow dr in dataTable.Rows)
+                {
+                    users.Add(
+                        new Users
+                        {
+                            Username = Convert.ToString(dr["Username"]),
+                            Password = Convert.ToString(dr["Password"]),
+                            EmailAddress = Convert.ToString(dr["EmailAddress"]),
+                            FirstName = Convert.ToString(dr["FirstName"]),
+                            LastName = Convert.ToString(dr["LastName"]),
+                            CardCvc = Convert.ToString(dr["CardCVC"]),
+                            CardNumber = Convert.ToString(dr["CardNumber"]),
+                            CardExpire = Convert.ToString(dr["CardExpire"]),
+                            Admin = Convert.ToInt32(dr["Admin"])
+                        });
+                }
+
+            }
+
+            return users;
+        }
+
         /// <summary>
         /// Gets the product list.
         /// </summary>
