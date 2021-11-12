@@ -20,7 +20,7 @@ namespace DataAccessLibrary.DataAccess
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.Entity<OrderDetails>()
-                .HasKey(o => new { o.Order_ID, o.Product_ID });
+                .HasKey(o => new { o.Order_ID });
         }
 
         /// <summary>

@@ -48,12 +48,20 @@ namespace FowlerSite.Controllers
         public int Quantity { get; set; }
 
         public Users Users { get; set; }
+
+        public Cart Cart { get; set; }
         
         public decimal Subtotal
         {
             get
             {
-                return GetSubtotal();
+                if (Cart != null && Cart.Subtotal > 0)
+                {
+                    return Cart.Subtotal;
+                } else
+                {
+                    return 0;
+                }
             }
             set { }
         }
@@ -198,6 +206,8 @@ namespace FowlerSite.Controllers
                 _db.SaveChanges();
 
                 cardId = cart.CartId;
+
+                this.Cart = cart;
             }
             else
             {
@@ -308,16 +318,7 @@ namespace FowlerSite.Controllers
         /// <returns></returns>
         public decimal GetSubtotal()
         {
-            ShoppingCartId = 1;
-            decimal totalCost = 0;
-            List<CartItem> items = this.GetCartItems(1);
-
-            foreach(CartItem i in items)
-            {
-               totalCost += i.Game.Price;
-            }
-
-            return totalCost;
+            return Subtotal;
         }
 
         public ActionResult CheckOut(FormCollection frc)
@@ -374,7 +375,7 @@ namespace FowlerSite.Controllers
                 Sub_Total = subtotal,
                 Total = total,
                 Order_ID = order.Order_ID,
-                Product_ID = product,
+                Cart_ID = this.ShoppingCartId,
             };
 
             _db.Order.Add(order);

@@ -28,11 +28,11 @@ namespace DataAccessLibrary.Models
 		public decimal Total { get; set; }
 		
 		/// <summary>
-		/// The id of a product.
+		/// The id of a the related cart.
 		/// </summary>
 		[Required]
 		[Column(TypeName = "int")]
-		public int Product_ID { get; set; }
+		public int Cart_ID { get; set; }
 
 		/// <summary>
 		/// The type of payment used for the order.

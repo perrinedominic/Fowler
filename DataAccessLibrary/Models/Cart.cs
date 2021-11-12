@@ -14,11 +14,6 @@ namespace DataAccessLibrary.Models
         public int CartId { get; set; }
 
         /// <summary>
-        /// Gets or sets the cart status.
-        /// </summary>
-        public int CartStatusId { get; set; }
-
-        /// <summary>
         /// Gets or sets the added on time.
         /// </summary>
         public  DateTime AddedOn { get; set; }
