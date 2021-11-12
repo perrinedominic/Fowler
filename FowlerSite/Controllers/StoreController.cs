@@ -47,6 +47,8 @@ namespace FowlerSite.Controllers
 
         public int Quantity { get; set; }
 
+        public Users Users { get; set; }
+        
         public decimal Subtotal
         {
             get
@@ -186,7 +188,9 @@ namespace FowlerSite.Controllers
                 {
                     AddedOn = DateTime.Now,
                     UpdatedOn = DateTime.Now,
-                    UserId = userId
+                    UserId = userId,
+                    Subtotal = 0,
+                    Total = Subtotal * .055m + Subtotal
                 };
 
                 _db.ShoppingCart.Add(cart);
@@ -274,9 +278,16 @@ namespace FowlerSite.Controllers
         /// Gets the user id for the shopping cart.
         /// </summary>
         /// <returns>An empty GUID for the id.</returns>
-        public Guid GetUserID()
+        public int? GetUserID()
         {
-            return Guid.Empty;
+            if (Users != null)
+            {
+                return Users.Id;
+            }
+            else
+            {
+                return null;
+            }
         }
 
         /// <summary>

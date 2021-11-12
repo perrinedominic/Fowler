@@ -24,5 +24,10 @@ namespace DataAccessLibrary.Models
         /// Gets or sets the customer.
         /// </summary>
         public int Cust_ID { get; set; }
+
+        /// <summary>
+        /// Gets or sets the Cart Id referenced in the order.
+        /// </summary>
+        public int? Cart_ID { get; set; }
     }
 }
