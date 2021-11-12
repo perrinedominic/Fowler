@@ -2,6 +2,7 @@
 using System.Threading.Tasks;
 using Azure.Storage.Blobs.Models;
 using FowlerSite.Models;
+using Microsoft.AspNetCore.Http;
 
 namespace FowlerSite.Services
 {
@@ -11,9 +12,9 @@ namespace FowlerSite.Services
 
         public Task<IEnumerable<string>> ListBlobsAsync();
 
-        public Task UploadFileBlobAsync(string filePath, string fileName);
-
         public Task UploadContentBlobAsync(string content, string fileName);
+
+        public Task UploadFileBlobAsync(IFormFile image);
 
         public Task DeleteBlobAsync(string imageName);
     }

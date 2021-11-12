@@ -1,9 +1,11 @@
 ﻿using Azure.Storage.Blobs;
 using Azure.Storage.Blobs.Models;
+using Microsoft.AspNetCore.Http;
 using System.Collections.Generic;
 using System.IO;
 using System.Text;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Hosting;
 
 namespace FowlerSite.Services
 {
@@ -11,9 +13,12 @@ namespace FowlerSite.Services
     {
         private readonly BlobServiceClient _blobServiceClient;
 
-        public BlobService(BlobServiceClient blobServiceClient)
+        private IWebHostEnvironment hostingEnv;
+
+        public BlobService(BlobServiceClient blobServiceClient, IWebHostEnvironment env)
         {
-            _blobServiceClient = blobServiceClient;
+            this._blobServiceClient = blobServiceClient;
+            this.hostingEnv = env;
         }
 
         public Task DeleteBlobAsync(string imageName)
@@ -43,14 +48,36 @@ namespace FowlerSite.Services
             return items;
         }
 
-        public Task UploadContentBlobAsync(string content, string fileName)
+        public async Task UploadContentBlobAsync(string content, string fileName)
         {
-            throw new System.NotImplementedException();
+            var containerClient = _blobServiceClient.GetBlobContainerClient("gameimages");
+            var blobClient = containerClient.GetBlobClient(fileName);
+
+            var bytes = Encoding.UTF8.GetBytes(content);
+            await using var memoryStream = new MemoryStream(bytes);
+            await blobClient.UploadAsync(memoryStream);
         }
 
-        public Task UploadFileBlobAsync(string filePath, string fileName)
+        /// <summary>
+        /// Uploads image to azure storage.
+        /// </summary>
+        /// <param name="image">The image to be uploaded.</param>
+        /// <returns></returns>
+        public async Task UploadFileBlobAsync(IFormFile image)
         {
-            throw new System.NotImplementedException();
+            // Gets the blob container and client.
+            var containerClient = _blobServiceClient.GetBlobContainerClient("gameimages");
+            var blobClient = containerClient.GetBlobClient(image.FileName);
+
+            // Gets the file path for the image saved to the project files.
+            var fileDirectory = "assets/images";
+            string FilePath = Path.Combine(hostingEnv.WebRootPath, fileDirectory);
+            if (!Directory.Exists(FilePath))
+                Directory.CreateDirectory(FilePath);
+            var fileName = image.FileName;
+            var filePath = Path.Combine(FilePath, fileName);
+
+            await blobClient.UploadAsync(filePath);
         }
     }
 }

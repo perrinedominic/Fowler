@@ -8,6 +8,10 @@ using Newtonsoft.Json;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using System;
+using System.IO;
+using System.Collections;
+using Microsoft.AspNetCore.Hosting;
 
 namespace FowlerSite.Controllers
 {
@@ -15,24 +19,30 @@ namespace FowlerSite.Controllers
     {
         private readonly OESContext _context;
 
+        private IWebHostEnvironment hostingEnv;
+
         /// <summary>
         /// Gets or sets the Games, used for the filter.
         /// </summary>
         public IEnumerable<Game> Games { get; set; }
 
-        public GamesController(OESContext context, IConfiguration configuration)
+        public GamesController(OESContext context, IConfiguration configuration, IBlobService blobService, IWebHostEnvironment env)
         {
             _context = context;
             if (Games == null)
                 Games = _context.Games.ToList();
 
             this.Configuration = configuration;
+            this._blobService = blobService;
+            this.hostingEnv = env;
         }
 
         /// <summary>
         /// Gets the key/value application configuration properties.
         /// </summary>
         public IConfiguration Configuration { get; }
+
+        public IBlobService _blobService { get; set; }
 
         /// <summary>
         /// Gets the IEnumerable for all games.
@@ -128,12 +138,31 @@ namespace FowlerSite.Controllers
         // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("ProductID,Name,Description,Price,Genre")] Game game)
+        public async Task<IActionResult> Create([Bind("ProductID,Name,Description,Price,Genre,Image")] Game game)
         {
             if (ModelState.IsValid)
             {
+                // Set the image path for the game.
+                game.ImagePath = "https://localhost:5001/blobs/" + game.Image.FileName;
+
                 _context.Add(game);
                 await _context.SaveChangesAsync();
+
+                // Save image to project images folder.
+                var fileDirectory = "assets/images";
+                string FilePath = Path.Combine(hostingEnv.WebRootPath, fileDirectory);
+                if (!Directory.Exists(FilePath))
+                    Directory.CreateDirectory(FilePath);
+                var fileName = game.Image.FileName;
+                var filePath = Path.Combine(FilePath, fileName);
+                using (FileStream fs = System.IO.File.Create(filePath))
+                {
+                    game.Image.CopyTo(fs);
+                }
+
+                // Uploads image to azure storage.
+                await _blobService.UploadFileBlobAsync(game.Image);
+
                 return RedirectToAction(nameof(Index));
             }
             UpdateTextJson(game);
