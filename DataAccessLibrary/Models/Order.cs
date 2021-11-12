@@ -26,8 +26,9 @@ namespace DataAccessLibrary.Models
         public int Cust_ID { get; set; }
 
         /// <summary>
-        /// Gets or sets the Cart Id referenced in the order.
+        /// Gets or sets the id of the related payment information.
         /// </summary>
-        public int? Cart_ID { get; set; }
+        [Column(TypeName = "int")][Required]
+        public int? Payment_Info_ID { get; set; }
     }
 }

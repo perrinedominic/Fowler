@@ -41,5 +41,11 @@ namespace DataAccessLibrary.Models
         /// Gets or sets the cart that is being used.
         /// </summary>
         public virtual Game Game { get; set; }
+
+        /// <summary>
+        /// Gets or sets the price of the item.
+        /// </summary>
+        [Column(TypeName = "float")]
+        public decimal ItemPrice { get; set; }
     }
 }
