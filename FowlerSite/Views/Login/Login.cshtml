@@ -13,22 +13,30 @@
     <div class="flex-container">
         <div class="content-container">
             <div class="form-container">
-                <form method="post" asp-action="UserLogin">
-                    <h1>
-                        Login
-                    </h1>
-                    <br>
-                    <br>
-                    <span class="subtitle">USERNAME:</span>
-                    <br>
-                    <input type="text" name="username" value="" asp-for="Username" />
-                    <br>
-                    <span class="subtitle">PASSWORD:</span>
-                    <br>
-                    <input type="password" name="password" value="" asp-for="Password" />
-                    <br><br>
-                    <button class="btn btn-outline-primary" type="submit">Login</button>
-                    <a class="btn btn-outline-secondary" asp-action="Create">Create an Account</a>
+                <h4 class="mb-0"><span class="text-main-1">Sign</span> In</h4>
+
+                <div class="nk-gap-1"></div>
+                <form asp-action="UserLogin" method="post" class="nk-form text-white">
+                    <div class="row vertical-gap">
+                        <div class="col-md-6">
+                            Username:
+
+                            <div class="nk-gap"></div>
+                            <input type="text" value="" name="username" asp-for="Username" class="form-control" placeholder="Username">
+                            
+                            Password:
+                            <div class="nk-gap"></div>
+                            <input type="password" value="" name="password" asp-for="Password" class="required form-control" placeholder="Password">
+                        </div>
+                    </div>
+
+                    <div class="nk-gap-1"></div>
+                    <div class="row vertical-gap">
+                            <button class="nk-btn nk-btn-rounded nk-btn-color-main-1" type="submit">Login</button>
+                            <button class="nk-btn nk-btn-color-primary" asp-controller="Login" asp-action="Create">Create an Account</button>
+                        <div class="col-md-6">
+                        </div>
+                    </div>
                 </form>
             </div>
         </div>

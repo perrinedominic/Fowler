@@ -97,13 +97,14 @@ namespace FowlerSite.Controllers
         /// <returns>The found admin that logged in.</returns>
         public IActionResult AdminPage(int id)
         {
+            int userId = (int)TempData["UserId"];
             Login user = new Login();
 
             using (SqlConnection connection = new SqlConnection(this.connectionString))
             {
                 connection.Open();
 
-                string sql = $"SELECT * FROM Login Where UserId = {id}";
+                string sql = $"SELECT * FROM Login Where UserId = {userId}";
                 SqlCommand command = new SqlCommand(sql, connection);
 
                 using (SqlDataReader dataReader = command.ExecuteReader())
@@ -150,9 +151,15 @@ namespace FowlerSite.Controllers
                         login.Users = new ListService(Configuration).GetUserList();
                         login.Admin = Convert.ToInt32(dataReader["Admin"]);
                         login.UserId = Convert.ToInt32(dataReader["UserId"]);
+                        login.Username = Convert.ToString(dataReader["Username"]);
+                        login.Password = Convert.ToString(dataReader["Password"]);
                     }
                 }
                 command = new SqlCommand(query, connection);
+
+                TempData["Username"] = login.Username;
+                TempData["Password"] = login.Password;
+                TempData["UserId"] = login.UserId;
 
                 using (SqlDataReader dataReader = command.ExecuteReader())
                 {
@@ -258,6 +265,66 @@ namespace FowlerSite.Controllers
         }
 
         /// <summary>
+        /// Gets the information needed to update the user.
+        /// </summary>
+        /// <param name="id">The id of the user.</param>
+        /// <returns>The found user.</returns>
+        [HttpGet]
+        public IActionResult Update(int id)
+        {
+            Users user = new Users();
+
+            using (SqlConnection connection = new SqlConnection(this.connectionString))
+            {
+                string sql = $"SELECT * FROM Users WHERE Id='{id}'";
+                SqlCommand command = new SqlCommand(sql, connection);
+
+                connection.Open();
+
+                using (SqlDataReader dataReader = command.ExecuteReader())
+                {
+                    while (dataReader.Read())
+                    {
+                        user.Id = Convert.ToInt32(dataReader["Id"]);
+                        user.FirstName = Convert.ToString(dataReader["FirstName"]);
+                        user.LastName = Convert.ToString(dataReader["LastName"]);
+                        user.EmailAddress = Convert.ToString(dataReader["EmailAddress"]);
+                        user.Username = Convert.ToString(dataReader["Username"]);
+                        user.Password = Convert.ToString(dataReader["Password"]);
+                        user.CardNumber = Convert.ToString(dataReader["CardNumber"]);
+                        user.CardExpire = Convert.ToString(dataReader["CardExpire"]);
+                        user.CardCvc = Convert.ToString(dataReader["CardCVC"]);
+                    }
+                }
+
+                connection.Close();
+            }
+
+            return View("Update", user);
+        }
+
+        [HttpPost]
+        public IActionResult Update(Users user, int id)
+        {
+            RedirectToActionResult result = null;
+
+            using (SqlConnection connection = new SqlConnection(this.connectionString))
+            {
+                string sql = $"Update Users SET Username='{user.Username}', Password='{user.Password}', FirstName='{user.FirstName}', LastName='{user.LastName}', " +
+                    $"EmailAddress='{user.EmailAddress}', CardNumber='{user.CardNumber}', CardExpire='{user.CardExpire}', CardCVC='{user.CardCvc}' WHERE Id={id}";
+
+                using (SqlCommand command = new SqlCommand(sql, connection))
+                {
+                    connection.Open();
+                    command.ExecuteNonQuery();
+                    connection.Close();
+                }
+            }
+
+            return RedirectToAction("AdminPage", "Login");
+        }
+
+        /// <summary>
         /// The method for the create view.
         /// </summary>
         /// <returns>The create view.</returns>
@@ -282,22 +349,6 @@ namespace FowlerSite.Controllers
         public IActionResult Login()
         {
             return View();
-        }
-
-        // POST: Users/Create
-        // To protect from overposting attacks, enable the specific properties you want to bind to, for 
-        // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Username,FirstName,LastName,EmailAddress,Password,Address")] User user)
-        {
-            if (ModelState.IsValid)
-            {
-                _context.Add(user);
-                await _context.SaveChangesAsync();
-                return RedirectToAction(nameof(Index));
-            }
-            return View(user);
         }
 
         // GET: Users/Edit/5

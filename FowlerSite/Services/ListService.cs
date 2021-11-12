@@ -54,6 +54,7 @@ namespace FowlerSite.Services
                     users.Add(
                         new Users
                         {
+                            Id = Convert.ToInt32(dr["Id"]),
                             Username = Convert.ToString(dr["Username"]),
                             Password = Convert.ToString(dr["Password"]),
                             EmailAddress = Convert.ToString(dr["EmailAddress"]),
