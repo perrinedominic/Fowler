@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -18,11 +19,13 @@ namespace FowlerSite.Models
         /// <summary>
         /// Gets or sets the username of the user.
         /// </summary>
+        [Required(ErrorMessage = "The username was incorrect.")]
         public string Username { get; set; }
 
         /// <summary>
         /// Gets or sets the password.
         /// </summary>
+        [Required(ErrorMessage = "The password was incorrect.")]
         public string Password { get; set; }
 
         /// <summary>

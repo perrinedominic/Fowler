@@ -10,21 +10,21 @@
             <div class="form-container">
                 <form method="post" asp-controller="Users" asp-action="UpdateCard">
                     <h1>
-                        Create an Account:
+                        Update Your Card:
                     </h1>
                     <br>
                     <br>
                     <span class="subtitle">Card Number:</span>
                     <br>
-                    <input type="text" name="CardNumber" value="" asp-for="CardNumber" />
+                    <input placeholder="@Model.CardNumber" type="text" name="CardNumber" value="" asp-for="CardNumber" />
                     <br />
                     <span class="subtitle">Card Expiration:</span>
                     <br>
-                    <input type="text" name="CardExpire" value="" asp-for="CardExpire" />
+                    <input placeholder="@Model.CardExpire" type="text" name="CardExpire" value="" asp-for="CardExpire" />
                     <br />
                     <span class="subtitle">Card CVC</span>
                     <br>
-                    <input type="text" name="cardcvc" value="" asp-for="CardCvc" />
+                    <input placeholder="@Model.CardCvc" type="text" name="cardcvc" value="" asp-for="CardCvc" />
                     <br /><br />
                     <button class="btn btn-outline-primary" type="submit">Update</button>
                     <button class="btn btn-outline-primary" asp-action="User" asp-route-id="@Model.Id">Cancel</button>
