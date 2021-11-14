@@ -13,6 +13,7 @@ using System.Data;
 using FowlerSite.Models;
 using FowlerSite.Services;
 using System.Configuration;
+using Microsoft.AspNetCore.Mvc.RazorPages;
 
 namespace FowlerSite.Controllers
 {
@@ -97,7 +98,7 @@ namespace FowlerSite.Controllers
         /// <returns>The found admin that logged in.</returns>
         public IActionResult AdminPage(int id)
         {
-            int userId = (int)TempData["UserId"];
+            int userId = (int)TempData.Peek("UserId");
             Login user = new Login();
 
             using (SqlConnection connection = new SqlConnection(this.connectionString))
@@ -140,7 +141,6 @@ namespace FowlerSite.Controllers
                 connection.Open();
 
                 string sql = $"SELECT * FROM Login WHERE Username = '{login.Username}' and Password = '{login.Password}'";
-                string query = $"SELECT Username, Password FROM Login WHERE Username='{login.Username}' and Password='{login.Password}'";
                 SqlCommand command = new SqlCommand(sql, connection);
 
                 using (SqlDataReader dataReader = command.ExecuteReader())
@@ -155,20 +155,8 @@ namespace FowlerSite.Controllers
                         login.Password = Convert.ToString(dataReader["Password"]);
                     }
                 }
-                command = new SqlCommand(query, connection);
 
-                TempData["Username"] = login.Username;
-                TempData["Password"] = login.Password;
                 TempData["UserId"] = login.UserId;
-
-                using (SqlDataReader dataReader = command.ExecuteReader())
-                {
-                    if (dataReader.Read())
-                    {
-
-                    }
-                }
-                connection.Close();
             }
             if (login.Admin == 0)
             {
@@ -312,6 +300,7 @@ namespace FowlerSite.Controllers
             {
                 string sql = $"Update Users SET Username='{user.Username}', Password='{user.Password}', FirstName='{user.FirstName}', LastName='{user.LastName}', " +
                     $"EmailAddress='{user.EmailAddress}', CardNumber='{user.CardNumber}', CardExpire='{user.CardExpire}', CardCVC='{user.CardCvc}' WHERE Id={id}";
+                string loginSql = $"Update Login SET Username='{user.Username}', Password='{user.Password}' WHERE UserId='{user.Id}'";
 
                 using (SqlCommand command = new SqlCommand(sql, connection))
                 {
@@ -319,9 +308,15 @@ namespace FowlerSite.Controllers
                     command.ExecuteNonQuery();
                     connection.Close();
                 }
+                using (SqlCommand command = new SqlCommand(loginSql, connection))
+                {
+                    connection.Open();
+                    command.ExecuteNonQuery();
+                    connection.Close();
+                }
             }
 
-            return RedirectToAction("AdminPage", "Login");
+            return RedirectToAction("AdminPage");
         }
 
         /// <summary>
@@ -402,33 +397,34 @@ namespace FowlerSite.Controllers
             return View(user);
         }
 
-        // GET: Users/Delete/5
-        public async Task<IActionResult> Delete(string id)
+        /// <summary>
+        /// Deletes the user from the admin page.
+        /// </summary>
+        /// <param name="id">The user id.</param>
+        /// <returns>The redirection to the admin page.</returns>
+        [HttpPost]
+        public IActionResult Delete(int id)
         {
-            if (id == null)
+            using (SqlConnection connection = new SqlConnection(this.connectionString))
             {
-                return NotFound();
+                string sql = $"DELETE FROM Users WHERE Id='{id}'";
+                string loginSql = $"DELETE FROM Login WHERE UserId='{id}'";
+
+                using (SqlCommand command = new SqlCommand(sql, connection))
+                {
+                    connection.Open();
+                    command.ExecuteNonQuery();
+                    connection.Close();
+                }
+                using (SqlCommand command = new SqlCommand(loginSql, connection))
+                {
+                    connection.Open();
+                    command.ExecuteNonQuery();
+                    connection.Close();
+                }
             }
 
-            var user = await _context.Users
-                .FirstOrDefaultAsync(m => m.Username == id);
-            if (user == null)
-            {
-                return NotFound();
-            }
-
-            return View(user);
-        }
-
-        // POST: Users/Delete/5
-        [HttpPost, ActionName("Delete")]
-        [ValidateAntiForgeryToken]
-        public async Task<IActionResult> DeleteConfirmed(string id)
-        {
-            var user = await _context.Users.FindAsync(id);
-            _context.Users.Remove(user);
-            await _context.SaveChangesAsync();
-            return RedirectToAction(nameof(Index));
+            return RedirectToAction("AdminPage");
         }
 
         private bool UserExists(string id)
