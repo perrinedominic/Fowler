@@ -123,12 +123,12 @@ namespace FowlerSite.Services
         /// <returns>Returns an IEnumerable</returns>
         public IEnumerable<Order> GetOrderList()
         {
-            List<Order> products = new List<Order>();
+            List<Order> orders = new List<Order>();
 
             using (SqlConnection connection = new SqlConnection(this.connectionString))
             {
                 DataTable dataTable = new DataTable();
-                string sql = $"SELECT * FROM [Order]";
+                string sql = "SELECT * FROM [Order]";
                 SqlCommand command = new SqlCommand(sql, connection);
 
                 SqlDataAdapter dataAdapter = new SqlDataAdapter(command);
@@ -137,7 +137,7 @@ namespace FowlerSite.Services
 
                 foreach (DataRow dr in dataTable.Rows)
                 {
-                    products.Add(
+                    orders.Add(
                         new Order
                         {
                             Order_ID = Convert.ToInt32(dr["Order_ID"]),
@@ -146,7 +146,7 @@ namespace FowlerSite.Services
                         });
                 }
 
-                return products;
+                return orders;
             }
         }
 
@@ -165,7 +165,7 @@ namespace FowlerSite.Services
             {
                 DataTable dataTable = new DataTable();
 
-                string sql = $"Select * From [OrderLine] Where OrderId={id}";
+                string sql = $"Select * From [Order_Details] Where Order_Id={id}";
 
                 SqlCommand command = new SqlCommand(sql, connection);
 
@@ -263,8 +263,7 @@ namespace FowlerSite.Services
                             Admin = Convert.ToInt32(dr["Admin"]),
                             CardNumber = Convert.ToString(dr["CardNumber"]),
                             CardExpire = Convert.ToString(dr["CardExpire"]),
-                            CardCvc = Convert.ToString(dr["CardCvc"])
-
+                            CardCvc = Convert.ToString(dr["CardCvc"]),
                         });
                 }
             }

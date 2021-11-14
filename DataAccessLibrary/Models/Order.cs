@@ -26,6 +26,9 @@ namespace DataAccessLibrary.Models
         /// </summary>
         public int Cust_ID { get; set; }
 
+        /// <summary>
+        /// The user that made the order.
+        /// </summary>
         public User User { get; set; }
 
         /// <summary>

@@ -60,6 +60,9 @@ namespace FowlerSite.Models
         /// </summary>
         public string CardExpire { get; set; }
 
+        /// <summary>
+        /// Gets or sets the users orders.
+        /// </summary>
         public IEnumerable<DataAccessLibrary.Models.Order> Orders { get; set; }
 
         /// <summary>
