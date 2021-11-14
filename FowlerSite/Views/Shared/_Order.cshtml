@@ -13,114 +13,85 @@
         }
     </div>
 </div>
-<table class="table table-bordered table-sm table-striped">
-    <thead>
-        <tr>
-            <th class="text-primary">Order ID</th>
-            <th class="text-primary">Customer</th>
-            <th class="text-primary">Order Date</th>
-            <th class="text-primary">Payment Info</th>
-        </tr>
-    </thead>
-    <tbody>
-        @if (Model == null)
-        {
-            <tr><td colspan="6" class="text-center">No Order Data</td></tr>
-        }
-        else
-        {
-            @foreach (var o in Model.Orders)
-            {
-                <tr class="text-white">
-                    <td>@o.Order_ID</td>
-                    <td>@o.Cust_ID</td>
-                    <td>@o.Order_Date</td>
-                    @if (o.Lines == null)
-                    {
-                        <td>
-                            <form asp-action="Delete" asp-controller="Order" method="post" asp-route-id="@o.Order_ID">
-                                <button class="btn-sm btn-danger">Delete</button>
-                            </form>
-                        </td>
-                    }
-                    else
-                    {
-                        if (o.Lines.Count() <= 0)
-                        {
-                            <td>
-                                <form asp-action="Delete" asp-controller="Order" method="post" asp-route-id="@o.Order_ID">
-                                    <button class="btn-sm btn-danger">Delete</button>
-                                </form>
-                            </td>
-                        }
-                        else
-                        {
-                            <td>OrderLines Exist</td>
-                        }
-                    }
-                </tr>
-            }
-        }
 
-        <button type="button" class="btn btn-outline-danger btn-round hidden" data-toggle="modal"
-                data-target="#myModal">
-            OrderHistory
-        </button>
-        <!-- Modal -->
-        <div class="modal fade" id="myModal" tabindex="-1" role="dialog"
-             aria-labelledby="exampleModalLabel" aria-hidden="true">
-            <div class="modal-dialog" role="document">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                            <span aria-hidden="true">×</span>
-                        </button>
-                        <h5 class="modal-title text-center" id="exampleModalLabel">Oops!</h5>
-                    </div>
-                    <div class="modal-body">
-                        It seems the team score you are trying to enter is a little
-                        higher than we expected, if this is not an error please contact the nba.
-                    </div>
-                    <div class="modal-footer">
-                        <div class="right-side">
-                            <button type="button" data-dismiss="modal"
-                                    class="btn btn-danger btn-link clear">
-                                Clear Entry
+        <div class="col-md-12">
+            <!-- Button trigger modal -->
+            <button type="button" class="btn btn-outline-danger btn-round" data-toggle="modal" data-target="#myModal">
+                Order History
+            </button>
+            <!-- Modal -->
+            <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                <div class="modal-dialog modal-lg" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">×</span>
                             </button>
+                            <h5 class="modal-title text-center" id="exampleModalLabel">Order History For @Model.FirstName @Model.LastName</h5>
+                        </div>
+                        <div class="modal-body">
+                            <table class="table table-bordered table-sm table-striped">
+                                <thead>
+                                    <tr>
+                                        <th class="text-primary">Order ID</th>
+                                        <th class="text-primary">Customer</th>
+                                        <th class="text-primary">Order Date</th>
+                                        <th class="text-primary">Payment Info</th>
+                                        <th class="text-primary">Order Details</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @if (Model == null)
+                                    {
+                                        <tr><td colspan="6" class="text-center">No Order Data</td></tr>
+                                    }
+                                    else
+                                    {
+                                        @foreach (var o in Model.Orders)
+                                        {
+                                            <tr class="text-white">
+                                                <td>@o.Order_ID</td>
+                                                <td>@o.User.FirstName @o.User.LastName </td>
+                                                <td>@o.Cust_ID</td>
+                                                <td>@o.Order_Date</td>
+                                                @if (o.Lines == null)
+                                                {
+                                                    <td>
+                                                        <form asp-action="Delete" asp-controller="Order" method="post" asp-route-id="@o.Order_ID">
+                                                            <button class="btn-sm btn-danger">View Order Details</button>
+                                                        </form>
+                                                    </td>
+                                                }
+                                                else
+                                                {
+                                                    if (o.Lines.Count() <= 0)
+                                                    {
+                                                        <td>
+                                                            <form asp-action="Delete" asp-controller="Order" method="post" asp-route-id="@o.Order_ID">
+                                                                <button class="btn-sm btn-danger">Delete</button>
+                                                            </form>
+                                                        </td>
+                                                    }
+                                                    else
+                                                    {
+                                                        <td>OrderLines Exist</td>
+                                                    }
+                                                }
+                                            </tr>
+                                        }
+                                    }
+                        </div>
+                        <div class="modal-footer">
+                            <div class="left-side">
+                            </div>
+                            <div class="divider"></div>
+                            <div class="right-side">
+                                <button type="button" class="btn btn-default btn-link" data-dismiss="modal">Never mind</button>
+                            </div>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
-
-        <button type="button" class="btn btn-outline-danger btn-round" data-toggle="modal" data-target="#myModal">
-        </button>
-
-        <!-- Modal -->
-        <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-            <div class="modal-dialog" role="document">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                            <span aria-hidden="true">×</span>
-                        </button>
-                        <h5 class="modal-title text-center" id="exampleModalLabel">Modal title</h5>
-                    </div>
-                    <div class="modal-body">
-                        Far far away, behind the word mountains, far from the countries Vokalia and Consonantia, there live the blind texts. Separated they live in Bookmarksgrove right at the coast of the Semantics, a large language ocean. A small river named Duden flows by their place and supplies it with the necessary regelialia. It is a paradisematic country, in which roasted parts of sentences fly into your mouth. Even the all-powerful Pointing has no control about the blind texts it is an almost unorthographic life One day however a small line of blind text by the name of Lorem Ipsum decided to leave for the far World of Grammar.
-                    </div>
-                    <div class="modal-footer">
-                        <div class="left-side">
-                            <button type="button" class="btn btn-default btn-link" data-dismiss="modal">Never mind</button>
-                        </div>
-                        <div class="divider"></div>
-                        <div class="right-side">
-                            <button type="button" class="btn btn-danger btn-link">Delete</button>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </tbody>
 </table>
 

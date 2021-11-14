@@ -35,6 +35,5 @@ namespace DataAccessLibrary.Models
         /// The Order details attatched to the order.
         /// </summary>
         public IEnumerable<OrderDetails> Lines;
-
     }
 }

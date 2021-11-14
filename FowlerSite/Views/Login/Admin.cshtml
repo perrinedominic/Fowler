@@ -1,2 +1,97 @@
-﻿<h4>Admin Page Functionality Coming Soon!</h4>
+﻿@model Login
 
+<!DOCTYPE html>
+<head>
+    <link href="~/assets/css/login.css" rel="stylesheet" />
+</head>
+<table class="nk-table">
+    <thead>
+        <tr>
+            <th colspan="3">Admin Information</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <th>You Are Logged in as Admin:</th>
+            <th>Would you like to:</th>
+        </tr>
+        <tr>
+            <td>@Model.Username</td>
+            <td><a class="btn btn-outline-primary" asp-action="CreateAdmin">Create an Admin</a></td>
+        </tr>
+    </tbody>
+</table>
+<table class="nk-table">
+    <thead>
+        <tr>
+            <th colspan="4">Users</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <th>Username:</th>
+            <th>Password:</th>
+            <th>First Name:</th>
+            <th>Last Name:</th>
+            <th>Email:</th>
+            <th>Edit:</th>
+            <th>Delete:</th>
+        </tr>
+            @foreach (var u in Model.Users)
+            {
+                @if (u.Admin == 0)
+                {
+                    <tr>
+                        <td>@u.Username</td>
+                        <td>@u.Password</td>
+                        <td>@u.FirstName</td>
+                        <td>@u.LastName</td>
+                        <td>@u.EmailAddress</td>
+                        <td><a class="btn btn-outline-primary" asp-action="Update" asp-route-id="@u.Id">Edit User</a></td>
+                        <td>
+                            <form asp-controller="Users" asp-action="Delete" method="post" asp-route-id="@u.Id">
+                                <button class="btn btn-outline-danger">Delete</button>
+                            </form>
+                        </td>
+                    </tr>
+                }
+            }
+    </tbody>
+</table>
+<table class="nk-table">
+    <thead>
+        <tr>
+            <th colspan="3">Admins</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <th>Username:</th>
+            <th>Password:</th>
+            <th>First Name:</th>
+            <th>Last Name:</th>
+            <th>Email:</th>
+            <th>Edit:</th>
+            <th>Delete:</th>
+        </tr>
+            @foreach (var u in Model.Users)
+            {
+                @if (u.Admin == 1)
+                {
+                    <tr>
+                        <td>@u.Username</td>
+                        <td>@u.Password</td>
+                        <td>@u.FirstName</td>
+                        <td>@u.LastName</td>
+                        <td>@u.EmailAddress</td>
+                        <td><a class="btn btn-outline-primary" asp-controller="Users" asp-action="Update" asp-route-id="@u.Id">Edit User</a></td>
+                        <td>
+                            <form asp-controller="Users" asp-action="Delete" method="post" asp-route-id="@u.Id">
+                                <button class="btn btn-outline-danger">Delete</button>
+                            </form>
+                        </td>
+                    </tr>
+                }
+            }
+    </tbody>
+</table>

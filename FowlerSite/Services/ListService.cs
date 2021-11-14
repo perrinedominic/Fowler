@@ -33,6 +33,45 @@ namespace FowlerSite.Services
         /// </summary>
         public IConfiguration Configuration { get; set; }
 
+        public IEnumerable<Users> GetUserList()
+        {
+            List<Users> users = new List<Users>();
+
+            using (SqlConnection connection = new SqlConnection(this.connectionString))
+            {
+                DataTable dataTable = new DataTable();
+
+                string sql = $"Select * from Users";
+                SqlCommand command = new SqlCommand(sql, connection);
+
+                SqlDataAdapter dataAdapter = new SqlDataAdapter(command);
+
+                // Filling records to datatable.
+                dataAdapter.Fill(dataTable);
+
+                foreach (DataRow dr in dataTable.Rows)
+                {
+                    users.Add(
+                        new Users
+                        {
+                            Id = Convert.ToInt32(dr["Id"]),
+                            Username = Convert.ToString(dr["Username"]),
+                            Password = Convert.ToString(dr["Password"]),
+                            EmailAddress = Convert.ToString(dr["EmailAddress"]),
+                            FirstName = Convert.ToString(dr["FirstName"]),
+                            LastName = Convert.ToString(dr["LastName"]),
+                            CardCvc = Convert.ToString(dr["CardCVC"]),
+                            CardNumber = Convert.ToString(dr["CardNumber"]),
+                            CardExpire = Convert.ToString(dr["CardExpire"]),
+                            Admin = Convert.ToInt32(dr["Admin"])
+                        });
+                }
+
+            }
+
+            return users;
+        }
+
         /// <summary>
         /// Gets the product list.
         /// </summary>
@@ -124,6 +163,7 @@ namespace FowlerSite.Services
         public IEnumerable<Order> GetOrderList()
         {
             List<Order> orders = new List<Order>();
+            var users = new ListService(this.Configuration).GetUserList();
 
             using (SqlConnection connection = new SqlConnection(this.connectionString))
             {
@@ -134,6 +174,7 @@ namespace FowlerSite.Services
                 SqlDataAdapter dataAdapter = new SqlDataAdapter(command);
 
                 dataAdapter.Fill(dataTable);
+                User user = new User();
 
                 foreach (DataRow dr in dataTable.Rows)
                 {
@@ -142,7 +183,10 @@ namespace FowlerSite.Services
                         {
                             Order_ID = Convert.ToInt32(dr["Order_ID"]),
                             Order_Date = Convert.ToDateTime(dr["Order_Date"]),
-                            Cust_ID = Convert.ToInt32(dr["Cust_ID"])
+                            Cust_ID = Convert.ToInt32(dr["Cust_ID"]),
+                            User = new User{ FirstName = users.FirstOrDefault(u => u.Id == Convert.ToInt32(dr["Cust_ID"])).FirstName,
+                                LastName = users.FirstOrDefault(u => u.Id == Convert.ToInt32(dr["Cust_ID"])).LastName
+                            }
                         });
                 }
 
@@ -228,47 +272,6 @@ namespace FowlerSite.Services
 
                 return products;
             }
-        }
-
-            /// <summary>
-            /// The method to get an iterable list of users.
-            /// </summary>
-            /// <returns>A list of users.</returns>
-            public IEnumerable<Users> GetUserList()
-        {
-            List<Users> users = new List<Users>();
-
-            using (SqlConnection connection = new SqlConnection(this.connectionString))
-            {
-                DataTable dataTable = new DataTable();
-
-                string sql = "Select * From Users";
-                SqlCommand command = new SqlCommand(sql, connection);
-
-                SqlDataAdapter dataAdapter = new SqlDataAdapter(command);
-
-                // filling records to DataTable
-                dataAdapter.Fill(dataTable);
-
-                foreach (DataRow dr in dataTable.Rows)
-                {
-                    users.Add(
-                        new Users
-                        {
-                            Username = Convert.ToString(dr["Username"]),
-                            Password = Convert.ToString(dr["Password"]),
-                            FirstName = Convert.ToString(dr["FirstName"]),
-                            LastName = Convert.ToString(dr["LastName"]),
-                            EmailAddress = Convert.ToString(dr["EmailAddress"]),
-                            Admin = Convert.ToInt32(dr["Admin"]),
-                            CardNumber = Convert.ToString(dr["CardNumber"]),
-                            CardExpire = Convert.ToString(dr["CardExpire"]),
-                            CardCvc = Convert.ToString(dr["CardCvc"]),
-                        });
-                }
-            }
-
-            return users;
         }
 
         /// <summary>

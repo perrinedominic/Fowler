@@ -50,5 +50,7 @@ namespace DataAccessLibrary.DataAccess
         public DbSet<Order> Order { get; set; }
 
         public DbSet<OrderDetails> Order_Details { get; set; }
+
+        public DbSet<PaymentInformation> Payment_Information { get; set; }
     }
 }
