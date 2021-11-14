@@ -7,6 +7,8 @@ using System.Collections.Generic;
 using System.Data;
 using System.Linq;
 using System.Threading.Tasks;
+using Azure.Storage.Blobs;
+using Azure.Storage.Blobs.Models;
 
 namespace FowlerSite.Services
 {
@@ -178,7 +180,8 @@ namespace FowlerSite.Services
                             Price = Convert.ToDecimal(dr["Price"]),
                             Genre = Convert.ToString(dr["Genre"]),
                             Rating = Convert.ToInt32(dr["Rating"]),
-                            Platforms = Convert.ToString(dr["Platforms"])
+                            Platforms = Convert.ToString(dr["Platforms"]),
+                            ImagePath =  Convert.ToString(dr["ImagePath"])
                         });
                 }
             }
