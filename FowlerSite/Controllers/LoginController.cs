@@ -83,6 +83,7 @@ namespace FowlerSite.Controllers
                         user.CardNumber = Convert.ToString(dataReader["CardNumber"]);
                         user.CardExpire = Convert.ToString(dataReader["CardExpire"]);
                         user.CardCvc = Convert.ToString(dataReader["CardCVC"]);
+                        user.Orders = new ListService(this.Configuration).GetOrderList();
                     }
                 }
                 connection.Close();

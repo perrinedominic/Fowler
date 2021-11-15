@@ -209,7 +209,7 @@ namespace FowlerSite.Controllers
             return RedirectToAction("ReadUser");
         }
 
-        public IActionResult ReadUser()
+        public Users ReadUser(int id)
         {
             string username = (string)TempData["Username"];
             Users user = new Users();
@@ -217,7 +217,7 @@ namespace FowlerSite.Controllers
             {
                 connection.Open();
 
-                string sql = $"SELECT * FROM Users ORDER BY Id ASC";
+                string sql = $"SELECT * FROM Users WHERE Id = {id}";
                 SqlCommand command = new SqlCommand(sql, connection);
 
                 using (SqlDataReader dataReader = command.ExecuteReader())
@@ -233,12 +233,13 @@ namespace FowlerSite.Controllers
                         user.CardNumber = Convert.ToString(dataReader["CardNumber"]);
                         user.CardExpire = Convert.ToString(dataReader["CardExpire"]);
                         user.CardCvc = Convert.ToString(dataReader["CardCVC"]);
+                        user.Orders = new ListService(this.Configuration).GetOrderList();
                     }
                 }
                 connection.Close();
             }
 
-            return RedirectToAction("CreateLogin", "Login", new { id = user.Id });
+            return user;
         }
 
         public IActionResult UpdateCard(int id)
@@ -320,9 +321,10 @@ namespace FowlerSite.Controllers
             return userList;
         }
 
-        public IActionResult Index()
+        public IActionResult Index(int id)
         {
-            return View();
+            Users user = this.ReadUser(id);
+            return View(user);
         }
 
         public IActionResult Create()
