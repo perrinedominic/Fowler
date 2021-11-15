@@ -211,7 +211,6 @@ namespace FowlerSite.Controllers
 
         public Users ReadUser(int id)
         {
-            string username = (string)TempData["Username"];
             Users user = new Users();
             using (SqlConnection connection = new SqlConnection(this.connectionString))
             {
@@ -233,7 +232,7 @@ namespace FowlerSite.Controllers
                         user.CardNumber = Convert.ToString(dataReader["CardNumber"]);
                         user.CardExpire = Convert.ToString(dataReader["CardExpire"]);
                         user.CardCvc = Convert.ToString(dataReader["CardCVC"]);
-                        user.Orders = new ListService(this.Configuration).GetOrderList();
+                        user.Orders = new ListService(this.Configuration).GetOrderList(id);
                     }
                 }
                 connection.Close();
