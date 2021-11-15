@@ -135,7 +135,8 @@ namespace FowlerSite.Controllers
         public IActionResult UserLogin(Login login)
         {
             RedirectToActionResult view = null;
-            bool validate = false;
+            string username = (string)TempData["Username"];
+            string password = (string)TempData["Password"];
 
             using (SqlConnection connection = new SqlConnection(this.connectionString))
             {
@@ -302,6 +303,30 @@ namespace FowlerSite.Controllers
                 string sql = $"Update Users SET Username='{user.Username}', Password='{user.Password}', FirstName='{user.FirstName}', LastName='{user.LastName}', " +
                     $"EmailAddress='{user.EmailAddress}', CardNumber='{user.CardNumber}', CardExpire='{user.CardExpire}', CardCVC='{user.CardCvc}' WHERE Id={id}";
                 string loginSql = $"Update Login SET Username='{user.Username}', Password='{user.Password}' WHERE UserId='{user.Id}'";
+
+                using (SqlCommand command = new SqlCommand(sql, connection))
+                {
+                    connection.Open();
+                    command.ExecuteNonQuery();
+                    connection.Close();
+                }
+                using (SqlCommand command = new SqlCommand(loginSql, connection))
+                {
+                    connection.Open();
+                    command.ExecuteNonQuery();
+                    connection.Close();
+                }
+            }
+
+            return RedirectToAction("AdminPage");
+        }
+
+        public IActionResult Upgrade(Users user, int id)
+        {
+            using (SqlConnection connection = new SqlConnection(this.connectionString))
+            {
+                string sql = $"Update Users SET Admin=1 WHERE Id='{id}'";
+                string loginSql = $"Update Login SET Admin=1 WHERE UserId='{id}'";
 
                 using (SqlCommand command = new SqlCommand(sql, connection))
                 {
