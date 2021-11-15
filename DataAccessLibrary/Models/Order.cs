@@ -24,5 +24,11 @@ namespace DataAccessLibrary.Models
         /// Gets or sets the customer.
         /// </summary>
         public int Cust_ID { get; set; }
+
+        /// <summary>
+        /// Gets or sets the id of the related payment information.
+        /// </summary>
+        [Column(TypeName = "int")][Required]
+        public int? Payment_Info_ID { get; set; }
     }
 }
