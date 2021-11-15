@@ -61,76 +61,87 @@
         </div>
         <div class="nk-gap-1"></div>
         <!-- END: Breadcrumbs -->
+          @{
+                string message = TempData["Message"] as string;
+                if (!String.IsNullOrEmpty(message))
+                {
+              <div class="alert alert-success"><strong>Success!</strong> Your order has been submitted!</div>
+
+                }
+            }
+
+
 
 
         <div class="container">
             <div class="nk-store nk-store-cart">
 
-                    <!-- START: Products in Cart -->
+                <!-- START: Products in Cart -->
 
-                    @using(Html.BeginForm("Update", "Store", FormMethod.Post)) { 
+                @using (Html.BeginForm("Update", "Store", FormMethod.Post))
+                {
 
-                <div class="table-responsive">
+                    <div class="table-responsive">
                         <table class="table nk-store-cart-products">
                             <tbody>
-                            @if (Model.Count() > 0)
-                            {
-                                <tr>
-                                    <td class="font-weight-bold">
-                                        Product:
-                                    </td>
-                                    <td class="font-weight-bold">
-                                        Price:
-                                    </td>
-                                    <td class="font-weight-bold">
-                                        Quantity:
-                                    </td>
-                                    <td class="font-weight-bold">
-                                    </td>
-                                </tr>
-
-                                @foreach (var item in Model)
+                                @if (Model.Count() > 0)
                                 {
-                            <tr>
+                                    <tr>
+                                        <td class="font-weight-bold">
+                                            Product:
+                                        </td>
+                                        <td class="font-weight-bold">
+                                            Price:
+                                        </td>
+                                        <td class="font-weight-bold">
+                                            Quantity:
+                                        </td>
+                                        <td class="font-weight-bold">
+                                        </td>
+                                    </tr>
 
-                                @*<td class="d-lg-block">
-            <img style="max-height:200px;" src="@Url.Content(item.Game.imagePath)" class="img-thumbnail" />
-        </td>*@
-                                <td>
-                                    @Html.DisplayFor(modelItem => item.Game.Name)
-                                </td>
-                                <td id="itemPrice">
-                                    $@Html.DisplayFor(modelItem => item.Game.Price)
-                                </td>
-                                <td id="itemQuantity">
-                                    <input name="quantity" asp-data-id="@item.Quantity" type="number" value="@Html.DisplayFor(modelItem => item.Quantity)" class="form-control col-lg-3" min="1" max="10"  >
-          </td>
+                                    @foreach (var item in Model)
+                                    {
+                                        <tr>
+
+                                            @*<td class="d-lg-block">
+                                                <img style="max-height:200px;" src="@Url.Content(item.Game.imagePath)" class="img-thumbnail" />
+                                            </td>*@
+                                            <td>
+                                                @Html.DisplayFor(modelItem => item.Game.Name)
+                                            </td>
+                                            <td id="itemPrice">
+                                                $@Html.DisplayFor(modelItem => item.Game.Price)
+                                            </td>
+                                            <td id="itemQuantity">
+                                                <input name="quantity" asp-data-id="@item.Quantity" type="number" value="@Html.DisplayFor(modelItem => item.Quantity)" class="form-control col-lg-3" min="1" max="10">
+                                            </td>
 
 
 
 
 
-          <td>
+                                            <td>
 
-              <a asp-action="StoreCart" asp-route-id="-@item.ProductId" asp-controller="Store">Remove</a>
+                                                <a asp-action="StoreCart" asp-route-id="-@item.ProductId" asp-controller="Store">Remove</a>
 
-          </td>
+                                            </td>
 
-      </tr>
-                                }}
-                            else
-                            {
+                                        </tr>
+                                    }}
+                                else
+                                {
                                     <tr><td>Your cart is empty. <a asp-controller="Games" asp-action="Index">Click here</a> to find games.</td></tr>
-                            }
+                                }
 
                             </tbody>
                         </table>
-                    
-                    <!-- END: Products in Cart -->
-                </div>
-                <div class="nk-gap-1"></div>
 
-                <input type="submit" class="nk-btn nk-btn-rounded nk-btn-color-white float-right" value="Update Cart" />
+                        <!-- END: Products in Cart -->
+                    </div>
+                    <div class="nk-gap-1"></div>
+
+                    <input type="submit" class="nk-btn nk-btn-rounded nk-btn-color-white float-right" value="Update Cart" />
                 }
                 <div class="clearfix"></div>
                 <div class="nk-gap-2"></div>
@@ -167,7 +178,7 @@
                                         @{ decimal tax = .055m;
                                             decimal taxTotal = sum * tax;
                                             Output.WriteLine("$" + Math.Round(taxTotal, 2));
-                                            }
+                                        }
                                     </td>
                                 </tr>
                                 <tr class="nk-store-cart-totals-total">
@@ -175,7 +186,7 @@
                                         Total
                                     </td>
                                     <td>
-                                        @{ 
+                                        @{
                                             decimal total = sum + taxTotal;
                                             Output.WriteLine("$" + Math.Round(total, 2));
                                         }

@@ -1,6 +1,9 @@
 ﻿@{
-    ViewBag.Title = "OrderSuccess";
-    Layout = "~/Views/Shared/_Layout.cshtml";
+    string message = TempData["Message"] as string;
+    if (!String.IsNullOrEmpty(message))
+    {
+        <div class="message">
+            <h4>@message</h4>
+        </div>
+    }
 }
-
-<h4>Your order has been placed.</h4>
