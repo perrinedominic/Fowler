@@ -35,5 +35,10 @@ namespace DataAccessLibrary.Models
         /// The Order details attatched to the order.
         /// </summary>
         public IEnumerable<OrderDetails> Lines;
+
+        /// Gets or sets the id of the related payment information.
+        /// </summary>
+        [Column(TypeName = "int")][Required]
+        public int? Payment_Info_ID { get; set; }
     }
 }

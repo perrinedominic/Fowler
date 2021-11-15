@@ -25,6 +25,9 @@ namespace DataAccessLibrary.DataAccess
         {
             modelBuilder.Entity<OrderDetails>()
                 .HasKey(o => new { o.Order_ID, o.Product_ID });
+
+            modelBuilder.Entity<Order>()
+                .HasKey(o => new { o.Order_ID, o.Payment_Info_ID });
         }
 
         /// <summary>
@@ -47,10 +50,19 @@ namespace DataAccessLibrary.DataAccess
         /// </summary>
         public DbSet<User> Users { get; set; }
 
+        /// <summary>
+        /// Gets or sets the DBSet of the orders.
+        /// </summary>
         public DbSet<Order> Order { get; set; }
 
+        /// <summary>
+        /// Gets or sets the db set of the order details.
+        /// </summary>
         public DbSet<OrderDetails> Order_Details { get; set; }
 
+        /// <summary>
+        /// Gets or sets the db set of the payment information.
+        /// </summary>
         public DbSet<PaymentInformation> Payment_Information { get; set; }
     }
 }

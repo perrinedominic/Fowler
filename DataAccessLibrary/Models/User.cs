@@ -37,6 +37,5 @@ namespace DataAccessLibrary.Models
         /// Gets or sets the address of user.
         /// </summary>
         public string Address { get; set; }
-
     }
 }

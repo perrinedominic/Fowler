@@ -47,11 +47,21 @@ namespace FowlerSite.Controllers
 
         public int Quantity { get; set; }
 
+        public Users Users { get; set; }
+
+        public Cart Cart { get; set; }
+        
         public decimal Subtotal
         {
             get
             {
-                return GetSubtotal();
+                if (Cart != null && Cart.Subtotal > 0)
+                {
+                    return Cart.Subtotal;
+                } else
+                {
+                    return 0;
+                }
             }
             set { }
         }
@@ -186,7 +196,9 @@ namespace FowlerSite.Controllers
                 {
                     AddedOn = DateTime.Now,
                     UpdatedOn = DateTime.Now,
-                    UserId = userId
+                    UserId = userId,
+                    Subtotal = 0,
+                    Total = Subtotal * .055m + Subtotal
                 };
 
                 _db.ShoppingCart.Add(cart);
@@ -194,6 +206,8 @@ namespace FowlerSite.Controllers
                 _db.SaveChanges();
 
                 cardId = cart.CartId;
+
+                this.Cart = cart;
             }
             else
             {
@@ -205,7 +219,7 @@ namespace FowlerSite.Controllers
                 c => c.CartId == cardId
                 && c.ProductId == productId);
 
-            if (cartItem == null)
+            if (cartItem == null && productId != 0)
             {
                 // Create a new cart item if no cart item exists.
                 cartItem = new CartItem()
@@ -213,9 +227,8 @@ namespace FowlerSite.Controllers
                     ItemId = Guid.NewGuid().ToString(),
                     ProductId = productId,
                     CartId = cardId,
-                    Game = _db.Games.SingleOrDefault(
-                        p => p.ProductID == productId),
                     Quantity = 1,
+                    ItemPrice = _db.Games.FirstOrDefault(p => p.ProductID == productId).Price,
                     DateCreated = DateTime.Now,
                 };
 
@@ -225,7 +238,10 @@ namespace FowlerSite.Controllers
             {
                 // If the item does exist in the cart,
                 // then add one to the quantity
-                cartItem.Quantity++;
+                if (productId != 0)
+                {
+                    cartItem.Quantity++;
+                }
             }
             if (productId != 0)
             {
@@ -274,9 +290,16 @@ namespace FowlerSite.Controllers
         /// Gets the user id for the shopping cart.
         /// </summary>
         /// <returns>An empty GUID for the id.</returns>
-        public Guid GetUserID()
+        public int? GetUserID()
         {
-            return Guid.Empty;
+            if (Users != null)
+            {
+                return Users.Id;
+            }
+            else
+            {
+                return null;
+            }
         }
 
         /// <summary>
@@ -297,16 +320,7 @@ namespace FowlerSite.Controllers
         /// <returns></returns>
         public decimal GetSubtotal()
         {
-            ShoppingCartId = 1;
-            decimal totalCost = 0;
-            List<CartItem> items = this.GetCartItems(1);
-
-            foreach(CartItem i in items)
-            {
-               totalCost += i.Game.Price;
-            }
-
-            return totalCost;
+            return Subtotal;
         }
 
         public ActionResult CheckOut(FormCollection frc)
@@ -322,52 +336,46 @@ namespace FowlerSite.Controllers
         public ActionResult ProcessOrder(IFormCollection frc)
         {
             var keys = frc.Keys.ToArray();
-            decimal subtotal = 0;
             List<CartItem> items = GetCartItems(1);
-            int product = 0;
-            
-            foreach(CartItem c in items)
-            {
-                c.Game = _db.Games.SingleOrDefault(
-                        p => p.ProductID == c.ProductId);
-                var price = c.Game.Price;
-                subtotal += price * c.Quantity;
-                product = c.Game.ProductID;
-            }
 
-            var orderid = _db.Order.ToList().LastOrDefault().Order_ID;
-            orderid++;
-
-            var total = subtotal / 0.945m;
-
-            // Save to the order table.
-            Order order = new Order()
-            {
-                Order_ID = orderid,
-                Order_Date = DateTime.Now,
-            };
-
+            var paymentinfoid = _db.Payment_Information.AsNoTracking().ToList().LastOrDefault().Payment_Info_Id++;
+            paymentinfoid++;
+            // Create the payment information for the order.
             PaymentInformation payment = new PaymentInformation()
             {
                 Card_Number = frc["cardnumber"],
                 Card_Provider = frc["cardtype"],
                 Security_Code = Convert.ToInt32(frc["cvc"]),
                 Expiration_Date = Convert.ToDateTime(frc["expdate"]),
-                Payment_Info_Id = new Random().Next(1000)
+                Payment_Info_Id = paymentinfoid
             };
 
-            // Save to the order details table.
-            OrderDetails orderDetail = new OrderDetails()
+            var orderid = _db.Order.AsNoTracking().ToList().LastOrDefault().Order_ID;
+            orderid++;
+            // Save to the order table.
+            Order order = new Order()
             {
-                Payment_Info_Id = payment.Payment_Info_Id,
-                Sub_Total = subtotal,
-                Total = total,
-                Order_ID = order.Order_ID,
-                Product_ID = product,
+                Order_ID = orderid,
+                Order_Date = DateTime.Now,
+                Payment_Info_ID = payment.Payment_Info_Id
             };
-
             _db.Order.Add(order);
-            _db.Order_Details.Add(orderDetail);
+
+            // Add order detail for each item in the shopping cart
+            foreach (CartItem c in items)
+            {
+                // Save to the order details table.
+                OrderDetails orderDetail = new OrderDetails()
+                {
+                    Order_ID = orderid,
+                    ItemPrice = c.ItemPrice,
+                    Product_ID = c.ProductId,
+                    Quantity = c.Quantity
+                };
+
+                _db.Order_Details.Add(orderDetail);
+            }
+
             _db.Payment_Information.Add(payment);
             _db.SaveChanges();
 

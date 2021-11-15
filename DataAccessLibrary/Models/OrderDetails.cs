@@ -19,18 +19,17 @@ namespace DataAccessLibrary.Models
 		/// The subtotal of the order.
 		/// </summary>
 		[Column(TypeName = "float")]
-		public decimal Sub_Total { get; set; }
+		public decimal ItemPrice { get; set; }
 
 		/// <summary>
 		/// The total of the order
 		/// </summary>
-		[Column(TypeName = "float")]
-		public decimal Total { get; set; }
+		[Column(TypeName = "int")]
+		public decimal Quantity { get; set; }
 		
 		/// <summary>
-		/// The id of a product.
+		/// The id of a the related cart.
 		/// </summary>
-		[Required]
 		[Column(TypeName = "int")]
 		public int Product_ID { get; set; }
 

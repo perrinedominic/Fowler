@@ -1,5 +1,9 @@
 {
   "dependencies": {
+    "storage1": {
+      "restored": true,
+      "restoreTime": "2021-10-29T14:00:55.5423143Z"
+    },
     "secrets1": {
       "restored": true,
       "restoreTime": "2021-10-15T18:28:12.5273782Z"
@@ -10,11 +14,23 @@
     }
   },
   "parameters": {
+    "storage1.resourceGroupName": {
+      "Name": "storage1.resourceGroupName",
+      "Type": "resourceGroup",
+      "Value": "FowlerSiteResourceGroup"
+    },
+    "storage1.subscriptionId": {
+      "Name": "storage1.subscriptionId",
+      "Type": "subscription",
+      "Value": "ee3fe163-4905-407e-b6af-a36d161b7004"
+    },
     "mssql1.subscriptionId": {
+      "Name": "mssql1.subscriptionId",
       "Type": "subscription",
       "Value": "ee3fe163-4905-407e-b6af-a36d161b7004"
     },
     "mssql1.resourceGroupName": {
+      "Name": "mssql1.resourceGroupName",
       "Type": "resourceGroup",
       "Value": "FowlerSiteResourceGroup"
     }

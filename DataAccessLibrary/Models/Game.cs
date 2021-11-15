@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.AspNetCore.Http;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
@@ -9,15 +10,15 @@ namespace DataAccessLibrary.Models
     public class Game
     {
         /// <summary>
-        /// The image path to uniquely identify the image associated with the game.
+        /// A string to hold the image path.
         /// </summary>
-        public string imagePath
-        {
-            get
-            {
-                return "~/assets/images/game-" + this.ProductID + ".jpg";
-            }
-        }
+        public string ImagePath { get; set; }
+
+        /// <summary>
+        /// The image being uploaded.
+        /// </summary>
+        [NotMapped]
+        public IFormFile Image { get; set; }
 
         /// <summary>
         /// The id that is associated with the product.

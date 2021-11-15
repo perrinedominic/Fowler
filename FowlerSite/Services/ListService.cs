@@ -7,6 +7,8 @@ using System.Collections.Generic;
 using System.Data;
 using System.Linq;
 using System.Threading.Tasks;
+using Azure.Storage.Blobs;
+using Azure.Storage.Blobs.Models;
 
 namespace FowlerSite.Services
 {
@@ -145,8 +147,6 @@ namespace FowlerSite.Services
                         new OrderDetails
                         {
                             Order_ID = Convert.ToInt32(dr["Order_ID"]),
-                            Sub_Total = Convert.ToDecimal(dr["Sub_Total"]),
-                            Total = Convert.ToDecimal(dr["Total"]),
                             Product_ID = Convert.ToInt32(dr["Product_ID"]),
                             PaymentType = Convert.ToString(dr["PaymentType"])
                         }));
@@ -223,8 +223,6 @@ namespace FowlerSite.Services
                         new OrderDetails
                         {
                             Order_ID = Convert.ToInt32(dr["Order_ID"]),
-                            Sub_Total = Convert.ToDecimal(dr["Sub_Total"]),
-                            Total = Convert.ToDecimal(dr["Total"]),
                             Product_ID = Convert.ToInt32(dr["Product_ID"]),
                             PaymentType = Convert.ToString(dr["PaymentType"]),
                             Order = orders.FirstOrDefault(o => o.Order_ID == Convert.ToInt32(dr["OrderID"])),
@@ -345,7 +343,8 @@ namespace FowlerSite.Services
                             Price = Convert.ToDecimal(dr["Price"]),
                             Genre = Convert.ToString(dr["Genre"]),
                             Rating = Convert.ToInt32(dr["Rating"]),
-                            Platforms = Convert.ToString(dr["Platforms"])
+                            Platforms = Convert.ToString(dr["Platforms"]),
+                            ImagePath =  Convert.ToString(dr["ImagePath"])
                         });
                 }
             }
