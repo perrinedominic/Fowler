@@ -160,7 +160,7 @@ namespace FowlerSite.Services
         /// The method to get the list of orders.
         /// </summary>
         /// <returns>Returns an IEnumerable</returns>
-        public IEnumerable<Order> GetOrderList()
+        public IEnumerable<Order> GetOrderList(int id)
         {
             List<Order> orders = new List<Order>();
             var users = new ListService(this.Configuration).GetUserList();
@@ -168,7 +168,7 @@ namespace FowlerSite.Services
             using (SqlConnection connection = new SqlConnection(this.connectionString))
             {
                 DataTable dataTable = new DataTable();
-                string sql = "SELECT * FROM [Order]";
+                string sql = $"SELECT * FROM [Order] WHERE Cust_ID = {id}";
                 SqlCommand command = new SqlCommand(sql, connection);
 
                 SqlDataAdapter dataAdapter = new SqlDataAdapter(command);
@@ -202,7 +202,7 @@ namespace FowlerSite.Services
         public IEnumerable<OrderDetails> GetOrderLineList(int id)
         {
             List<OrderDetails> orderLines = new List<OrderDetails>();
-            var orders = new ListService(this.Configuration).GetOrderList();
+            var orders = new ListService(this.Configuration).GetOrderList(id);
             var products = new ListService(this.Configuration).GetProductList();
 
             using (SqlConnection connection = new SqlConnection(this.connectionString))

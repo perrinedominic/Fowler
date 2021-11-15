@@ -213,13 +213,12 @@ namespace FowlerSite.Controllers
 
         public IActionResult ReadUser(int id)
         {
-            string username = (string)TempData["Username"];
             Users user = new Users();
             using (SqlConnection connection = new SqlConnection(this.connectionString))
             {
                 connection.Open();
 
-                string sql = $"SELECT * FROM Users WHERE Username = '{username}'";
+                string sql = $"SELECT * FROM Users WHERE Username = '{id}'";
                 SqlCommand command = new SqlCommand(sql, connection);
 
                 using (SqlDataReader dataReader = command.ExecuteReader())
@@ -235,6 +234,7 @@ namespace FowlerSite.Controllers
                         user.CardNumber = Convert.ToString(dataReader["CardNumber"]);
                         user.CardExpire = Convert.ToString(dataReader["CardExpire"]);
                         user.CardCvc = Convert.ToString(dataReader["CardCVC"]);
+                        user.Orders = new ListService(this.Configuration).GetOrderList(id);
                     }
                 }
                 connection.Close();

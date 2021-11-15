@@ -83,6 +83,7 @@ namespace FowlerSite.Controllers
                         user.CardNumber = Convert.ToString(dataReader["CardNumber"]);
                         user.CardExpire = Convert.ToString(dataReader["CardExpire"]);
                         user.CardCvc = Convert.ToString(dataReader["CardCVC"]);
+                        user.Orders = new ListService(this.Configuration).GetOrderList(id);
                     }
                 }
                 connection.Close();
@@ -141,7 +142,7 @@ namespace FowlerSite.Controllers
             {
                 connection.Open();
 
-                string sql = $"SELECT * FROM Login WHERE Username = '{login.Username}' and Password = '{login.Password}'";
+                string sql = $"SELECT * FROM [Login] WHERE Username = '{login.Username}' and [Password] = '{login.Password}'";
                 SqlCommand command = new SqlCommand(sql, connection);
 
                 using (SqlDataReader dataReader = command.ExecuteReader())

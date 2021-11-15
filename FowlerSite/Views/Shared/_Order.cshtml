@@ -3,7 +3,7 @@
 <header>Order History</header>
 <div class="row">
     <div class="col text-right">
-        @if (Model.Orders.Count() >= 0 && Model.Orders.Count() != null)
+        @if (Model.Orders.Count() >= 0 && Model.Orders != null)
         {
             <h4>Order Count: @Model.Orders.Count()</h4>
         }
@@ -36,7 +36,6 @@
                                         <th class="text-primary">Order ID</th>
                                         <th class="text-primary">Customer</th>
                                         <th class="text-primary">Order Date</th>
-                                        <th class="text-primary">Payment Info</th>
                                         <th class="text-primary">Order Details</th>
                                     </tr>
                                 </thead>
@@ -52,7 +51,6 @@
                                             <tr class="text-white">
                                                 <td>@o.Order_ID</td>
                                                 <td>@o.User.FirstName @o.User.LastName </td>
-                                                <td>@o.Cust_ID</td>
                                                 <td>@o.Order_Date</td>
                                                 @if (o.Lines == null)
                                                 {
