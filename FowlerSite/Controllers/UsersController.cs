@@ -120,6 +120,7 @@ namespace FowlerSite.Controllers
                     TempData["Admin"] = user.Admin;
                     TempData["Username"] = user.Username;
                     TempData["Password"] = user.Password;
+                    TempData["UserId"] = user.Id;
                 }
             }
 
@@ -203,13 +204,14 @@ namespace FowlerSite.Controllers
                     TempData["Admin"] = user.Admin;
                     TempData["Username"] = user.Username;
                     TempData["Password"] = user.Password;
+                    TempData["UserId"] = user.Id;
                 }
             }
 
-            return RedirectToAction("ReadUser");
+            return RedirectToAction("ReadUser", "Users");
         }
 
-        public Users ReadUser(int id)
+        public IActionResult ReadUser(int id)
         {
             string username = (string)TempData["Username"];
             Users user = new Users();
@@ -217,7 +219,7 @@ namespace FowlerSite.Controllers
             {
                 connection.Open();
 
-                string sql = $"SELECT * FROM Users WHERE Id = {id}";
+                string sql = $"SELECT * FROM Users WHERE Username = '{username}'";
                 SqlCommand command = new SqlCommand(sql, connection);
 
                 using (SqlDataReader dataReader = command.ExecuteReader())
@@ -233,13 +235,12 @@ namespace FowlerSite.Controllers
                         user.CardNumber = Convert.ToString(dataReader["CardNumber"]);
                         user.CardExpire = Convert.ToString(dataReader["CardExpire"]);
                         user.CardCvc = Convert.ToString(dataReader["CardCVC"]);
-                        user.Orders = new ListService(this.Configuration).GetOrderList();
                     }
                 }
                 connection.Close();
             }
 
-            return user;
+            return RedirectToAction("CreateLogin", "Login", new { id = user.Id });
         }
 
         public IActionResult UpdateCard(int id)
@@ -323,7 +324,7 @@ namespace FowlerSite.Controllers
 
         public IActionResult Index(int id)
         {
-            Users user = this.ReadUser(id);
+            IActionResult user = this.ReadUser(id);
             return View(user);
         }
 
