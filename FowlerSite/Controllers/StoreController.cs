@@ -336,6 +336,7 @@ namespace FowlerSite.Controllers
         public ActionResult ProcessOrder(IFormCollection frc)
         {
             var keys = frc.Keys.ToArray();
+            int orderid = 0;
             List<CartItem> items = GetCartItems(1);
 
             var paymentinfoid = _db.Payment_Information.AsNoTracking().ToList().LastOrDefault().Payment_Info_Id++;
@@ -350,8 +351,25 @@ namespace FowlerSite.Controllers
                 Payment_Info_Id = paymentinfoid
             };
 
-            var orderid = _db.Order.AsNoTracking().ToList().LastOrDefault().Order_ID;
-            orderid++;
+            using (SqlConnection connection = new SqlConnection(this.connectionString))
+            {
+                connection.Open();
+
+                string sql = "SELECT TOP 1 Order_ID FROM [dbo].[Order] ORDER BY Order_ID DESC;";
+                SqlCommand command = new SqlCommand(sql, connection);
+
+                using (SqlDataReader dataReader = command.ExecuteReader())
+                {
+                    while (dataReader.Read())
+                    {
+                        orderid = Convert.ToInt32(dataReader["Order_ID"]);
+                    };
+                }
+
+                connection.Close();
+                orderid++;
+            }
+
             // Save to the order table.
             Order order = new Order()
             {
