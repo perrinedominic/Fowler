@@ -365,37 +365,38 @@ namespace FowlerSite.Controllers
                         orderid = Convert.ToInt32(dataReader["Order_ID"]);
                     };
                 }
+                orderid++;
+                string orderDate = DateTime.Now.ToString("MM-dd-yyyy");
+                sql = $"INSERT INTO [dbo].[Order] (Order_ID, Order_Date, Cust_ID, Payment_Info_ID) VALUES ({orderid}, {orderDate}, 1, {payment.Payment_Info_Id});";
+                command = new SqlCommand(sql, connection);
+                command.ExecuteNonQuery();
+
+                // Add order detail for each item in the shopping cart
+                foreach (CartItem c in items)
+                {
+                    // Save to the order details table.
+                    OrderDetails orderDetail = new OrderDetails()
+                    {
+                        Order_ID = orderid,
+                        ItemPrice = c.ItemPrice,
+                        Product_ID = c.ProductId,
+                        Quantity = c.Quantity
+                    };
+
+                    sql = $"INSERT INTO [dbo].[Order_Details] (Order_ID, Quantity, ItemPrice, Product_ID) VALUES" +
+                        $" ({orderid}, {orderDetail.Quantity}, {orderDetail.ItemPrice}, {orderDetail.Product_ID})";
+                    command = new SqlCommand(sql, connection);
+                    command.ExecuteNonQuery();
+                }
+
+                string expDate = payment.Expiration_Date.ToString("MM-dd-yyyy");
+                sql = $"INSERT INTO [dbo].[Payment_Information] (Payment_Info_ID, Card_Number, Security_Code, Expiration_Date, Card_Provider) VALUES(" +
+                    $"{payment.Payment_Info_Id}, {payment.Card_Number}, {payment.Security_Code}, '{expDate}', 'VISA')";
+                command = new SqlCommand(sql, connection);
+                command.ExecuteNonQuery();
 
                 connection.Close();
-                orderid++;
             }
-
-            // Save to the order table.
-            Order order = new Order()
-            {
-                Order_ID = orderid,
-                Order_Date = DateTime.Now,
-                Payment_Info_ID = payment.Payment_Info_Id
-            };
-            _db.Order.Add(order);
-
-            // Add order detail for each item in the shopping cart
-            foreach (CartItem c in items)
-            {
-                // Save to the order details table.
-                OrderDetails orderDetail = new OrderDetails()
-                {
-                    Order_ID = orderid,
-                    ItemPrice = c.ItemPrice,
-                    Product_ID = c.ProductId,
-                    Quantity = c.Quantity
-                };
-
-                _db.Order_Details.Add(orderDetail);
-            }
-
-            _db.Payment_Information.Add(payment);
-            _db.SaveChanges();
 
             // Remove Shopping Cart Session.
 
