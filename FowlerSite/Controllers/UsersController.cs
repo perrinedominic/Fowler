@@ -120,6 +120,7 @@ namespace FowlerSite.Controllers
                     TempData["Admin"] = user.Admin;
                     TempData["Username"] = user.Username;
                     TempData["Password"] = user.Password;
+                    TempData["UserId"] = user.Id;
                 }
             }
 
@@ -203,21 +204,21 @@ namespace FowlerSite.Controllers
                     TempData["Admin"] = user.Admin;
                     TempData["Username"] = user.Username;
                     TempData["Password"] = user.Password;
+                    TempData["UserId"] = user.Id;
                 }
             }
 
-            return RedirectToAction("ReadUser");
+            return RedirectToAction("ReadUser", "Users");
         }
 
-        public IActionResult ReadUser()
+        public IActionResult ReadUser(int id)
         {
-            string username = (string)TempData["Username"];
             Users user = new Users();
             using (SqlConnection connection = new SqlConnection(this.connectionString))
             {
                 connection.Open();
 
-                string sql = $"SELECT * FROM Users ORDER BY Id ASC";
+                string sql = $"SELECT * FROM Users WHERE Username = '{id}'";
                 SqlCommand command = new SqlCommand(sql, connection);
 
                 using (SqlDataReader dataReader = command.ExecuteReader())
@@ -233,6 +234,7 @@ namespace FowlerSite.Controllers
                         user.CardNumber = Convert.ToString(dataReader["CardNumber"]);
                         user.CardExpire = Convert.ToString(dataReader["CardExpire"]);
                         user.CardCvc = Convert.ToString(dataReader["CardCVC"]);
+                        user.Orders = new ListService(this.Configuration).GetOrderList(id);
                     }
                 }
                 connection.Close();
@@ -320,9 +322,10 @@ namespace FowlerSite.Controllers
             return userList;
         }
 
-        public IActionResult Index()
+        public IActionResult Index(int id)
         {
-            return View();
+            IActionResult user = this.ReadUser(id);
+            return View(user);
         }
 
         public IActionResult Create()

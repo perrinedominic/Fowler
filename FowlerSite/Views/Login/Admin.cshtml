@@ -21,6 +21,7 @@
         </tr>
     </tbody>
 </table>
+
 <table class="nk-table">
     <thead>
         <tr>
@@ -37,27 +38,29 @@
             <th>Edit:</th>
             <th>Delete:</th>
         </tr>
-            @foreach (var u in Model.Users)
+        @foreach (var u in Model.Users)
+        {
+            @if (u.Admin == 0)
             {
-                @if (u.Admin == 0)
-                {
-                    <tr>
-                        <td>@u.Username</td>
-                        <td>@u.Password</td>
-                        <td>@u.FirstName</td>
-                        <td>@u.LastName</td>
-                        <td>@u.EmailAddress</td>
-                        <td><a class="btn btn-outline-primary" asp-action="Update" asp-route-id="@u.Id">Edit User</a></td>
-                        <td>
-                            <form asp-action="Delete" method="post" asp-route-id="@u.Id">
-                                <button class="btn btn-outline-danger">Delete</button>
-                            </form>
-                        </td>
-                    </tr>
-                }
+                <tr>
+                    <td>@u.Username</td>
+                    <td>@u.Password</td>
+                    <td>@u.FirstName</td>
+                    <td>@u.LastName</td>
+                    <td>@u.EmailAddress</td>
+                    <td><a class="btn btn-outline-primary" asp-action="Update" asp-route-id="@u.Id">Edit User</a></td>
+                    <td>
+                        <form asp-action="Delete" method="post" asp-route-id="@u.Id">
+                            <button class="btn btn-outline-danger">Delete</button>
+                        </form>
+                    </td>
+                    <td><a class="btn btn-outline-neutral" asp-action="Upgrade" asp-route-id="@u.Id">Upgrade To Admin</a></td>
+                </tr>
             }
+        }
     </tbody>
 </table>
+
 <table class="nk-table">
     <thead>
         <tr>
@@ -86,7 +89,7 @@
                         <td>@u.EmailAddress</td>
                         <td><a class="btn btn-outline-primary" asp-controller="Users" asp-action="Update" asp-route-id="@u.Id">Edit User</a></td>
                         <td>
-                            <form asp-controller="Users" asp-action="Delete" method="post" asp-route-id="@u.Id">
+                            <form asp-action="Delete" method="post" asp-route-id="@u.Id">
                                 <button class="btn btn-outline-danger">Delete</button>
                             </form>
                         </td>

@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
@@ -26,6 +27,15 @@ namespace DataAccessLibrary.Models
         public int Cust_ID { get; set; }
 
         /// <summary>
+        /// The user that made the order.
+        /// </summary>
+        public User User { get; set; }
+
+        /// <summary>
+        /// The Order details attatched to the order.
+        /// </summary>
+        public IEnumerable<OrderDetails> Lines;
+
         /// Gets or sets the id of the related payment information.
         /// </summary>
         [Column(TypeName = "int")][Required]

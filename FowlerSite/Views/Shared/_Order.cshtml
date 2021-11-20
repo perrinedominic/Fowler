@@ -1,0 +1,95 @@
+﻿@model Users
+
+<header>Order History</header>
+<div class="row">
+    <div class="col text-right">
+        @if (Model.Orders.Count() >= 0 && Model.Orders != null)
+        {
+            <h4>Order Count: @Model.Orders.Count()</h4>
+        }
+        else
+        {
+            <h4>Order count: 0</h4>
+        }
+    </div>
+</div>
+
+        <div class="col-md-12">
+            <!-- Button trigger modal -->
+            <button type="button" class="btn btn-outline-danger btn-round" data-toggle="modal" data-target="#myModal">
+                Order History
+            </button>
+            <!-- Modal -->
+            <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                <div class="modal-dialog modal-lg" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">×</span>
+                            </button>
+                            <h5 class="modal-title text-center" id="exampleModalLabel">Order History For @Model.FirstName @Model.LastName</h5>
+                        </div>
+                        <div class="modal-body">
+                            <table class="table table-bordered table-sm table-striped">
+                                <thead>
+                                    <tr>
+                                        <th class="text-primary">Order ID</th>
+                                        <th class="text-primary">Customer</th>
+                                        <th class="text-primary">Order Date</th>
+                                        <th class="text-primary">Order Details</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @if (Model == null)
+                                    {
+                                        <tr><td colspan="6" class="text-center">No Order Data</td></tr>
+                                    }
+                                    else
+                                    {
+                                        @foreach (var o in Model.Orders)
+                                        {
+                                            <tr class="text-white">
+                                                <td>@o.Order_ID</td>
+                                                <td>@o.User.FirstName @o.User.LastName </td>
+                                                <td>@o.Order_Date</td>
+                                                @if (o.Lines == null)
+                                                {
+                                                    <td>
+                                                        <form asp-action="Delete" asp-controller="Order" method="post" asp-route-id="@o.Order_ID">
+                                                            <button class="btn-sm btn-danger">View Order Details</button>
+                                                        </form>
+                                                    </td>
+                                                }
+                                                else
+                                                {
+                                                    if (o.Lines.Count() <= 0)
+                                                    {
+                                                        <td>
+                                                            <form asp-action="Delete" asp-controller="Order" method="post" asp-route-id="@o.Order_ID">
+                                                                <button class="btn-sm btn-danger">Delete</button>
+                                                            </form>
+                                                        </td>
+                                                    }
+                                                    else
+                                                    {
+                                                        <td>OrderLines Exist</td>
+                                                    }
+                                                }
+                                            </tr>
+                                        }
+                                    }
+                        </div>
+                        <div class="modal-footer">
+                            <div class="left-side">
+                            </div>
+                            <div class="divider"></div>
+                            <div class="right-side">
+                                <button type="button" class="btn btn-default btn-link" data-dismiss="modal">Never mind</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+</table>
+
