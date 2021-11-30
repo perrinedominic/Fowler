@@ -8,14 +8,6 @@
 
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href="~/lib/bootstrap/css/bootstrap.min.css" />
-    <!-- Bootstrap -->
-    <link rel="stylesheet" href="~/assets/vendor/bootstrap/css/bootstrap.css">
-    <link rel="stylesheet" href="~/assets/vendor/bootstrap/css/bootstrap-grid.css">
-    <link rel="stylesheet" href="~/assets/vendor/bootstrap/css/bootstrap-reboot.css">
-    <!-- Bootstrap -->
-    <link rel="stylesheet" href="~/assets/vendor/bootstrap/css/bootstrap.css">
-    <link rel="stylesheet" href="~/assets/vendor/bootstrap/css/bootstrap-grid.css">
-    <link rel="stylesheet" href="~/assets/vendor/bootstrap/css/bootstrap-reboot.css">
 
     <!-- START: Styles -->
     <!-- Google Fonts -->
@@ -61,6 +53,7 @@
 
     <!-- Custom Styles -->
     <link rel="stylesheet" href="~/assets/css/custom.css">
+    <link rel="stylesheet" href="~/assets/css/login.css">
 
     <!-- END: Styles -->
     <!-- jQuery -->
@@ -72,40 +65,34 @@
             <div class="container">
                 <div class="nk-nav-table">
 
-                <a href="index.html" class="nk-nav-logo">
-                    <img src="~/assets/images/logo.png" alt="GoodGames" width="199">
-                </a>
+                    <a href="index.html" class="nk-nav-logo">
+                        <img src="~/assets/images/logo.png" alt="GoodGames" width="199">
+                    </a>
 
-                <ul class="nk-nav nk-nav-center d-none d-md-table-cell" data-nav-mobile="#nk-nav-mobile">
+                    <ul class="nk-nav nk-nav-center d-none d-md-table-cell" data-nav-mobile="#nk-nav-mobile">
 
-                    <li class=" nk-drop-item">
-                        <a asp-controller="Home" asp-action="Index">Home</a>
-                    </li>
-                    <li class=" nk-drop-item">
-                        <a asp-area="" asp-controller="Games" asp-action="Index">Games</a>
-                    </li>
-                    <li class=" nk-drop-item">
-                        <a asp-controller="Store" asp-action="Index">Store</a>
-                    </li>
-                    <li class=" nk-drop-item">
-                        <a asp-controller="Store" asp-action="StoreProduct">Product</a>
-                    </li>
-                    <li class=" nk-drop-item">
-                        <a asp-controller="Home" asp-action="ContactUs">Contact Us</a>
-                    </li>
-                </ul>
-                <ul class="nk-nav nk-nav-right nk-nav-icons">
+                        <li class=" nk-drop-item">
+                            <a asp-controller="Home" asp-action="Index">Home</a>
+                        </li>
+                        <li class=" nk-drop-item">
+                            <a asp-area="" asp-controller="Games" asp-action="Index">Games</a>
+                        </li>
+                        <li class=" nk-drop-item">
+                            <a asp-controller="Home" asp-action="ContactUs">Contact Us</a>
+                        </li>
+                    </ul>
+                    <ul class="nk-nav nk-nav-right nk-nav-icons">
 
-                    <li class="single-icon d-lg-none">
-                        <a href="#" class="no-link-effect" data-nav-toggle="#nk-nav-mobile">
-                            <span class="nk-icon-burger">
-                                <span class="nk-t-1"></span>
-                                <span class="nk-t-2"></span>
-                                <span class="nk-t-3"></span>
-                            </span>
-                        </a>
-                    </li>
-                </ul>
+                        <li class="single-icon d-lg-none">
+                            <a href="#" class="no-link-effect" data-nav-toggle="#nk-nav-mobile">
+                                <span class="nk-icon-burger">
+                                    <span class="nk-t-1"></span>
+                                    <span class="nk-t-2"></span>
+                                    <span class="nk-t-3"></span>
+                                </span>
+                            </a>
+                        </li>
+                    </ul>
                 </div>
             </div>
         </nav>
@@ -154,12 +141,98 @@
             @RenderBody()
         </main>
     </div>
-    <footer class="border-top footer text-muted">
+    <footer class="nk-footer">
         <div class="container">
-            &copy; 2021 - FowlerSite - <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
+            <div class="nk-gap-3"></div>
+            <div class="row vertical-gap">
+                <div class="col-md-6">
+                    <div class="nk-widget">
+                        <h4 class="nk-widget-title"><span class="text-main-1">Contact</span> With Us</h4>
+                        <div class="nk-widget-content">
+                            <form action="php/ajax-contact-form.php" class="nk-form nk-form-ajax">
+                                <div class="row vertical-gap sm-gap">
+                                    <div class="col-md-6">
+                                        <input type="email" class="form-control required" name="email" placeholder="Email *">
+                                    </div>
+                                    <div class="col-md-6">
+                                        <input type="text" class="form-control required" name="name" placeholder="Name *">
+                                    </div>
+                                </div>
+                                <div class="nk-gap"></div>
+                                <textarea class="form-control required" name="message" rows="5" placeholder="Message *"></textarea>
+                                <div class="nk-gap-1"></div>
+                                <button class="nk-btn nk-btn-rounded nk-btn-color-white">
+                                    <span>Send</span>
+                                    <span class="icon"><i class="ion-paper-airplane"></i></span>
+                                </button>
+                                <div class="nk-form-response-success"></div>
+                                <div class="nk-form-response-error"></div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="nk-widget">
+                        <h4 class="nk-widget-title"><span class="text-main-1">Latest</span> Posts</h4>
+                        <div class="nk-widget-content">
+                            <div class="row vertical-gap sm-gap">
+
+                                <div class="col-lg-6">
+                                    <div class="nk-widget-post-2">
+                                        <a href="blog-article.html" class="nk-post-image">
+                                            <img src="assets/images/post-1-sm.jpg" alt="">
+                                        </a>
+                                        <div class="nk-post-title"><a href="blog-article.html">Smell magic in the air. Or maybe barbecue</a></div>
+                                        <div class="nk-post-date">
+                                            <span class="fa fa-calendar"></span> Sep 18, 2018
+                                            <span class="fa fa-comments"></span> <a href="#">4</a>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="col-lg-6">
+                                    <div class="nk-widget-post-2">
+                                        <a href="blog-article.html" class="nk-post-image">
+                                            <img src="assets/images/post-2-sm.jpg" alt="">
+                                        </a>
+                                        <div class="nk-post-title"><a href="blog-article.html">Grab your sword and fight the Horde</a></div>
+                                        <div class="nk-post-date">
+                                            <span class="fa fa-calendar"></span> Sep 5, 2018
+                                            <span class="fa fa-comments"></span> <a href="#">7</a>
+                                        </div>
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+                    <div class="nk-widget">
+                        <h4 class="nk-widget-title"><span class="text-main-1">In</span> Twitter</h4>
+                        <div class="nk-widget-content">
+                            <div class="nk-twitter-list" data-twitter-count="1"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="nk-gap-3"></div>
         </div>
 
-        <!-- END: Login Modal -->
+        <div class="nk-copyright">
+            <div class="container">
+                <div class="nk-copyright-right">
+                    <ul class="nk-social-links-2">
+                        <li><a class="nk-social-rss" href="#"><span class="fa fa-rss"></span></a></li>
+                        <li><a class="nk-social-twitch" href="#"><span class="fab fa-twitch"></span></a></li>
+                        <li><a class="nk-social-steam" href="#"><span class="fab fa-steam"></span></a></li>
+                        <li><a class="nk-social-facebook" href="#"><span class="fab fa-facebook"></span></a></li>
+                        <li><a class="nk-social-google-plus" href="#"><span class="fab fa-google-plus"></span></a></li>
+                        <li><a class="nk-social-twitter" href="#" target="_blank"><span class="fab fa-twitter"></span></a></li>
+                        <li><a class="nk-social-pinterest" href="#"><span class="fab fa-pinterest-p"></span></a></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
         <!-- START: Scripts -->
         <!-- Paper Kit Assets-->
         <script src="~/assets/js/paper-kit.js"></script>
@@ -231,6 +304,14 @@
         <script src="~/assets/js/goodgames.min.js"></script>
         <script src="~/assets/js/goodgames-init.js"></script>
     </footer>
+
+    <!-- START: Page Background -->
+
+    <img class="nk-page-background-top" src="~/assets/images/bg-top.png" alt="">
+    <img class="nk-page-background-bottom" src="~/assets/images/bg-bottom.png" alt="">
+
+    <!-- END: Page Background -->
+
     @RenderSection("Scripts", required: false)
 </body>
 </html>
