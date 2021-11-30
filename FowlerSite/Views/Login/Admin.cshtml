@@ -1,13 +1,18 @@
 ﻿@model Login
 
+@{
+    ViewData["Title"] = "Admin";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
 <!DOCTYPE html>
 <head>
     <link href="~/assets/css/login.css" rel="stylesheet" />
 </head>
-<table class="nk-table">
+<table class="nk-table m-10">
     <thead>
         <tr>
-            <th colspan="3">Admin Information</th>
+            <th colspan="2">Admin Information</th>
         </tr>
     </thead>
     <tbody>
@@ -22,10 +27,10 @@
     </tbody>
 </table>
 
-<table class="nk-table">
+<table class="nk-table m-10">
     <thead>
         <tr>
-            <th colspan="3">Users</th>
+            <th colspan="7">Users</th>
         </tr>
     </thead>
     <tbody>
@@ -87,10 +92,10 @@
     </tbody>
 </table>
 
-<table class="nk-table">
+<table class="nk-table m-10">
     <thead>
         <tr>
-            <th colspan="3">Admins</th>
+            <th colspan="7">Admins</th>
         </tr>
     </thead>
     <tbody>
