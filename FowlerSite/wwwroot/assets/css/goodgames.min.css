@@ -7937,7 +7937,7 @@ div.nk-error {
         }
 
 .nk-store-checkout tbody tr.nk-store-cart-totals-shipping, .nk-store-checkout tbody tr.nk-store-cart-totals-subtotal, .nk-store-checkout tbody tr.nk-store-cart-totals-total {
-    background-color: #171e22
+    background-color: #171e22;
 }
 
 .nk-cart-toggle {
