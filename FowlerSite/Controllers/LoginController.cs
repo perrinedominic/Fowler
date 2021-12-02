@@ -367,9 +367,9 @@ namespace FowlerSite.Controllers
         /// The method for the login view.
         /// </summary>
         /// <returns>The login view.</returns>
-        public IActionResult Login()
+        public IActionResult Login(Login login)
         {
-            return View();
+            return View(login);
         }
 
         // GET: Users/Edit/5
@@ -451,6 +451,42 @@ namespace FowlerSite.Controllers
             }
 
             return RedirectToAction("AdminPage");
+        }
+
+        public IActionResult Validate(Login login)
+        {
+            Login user = new Login();
+            RedirectToActionResult result = null;
+
+            using (SqlConnection connection = new SqlConnection(this.connectionString))
+            {
+                string sql = $"SELECT Username, Password FROM Login WHERE Username='{login.Username}' and Password='{login.Password}'";
+
+                using (SqlCommand command = new SqlCommand(sql, connection))
+                {
+                    connection.Open();
+                    using (SqlDataReader dataReader = command.ExecuteReader())
+                    {
+                        while (dataReader.Read())
+                        {
+                            user.Username = Convert.ToString(dataReader["Username"]);
+                            user.Password = Convert.ToString(dataReader["Password"]);
+                        }
+                    }
+                    connection.Close();
+                }
+                if (user.Username == "" || user.Password == "" || user.Username == null || user.Password == null)
+                {
+                    login.ErrorMessage = "Invalid Username or Password.";
+                    result = RedirectToAction("Login", login);
+                }
+                else
+                {
+                    result = RedirectToAction("UserLogin", login);
+                }
+            }
+
+            return result;
         }
 
         private bool UserExists(string id)

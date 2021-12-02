@@ -17,9 +17,13 @@
 <div class="form-container mx-auto my-100">
     <h4 class="my-2"><span class="text-main-1">Sign</span> In</h4>
 
-    <form asp-action="UserLogin" method="post" class="nk-form text-white">
+    <form asp-action="Validate" method="post" class="nk-form text-white">
         <div class="row vertical-gap">
             <div class="col-md-6">
+                @if (Model != null)
+                {
+                    <span class="error">@Model.ErrorMessage</span>
+                }
                 <span class="subtitle">USERNAME:</span>
                 <br>
                 <input type="text" name="username" value="" asp-for="Username" />

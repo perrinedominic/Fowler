@@ -33,6 +33,11 @@ namespace FowlerSite.Models
         public int UserId { get; set; }
 
         /// <summary>
+        /// Gets or sets the login error message.
+        /// </summary>
+        public string ErrorMessage { get; set; }
+
+        /// <summary>
         /// Gets or sets the users for the logins.
         /// </summary>
         public IEnumerable<Users> Users { get; set; }
