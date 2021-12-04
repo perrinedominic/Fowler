@@ -410,7 +410,7 @@ namespace FowlerSite.Controllers
             message.Subject = "Order Confirmation";
             message.Body = new TextPart(TextFormat.Plain)
             {
-                Text = "Thank you for your order."
+                Text = "Thank you for your order. Your order number is " + orderid
         };
             using (var client = new SmtpClient())
             {
