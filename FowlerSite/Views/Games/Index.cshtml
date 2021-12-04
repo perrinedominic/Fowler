@@ -10,16 +10,16 @@
     <div class="row">
         <div class="col-4">
 
-        <h1>Filters</h1>
+            <h1>Filters</h1>
 
-        <!--
-        START: Filter Sidebar
+            <!--
+            START: Filter Sidebar
 
-        Additional Classes:
-            .nk-sidebar-left
-            .nk-sidebar-right
-            .nk-sidebar-sticky
-        -->
+            Additional Classes:
+                .nk-sidebar-left
+                .nk-sidebar-right
+                .nk-sidebar-sticky
+            -->
             <aside class="nk-sidebar nk-sidebar-left">
                 <div class="nk-widget nk-widget-highlighted">
                     <form method="post" class="nk-form nk-form-style-1" novalidate="novalidate">
@@ -150,7 +150,7 @@
                                 </td>
                             </tr>
                             <tr>
-                                <td colspan="5">
+                                <td class="border-0" colspan="5">
                                     <h4 class="nk-feature-title text-main-1 d-flex justify-content-end">
                                         <a asp-action="StoreCart" asp-controller="Store" asp-route-id="@item.ProductID">Add to cart&nbsp;&nbsp;&nbsp;</a>|
                                         <a asp-action="Edit" asp-route-id="@item.ProductID">&nbsp;&nbsp;&nbsp;Edit&nbsp;&nbsp;&nbsp;</a>|

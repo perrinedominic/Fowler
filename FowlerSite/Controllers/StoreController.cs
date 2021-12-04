@@ -39,8 +39,12 @@ namespace FowlerSite.Controllers
             _logger = logger;
             this.Configuration = configuration;
             this.connectionString = Configuration["ConnectionStrings:DefaultConnection"];
+
         }
 
+        /// <summary>
+        /// Gets or sets the configuration.
+        /// </summary>
         public IConfiguration Configuration { get; set; }
 
         /// <summary>
@@ -48,12 +52,25 @@ namespace FowlerSite.Controllers
         /// </summary>
         public int ShoppingCartId { get; set; }
 
+        /// <summary>
+        /// Gets or sets the quantity of a cart item.
+        /// </summary>
         public int Quantity { get; set; }
 
-        public Users Users { get; set; }
+        /// <summary>
+        /// Gets or sets the users.
+        /// </summary>
+        public Login login { get; set; }
 
+        /// <summary>
+        /// Gets or sets the cart.
+        /// </summary>
         public Cart Cart { get; set; }
+
         
+        /// <summary>
+        /// Gets or sets the subtotal for the cart.
+        /// </summary>
         public decimal Subtotal
         {
             get
@@ -69,7 +86,9 @@ namespace FowlerSite.Controllers
             set { }
         }
 
-
+        /// <summary>
+        /// The current database context.
+        /// </summary>
         private OESContext _db;
 
         /// <summary>
@@ -82,8 +101,11 @@ namespace FowlerSite.Controllers
         /// </summary>
         private readonly ILogger<StoreController> _logger;
 
+        [TempData]
+        public string Message { get; set; }
+
         /// <summary>
-        /// 
+        /// Gets the index view.
         /// </summary>
         /// <returns>The index view.</returns>
         public IActionResult Index()
@@ -295,9 +317,9 @@ namespace FowlerSite.Controllers
         /// <returns>An empty GUID for the id.</returns>
         public int? GetUserID()
         {
-            if (Users != null)
+            if (login != null)
             {
-                return Users.Id;
+                return login.Id;
             }
             else
             {
@@ -336,7 +358,7 @@ namespace FowlerSite.Controllers
         /// </summary>
         /// <param name="frc">The data from the form submitted for the method.</param>
         /// <returns>Returns the Order Success view.</returns>
-        public ActionResult ProcessOrder(IFormCollection frc)
+        public IActionResult ProcessOrder(IFormCollection frc)
         {
             var keys = frc.Keys.ToArray();
             int orderid = 0;
@@ -422,7 +444,12 @@ namespace FowlerSite.Controllers
                 client.Disconnect(true);
             }
 
-            return View("OrderSuccess");
+            _db.ShoppingCartItems.RemoveRange(_db.ShoppingCartItems);
+            _db.SaveChanges();
+            Message = "Thank you. Your order has been submitted.";
+            // Remove Shopping Cart Session.
+
+            return Redirect("StoreCart/0");
         }
 
 

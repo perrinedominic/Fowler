@@ -1,44 +1,48 @@
 ﻿@model Login
 
-<!DOCTYPE html>
+@{
+    ViewData["Title"] = "Login";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
 <head>
-    <link href="~/assets/css/login.css" rel="stylesheet" />
+    
 </head>
 <style type="text/css">
-    .error{
+    .error {
         color: red;
     }
 </style>
-<body>
-    <div class="flex-container">
-        <div class="content-container">
-            <div class="form-container">
-                <h4 class="mb-0"><span class="text-main-1">Sign</span> In</h4>
 
-                <div class="nk-gap-1"></div>
-                <form asp-action="UserLogin" method="post" class="nk-form text-white">
-                    <div class="row vertical-gap">
-                        <div class="col-md-6">
-                            <span class="subtitle">USERNAME:</span>
-                            <br>
-                            <input type="text" name="username" value="" asp-for="Username" />
-                            <br>
-                            <span class="subtitle">PASSWORD:</span>
-                            <br>
-                            <input type="password" name="password" value="" asp-for="Password" />
-                            <br><br>
-                        </div>
-                    </div>
+<div class="form-container mx-auto my-100">
+    <h4 class="my-2"><span class="text-main-1">Sign</span> In</h4>
 
-                    <div class="nk-gap-1"></div>
-                    <div class="row vertical-gap">
-                        <button class="btn btn-outline-primary" type="submit">Login</button>
-                        <a class="btn btn-outline-secondary" asp-action="Create">Create an Account</a>
-                        <div class="col-md-6">
-                        </div>
-                    </div>
-                </form>
+    <form asp-action="Validate" method="post" class="nk-form text-white">
+        <div class="row vertical-gap">
+            <div class="col-md-6">
+                @if (Model != null)
+                {
+                    <span class="error">@Model.ErrorMessage</span>
+                }
+                <span class="subtitle">USERNAME:</span>
+                <br>
+                <input type="text" name="username" value="" asp-for="Username" />
+                <br>
+                <span class="subtitle">PASSWORD:</span>
+                <br>
+                <input type="password" name="password" value="" asp-for="Password" />
+                <br><br>
             </div>
         </div>
-    </div>
-</body>
+
+        <div class="nk-gap-1"></div>
+        <div class="row vertical-gap">
+            <div class="col-4">
+                <button class="btn btn-outline-primary" type="submit">Login</button>
+            </div>
+            <div class="col-8">
+                <a class="btn btn-outline-secondary" asp-action="Create">Create an Account</a>
+            </div>
+        </div>
+    </form>
+</div>
