@@ -1,12 +1,15 @@
 ﻿using DataAccessLibrary.DataAccess;
 using DataAccessLibrary.Models;
 using FowlerSite.Models;
+using MailKit.Net.Smtp;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Data.SqlClient;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
+using MimeKit;
+using MimeKit.Text;
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
@@ -420,7 +423,26 @@ namespace FowlerSite.Controllers
                 connection.Close();
             }
 
+            string name = frc["fname"];
+            string email = frc["email"];
             // Remove Shopping Cart Session.
+            var message = new MimeMessage();
+            message.From.Add(new MailboxAddress("Test Project", "fowlergoodgames@gmail.com"));
+            message.To.Add(new MailboxAddress(name, email));
+            message.Subject = "Order Confirmation";
+            message.Body = new TextPart(TextFormat.Plain)
+            {
+                Text = "Thank you for your order. Your order number is " + orderid
+        };
+            using (var client = new SmtpClient())
+            {
+                client.Connect("smtp.gmail.com", 587, false);
+                client.Authenticate("fowlergoodgames@gmail.com", "visualstudio");
+
+                client.Send(message);
+
+                client.Disconnect(true);
+            }
 
             _db.ShoppingCartItems.RemoveRange(_db.ShoppingCartItems);
             _db.SaveChanges();
