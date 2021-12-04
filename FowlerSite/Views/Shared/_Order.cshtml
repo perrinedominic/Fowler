@@ -1,18 +1,6 @@
 ﻿@model Users
 
 <header>Order History</header>
-<div class="row">
-    <div class="col text-right">
-        @if (Model.Orders.Count() >= 0 && Model.Orders != null)
-        {
-            <h4>Order Count: @Model.Orders.Count()</h4>
-        }
-        else
-        {
-            <h4>Order count: 0</h4>
-        }
-    </div>
-</div>
 
         <div class="col-md-12">
             <!-- Button trigger modal -->
@@ -40,7 +28,7 @@
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    @if (Model == null)
+                                    @if (Model.Orders == null)
                                     {
                                         <tr><td colspan="6" class="text-center">No Order Data</td></tr>
                                     }
