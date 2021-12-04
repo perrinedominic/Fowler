@@ -59,9 +59,9 @@
 
 
 
-        <div class="container">
+        <div class="nk-feature-1">
 
-            <div class="nk-store nk-store-checkout">
+            <div class="nk-store nk-feature-cont mx-auto">
 
                 <!-- START: Billing Details -->
                 <div class="nk-gap-2"></div>
@@ -142,35 +142,25 @@
                     <div class="row vertical-gap">
 
                         <div class="col-lg-6">
-                                <label for="cardnumber">Cardholder Name(As Shown on Card)<span class="text-main-1">*</span>:</label>
-                                <input type="text" class="form-control required" name="cardname" id="cardname" />
+                            <label for="cardnumber">Cardholder Name(As Shown on Card)<span class="text-main-1">*</span>:</label>
+                            <input type="text" class="form-control required" name="cardname" id="cardname" />
                             <div class="nk-gap-1"></div>
-                                <label for="cardnumber">Credit Card Number<span class="text-main-1">*</span>:</label>
-                                <input type="tel" required="required" data-parsley-creditcard="visa, mastercard" class="form-control required" name="cardnumber" id="cardnumber" />
+                            <label for="cardnumber">Credit Card Number<span class="text-main-1">*</span>:</label>
+                            <input type="tel" required="required" data-parsley-creditcard="visa, mastercard" class="form-control required" name="cardnumber" id="cardnumber" />
+                            <div class="nk-gap-1"></div>
+                            <label for="cardnumber">Card Type<span class="text-main-1">*</span>:</label>
+                            <select class="form-control required" required name="cardtype" id="cardtype">
+                                <option>VISA</option>
+                                <option>MasterCard</option>
+                            </select>
                         </div>
+
                         <div class="col-lg-6">
-
-                            <div class="col-sm-3">
-                                <label for="cardnumber">Card Type<span class="text-main-1">*</span>:</label>
-                                <select class="form-control required" required name="cardtype" id="cardtype">
-                                    <option>VISA</option>
-                                    <option>MasterCard</option>
-                                </select>
-                            </div>
+                            <label for="expdate">Expiration Date (mm/yy)<span class="text-main-1">*</span>:</label>
+                            <input type="tel" data-parsley-cardexpiry="" class="form-control required" name="expdate" id="expdate" />
                             <div class="nk-gap-1"></div>
-
-                            <div class="row vertical-gap">
-
-                                <div class="col-sm-6">
-                                    <label for="expdate">Expiration Date (mm/yy)<span class="text-main-1">*</span>:</label>
-                                    <input type="tel" data-parsley-cardexpiry="" class="form-control required" name="expdate" id="expdate" />
-                                </div>
-
-                                <div class="col-sm-6">
-                                    <label for="cvc">CVC Number<span class="text-main-1">*</span>:</label>
-                                    <input type="tel" data-parsley-cvv="" class="form-control required" name="cvc" id="cvc" />
-                                </div>
-                            </div>
+                            <label for="cvc">CVC Number<span class="text-main-1">*</span>:</label>
+                            <input type="tel" data-parsley-cvv="" class="form-control required" name="cvc" id="cvc" />
                         </div>
                         </div>
 
