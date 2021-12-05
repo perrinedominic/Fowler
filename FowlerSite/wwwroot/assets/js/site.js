@@ -1,3 +1,5 @@
 ﻿$(document).ready(function () {
-    console.log("Site.js linked");
+    if ($("body").is(".Create-User")) {
+        $(".hide-me").css("display", "none");
+    } 
 });
