@@ -217,10 +217,12 @@ namespace FowlerSite.Controllers
                     };
                     command.Parameters.Add(parameter);
 
+                    int UserID = this.GetUserID(username);
+
                     parameter = new SqlParameter
                     {
                         ParameterName = "@UserId",
-                        Value = id,
+                        Value = UserID,
                         SqlDbType = SqlDbType.Int,
                     };
                     command.Parameters.Add(parameter);
@@ -234,6 +236,28 @@ namespace FowlerSite.Controllers
             result = RedirectToAction("Login");
 
             return result;
+        }
+
+        public int GetUserID(string username)
+        {
+            Users user = new Users();
+
+            using (SqlConnection connection = new SqlConnection(this.connectionString))
+            {
+                string sql = $"SELECT * FROM Users WHERE Username = '{username}'";
+                SqlCommand command = new SqlCommand(sql, connection);
+                connection.Open();
+                using (SqlDataReader dr = command.ExecuteReader())
+                {
+                    while (dr.Read())
+                    {
+                        user.Id = Convert.ToInt32(dr["Id"]);
+                    }
+                }
+                connection.Close();
+            }
+
+            return user.Id;
         }
 
         // GET: Users/Details/5
