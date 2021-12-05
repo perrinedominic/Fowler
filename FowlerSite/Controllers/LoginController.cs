@@ -14,6 +14,7 @@ using FowlerSite.Models;
 using FowlerSite.Services;
 using System.Configuration;
 using Microsoft.AspNetCore.Mvc.RazorPages;
+using Microsoft.AspNetCore.Http;
 
 namespace FowlerSite.Controllers
 {
@@ -157,8 +158,7 @@ namespace FowlerSite.Controllers
                         login.Password = Convert.ToString(dataReader["Password"]);
                     }
                 }
-
-                TempData["UserId"] = login.UserId;
+                this.SetCookie("UserId", Convert.ToString(login.UserId), 14);
             }
             if (login.Admin == 0)
             {
@@ -170,6 +170,21 @@ namespace FowlerSite.Controllers
             }
 
             return view;
+        }
+
+        public void SetCookie(string key, string value, int? expireTime)
+        {
+            CookieOptions option = new CookieOptions();
+            if (expireTime.HasValue)
+            {
+                option.Expires = DateTime.Now.AddDays(expireTime.Value);
+                Response.Cookies.Append(key, value, option);
+            }
+            else
+            {
+                option.Expires = DateTime.Now.AddMinutes(60);
+                Response.Cookies.Append(key, value, option);
+            }
         }
 
         /// <summary>
@@ -393,6 +408,12 @@ namespace FowlerSite.Controllers
         /// <returns>The login view.</returns>
         public IActionResult Login(Login login)
         {
+            string UserId = Request.Cookies["UserId"];
+
+            if (UserId != "")
+            {
+                
+            }
             return View(login);
         }
 
