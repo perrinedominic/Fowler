@@ -113,45 +113,56 @@
         {
             @if (u.Admin == 1)
             {
-                <tr>
-                    <td>@u.Username</td>
-                    <td>@u.Password</td>
-                    <td>@u.FirstName</td>
-                    <td>@u.LastName</td>
-                    <td>@u.EmailAddress</td>
-                    <td><a class="btn btn-outline-primary" asp-controller="Users" asp-action="Update" asp-route-id="@u.Id">Edit User</a></td>
-                    <td>
-                        <button type="button" class="btn btn-outline-danger" data-toggle="modal" data-target="#myModal">
-                            Delete User
-                        </button>
-                        <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                            <div class="modal-dialog" role="document">
-                                <div class="modal-content">
-                                    <div class="modal-header">
-                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                            <span aria-hidden="true">×</span>
-                                        </button>
-                                        <h5 class="modal-title text-center" id="exampleModalLabel">Are You Sure?</h5>
-                                    </div>
-                                    <div class="modal-body text-white text-lg-center">
-                                        If you delete this user all of their information will be removed permanently, Do you still wish to delete them?
-                                    </div>
-                                    <div class="modal-footer">
-                                        <div class="left-side">
-                                            <button type="button" class="btn btn-default btn-link" data-dismiss="modal">Never mind</button>
-                                        </div>
-                                        <div class="divider"></div>
-                                        <div class="right-side">
-                                            <form asp-action="Delete" method="post" asp-route-id="@u.Id">
-                                                <button class="btn btn-outline-danger">Delete</button>
-                                            </form>
-                                        </div>
-                                    </div>
+    <tr>
+        <td>@u.Username</td>
+        <td>@u.Password</td>
+        <td>@u.FirstName</td>
+        <td>@u.LastName</td>
+        <td>@u.EmailAddress</td>
+        <td><a class="btn btn-outline-primary" asp-controller="Users" asp-action="Update" asp-route-id="@u.Id">Edit User</a></td>
+        @if (Model.UserId != u.Id)
+        {
+            <td>
+                <button type="button" class="btn btn-outline-danger" data-toggle="modal" data-target="#myModal">
+                    Delete User
+                </button>
+                <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                    <div class="modal-dialog" role="document">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                    <span aria-hidden="true">×</span>
+                                </button>
+                                <h5 class="modal-title text-center" id="exampleModalLabel">Are You Sure?</h5>
+                            </div>
+                            <div class="modal-body text-white text-lg-center">
+                                If you delete this user all of their information will be removed permanently, Do you still wish to delete them?
+                            </div>
+                            <div class="modal-footer">
+                                <div class="left-side">
+                                    <button type="button" class="btn btn-default btn-link" data-dismiss="modal">Never mind</button>
+                                </div>
+                                <div class="divider"></div>
+                                <div class="right-side">
+                                    <form asp-action="Delete" method="post" asp-route-id="@u.Id">
+                                        <button class="btn btn-outline-danger">Delete</button>
+                                    </form>
                                 </div>
                             </div>
                         </div>
-                    </td>
-                </tr>
+                    </div>
+                </div>
+            </td>
+        }
+        else
+        {
+    <td>
+        <button type="button" disabled class="btn btn-outline-danger">
+            Delete User
+        </button>
+    </td>   
+        }
+    </tr>
             }
         }
     </tbody>
