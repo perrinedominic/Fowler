@@ -100,14 +100,14 @@ namespace FowlerSite.Controllers
         /// <returns>The found admin that logged in.</returns>
         public IActionResult AdminPage(int id)
         {
-            int userId = (int)TempData.Peek("UserId");
+            string userId = Request.Cookies["UserId"];
             Login user = new Login();
 
             using (SqlConnection connection = new SqlConnection(this.connectionString))
             {
                 connection.Open();
 
-                string sql = $"SELECT * FROM Login Where UserId = {userId}";
+                string sql = $"SELECT * FROM Login Where UserId = {Convert.ToInt32(userId)}";
                 SqlCommand command = new SqlCommand(sql, connection);
 
                 using (SqlDataReader dataReader = command.ExecuteReader())
