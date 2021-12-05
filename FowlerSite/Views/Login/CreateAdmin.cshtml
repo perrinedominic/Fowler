@@ -4,40 +4,68 @@
 <head>
     <link href="~/assets/css/login.css" rel="stylesheet" />
 </head>
+
+<style type="text/css">
+    .error {
+        color: red;
+    }
+
+    .nk-page-background-bottom {
+        display: none;
+    }
+
+    footer {
+        display: none;
+    }
+</style>
+
 <body>
-    <div class="flex-container">
-        <div class="content-container">
-            <div class="form-container">
-                <form method="post" asp-controller="Users" asp-action="CreateAdmin">
-                    <h1>
-                        Create Admin Account:
-                    </h1>
-                    <br>
-                    <br>
-                    <span class="subtitle">FIRST NAME:</span>
-                    <br>
-                    <input type="text" name="FirstName" value="" asp-for="FirstName" />
-                    <br />
-                    <span class="subtitle">LAST NAME:</span>
-                    <br>
-                    <input type="text" name="LastName" value="" asp-for="LastName" />
-                    <br />
-                    <span class="subtitle">CREATE USERNAME:</span>
-                    <br>
-                    <input type="text" name="username" value="" asp-for="Username" />
-                    <br>
-                    <span class="subtitle">CREATE PASSWORD:</span>
-                    <br>
-                    <input type="password" name="password" value="" asp-for="Password" />
-                    <br>
-                    <span class="subtitle">ENTER YOUR EMAIL:</span>
-                    <br />
-                    <input type="text" name="emailaddress" value="" asp-for="EmailAddress" />
-                    <input type="hidden" name="Admin" value="1" asp-for="Admin" />
-                    <br /><br />
-                    <button class="btn btn-outline-primary" type="submit">Create</button>
-                </form>
-            </div>
+    <div class="nk-feature-1 mt-100">
+        <div class="nk-feature-cont mx-auto w-75">
+
+            <h3 class="nk-decorated-h-2"><span><span class="text-main-1">Create</span> Admin Account</span></h3>
+
+            <div class="nk-gap-1"></div>
+            <form method="post" asp-controller="Users" asp-action="CreateAdmin">
+                <div class="row">
+                    <div class="col-lg-6 col-sm-12">
+                        <label for="firstname">First Name:</label>
+                        <input type="text" value="" name="firstname" asp-for="FirstName" class="form-control">
+                    </div>
+
+                    <div class="col-lg-6 col-sm-12">
+                        <label for="lastname">Last Name:</label>
+                        <input type="text" value="" name="lastname" asp-for="LastName" class="required form-control">
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-lg-6 col-sm-12">
+                        <label for="username">Username:</label>
+                        <input type="text" value="" name="username" asp-for="Username" class="form-control">
+                    </div>
+
+                    <div class="col-lg-6 col-sm-12">
+                        <label for="password">Password:</label>
+                        <input type="password" value="" name="password" asp-for="Password" class="required form-control">
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-12">
+                        <label for="emailaddress">Email:</label>
+                        <input type="text" value="" name="emailaddress" asp-for="EmailAddress" class="required form-control">
+                    </div>
+                </div>
+
+                <input type="hidden" name="Admin" value="1" asp-for="Admin" />
+
+                <div class="row">
+                    <div class="col-12">
+                        <button class="nk-btn nk-btn-rounded nk-btn-color-main-1" type="submit">Create</button>
+                    </div>
+                </div>
+            </form>
         </div>
     </div>
 </body>
