@@ -11,54 +11,73 @@
 
 <!-- END: Page Background -->
 <body>
-    <div class="flex-container">
-        <div class="content-container">
-            <h4 class="mb-0"><span class="text-main-1">Edit User</span></h4>
+    <div class="nk-feature-1">
+        <div class="nk-feature-cont mx-auto w-75">
+
+            <h3 class="nk-decorated-h-2"><span><span class="text-main-1">Edit</span> User</span></h3>
 
             <div class="nk-gap-1"></div>
-            <form asp-action="Update" asp-controller="Login" method="post" class="nk-form text-white">
-                <div class="row vertical-gap">
-                    <div class="col-md-6">
-                        First Name:
-                        <div class="nk-gap"></div>
+            <form asp-action="Update" asp-controller="Login" method="post" class="text-white">
+                <div class="row">
+                    <div class="col-lg-6 col-sm-12">
+                        <label for="firstname">First Name:</label>
                         <input type="text" value="@Model.FirstName" name="firstname" asp-for="FirstName" class="form-control">
+                    </div>
 
-                        Last Name:
-                        <div class="nk-gap"></div>
+                    <div class="col-lg-6 col-sm-12">
+                        <label for="lastname">Last Name:</label>
                         <input type="text" value="@Model.LastName" name="lastname" asp-for="LastName" class="required form-control">
+                    </div>
+                </div>
 
-                        Username:
-                        <div class="nk-gap"></div>
+                <div class="row">
+                    <div class="col-lg-6 col-sm-12">
+                        <label for="username">Username:</label>
                         <input type="text" value="@Model.Username" name="username" asp-for="Username" class="form-control">
+                    </div>
 
-                        Password:
-                        <div class="nk-gap"></div>
-                        <input type="text" value="@Model.Password" name="password" asp-for="Password" class="required form-control">
+                    <div class="col-lg-6 col-sm-12">
+                        <label for="password">Password:</label>
+                        <input type="password" value="@Model.Password" name="password" asp-for="Password" class="required form-control">
+                    </div>
+                </div>
 
-                        Email:
-                        <div class="nk-gap"></div>
+                <div class="row">
+                    <div class="col-12">
+                        <label for="emailaddress">Email:</label>
                         <input type="text" value="@Model.EmailAddress" name="emailaddress" asp-for="EmailAddress" class="required form-control">
+                    </div>
+                </div>
 
-                        Card Number:
-                        <div class="nk-gap"></div>
+                <div class="row">
+                    <div class="col-12">
+                        <label for="cardnumber">Card Number:</label>
                         <input type="text" value="@Model.CardNumber" name="cardnumber" asp-for="CardNumber" class="required form-control">
+                    </div>
+                </div>
 
-                        Card Expiration Date:
-                        <div class="nk-gap"></div>
+
+                <div class="row">
+                    <div class="col-12">
+                        <label for="CardExpire">Card Epiration Date:</label>
                         <input type="text" value="@Model.CardExpire" name="CardExpire" asp-for="CardExpire" class="required form-control">
+                    </div>
+                </div>
 
-                        Card CVC:
-                        <div class="nk-gap"></div>
+                <div class="row">
+                    <div class="col-12">
+                        <label for="CardCvc">Card CVC:</label>
                         <input type="text" value="@Model.CardCvc" name="cardcvc" asp-for="CardCvc" class="required form-control">
                     </div>
                 </div>
 
                 <div class="nk-gap-1"></div>
-                <div class="row vertical-gap">
-                    <div class="col-md-6">
+                <div class="row">
+                    <div class="col-12">
                         <button class="nk-btn nk-btn-rounded nk-btn-color-main-1" type="submit">Complete</button>
                     </div>
                 </div>
+                <div class="nk-gap-1"></div>
             </form>
         </div>
     </div>
