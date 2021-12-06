@@ -14,6 +14,7 @@ using FowlerSite.Models;
 using FowlerSite.Services;
 using System.Configuration;
 using Microsoft.AspNetCore.Mvc.RazorPages;
+using Microsoft.AspNetCore.Http;
 
 namespace FowlerSite.Controllers
 {
@@ -99,14 +100,14 @@ namespace FowlerSite.Controllers
         /// <returns>The found admin that logged in.</returns>
         public IActionResult AdminPage(int id)
         {
-            int userId = (int)TempData.Peek("UserId");
+            string userId = Request.Cookies["UserId"];
             Login user = new Login();
 
             using (SqlConnection connection = new SqlConnection(this.connectionString))
             {
                 connection.Open();
 
-                string sql = $"SELECT * FROM Login Where UserId = {userId}";
+                string sql = $"SELECT * FROM Login Where UserId = {Convert.ToInt32(userId)}";
                 SqlCommand command = new SqlCommand(sql, connection);
 
                 using (SqlDataReader dataReader = command.ExecuteReader())
@@ -157,8 +158,7 @@ namespace FowlerSite.Controllers
                         login.Password = Convert.ToString(dataReader["Password"]);
                     }
                 }
-
-                TempData["UserId"] = login.UserId;
+                this.SetCookie("UserId", Convert.ToString(login.UserId), 14);
             }
             if (login.Admin == 0)
             {
@@ -170,6 +170,21 @@ namespace FowlerSite.Controllers
             }
 
             return view;
+        }
+
+        public void SetCookie(string key, string value, int? expireTime)
+        {
+            CookieOptions option = new CookieOptions();
+            if (expireTime.HasValue)
+            {
+                option.Expires = DateTime.Now.AddDays(expireTime.Value);
+                Response.Cookies.Append(key, value, option);
+            }
+            else
+            {
+                option.Expires = DateTime.Now.AddMinutes(60);
+                Response.Cookies.Append(key, value, option);
+            }
         }
 
         /// <summary>
@@ -217,10 +232,12 @@ namespace FowlerSite.Controllers
                     };
                     command.Parameters.Add(parameter);
 
+                    int UserID = this.GetUserID(username);
+
                     parameter = new SqlParameter
                     {
                         ParameterName = "@UserId",
-                        Value = id,
+                        Value = UserID,
                         SqlDbType = SqlDbType.Int,
                     };
                     command.Parameters.Add(parameter);
@@ -234,6 +251,28 @@ namespace FowlerSite.Controllers
             result = RedirectToAction("Login");
 
             return result;
+        }
+
+        public int GetUserID(string username)
+        {
+            Users user = new Users();
+
+            using (SqlConnection connection = new SqlConnection(this.connectionString))
+            {
+                string sql = $"SELECT * FROM Users WHERE Username = '{username}'";
+                SqlCommand command = new SqlCommand(sql, connection);
+                connection.Open();
+                using (SqlDataReader dr = command.ExecuteReader())
+                {
+                    while (dr.Read())
+                    {
+                        user.Id = Convert.ToInt32(dr["Id"]);
+                    }
+                }
+                connection.Close();
+            }
+
+            return user.Id;
         }
 
         // GET: Users/Details/5
@@ -369,6 +408,12 @@ namespace FowlerSite.Controllers
         /// <returns>The login view.</returns>
         public IActionResult Login(Login login)
         {
+            string UserId = Request.Cookies["UserId"];
+
+            if (UserId != "")
+            {
+                
+            }
             return View(login);
         }
 

@@ -390,9 +390,11 @@ namespace FowlerSite.Controllers
                         orderid = Convert.ToInt32(dataReader["Order_ID"]);
                     };
                 }
+
+                int custId = Convert.ToInt32(Request.Cookies["UserId"]);
                 orderid++;
                 string orderDate = DateTime.Now.ToString("MM-dd-yyyy");
-                sql = $"INSERT INTO [dbo].[Order] (Order_ID, Order_Date, Cust_ID, Payment_Info_ID) VALUES ({orderid}, {orderDate}, 1, {payment.Payment_Info_Id});";
+                sql = $"INSERT INTO [dbo].[Order] (Order_ID, Order_Date, Cust_ID, Payment_Info_ID) VALUES ({orderid}, {orderDate}, {custId}, {payment.Payment_Info_Id});";
                 command = new SqlCommand(sql, connection);
                 command.ExecuteNonQuery();
 
