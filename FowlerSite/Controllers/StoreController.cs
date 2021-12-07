@@ -126,7 +126,8 @@ namespace FowlerSite.Controllers
         /// <returns>The view of the shopping cart items.</returns>
         public IActionResult StoreCart(int id)
         {
-            int cardId = 1;
+            var userId = GetUserID();
+            var cardId = _db.ShoppingCart.Where(x => x.UserId == userId).Select(x => x.CartId).FirstOrDefault();
 
             if (id.ToString().StartsWith("-"))
             {
@@ -295,7 +296,7 @@ namespace FowlerSite.Controllers
             var userId = GetUserID();
             var cardId = _db.ShoppingCart.Where(x => x.UserId == userId).Select(x => x.CartId).FirstOrDefault();
 
-            List<CartItem> cartItems = GetCartItems(1);
+            List<CartItem> cartItems = GetCartItems(cardId);
 
             // Loops through the cart items to find the correct product id.
             foreach(CartItem c in cartItems)
@@ -317,14 +318,11 @@ namespace FowlerSite.Controllers
         /// <returns>An empty GUID for the id.</returns>
         public int? GetUserID()
         {
-            if (login != null)
-            {
-                return login.Id;
-            }
-            else
-            {
-                return null;
-            }
+            string userId = Request.Cookies["UserId"];
+            int? nuserId = Convert.ToInt32(userId);
+             if (nuserId != null) { return nuserId; }
+            else { return 0; }
+            
         }
 
         /// <summary>
