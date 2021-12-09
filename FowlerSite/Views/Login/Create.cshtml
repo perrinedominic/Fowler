@@ -4,43 +4,65 @@
 <head>
     <link href="~/assets/css/login.css" rel="stylesheet" />
 </head>
+
+<!--Removes footer and second backgroun from page-->
+<style type="text/css">
+    .error {
+        color: red;
+    }
+
+    .nk-page-background-bottom {
+        display: none;
+    }
+
+    footer {
+        display: none;
+    }
+</style>
+
 <body>
-    <div class="flex-container">
-        <div class="content-container">
-                <h4 class="mb-0"><span class="text-main-1">Create an Account</span></h4>
+    <div class="form-container mx-auto mt-100">
 
-                <div class="nk-gap-1"></div>
-                <form asp-action="CreateUser" asp-controller="Users" method="post" class="nk-form text-white">
-                    <div class="row vertical-gap">
-                        <div class="col-md-6">
-                            First Name:
-                            <div class="nk-gap"></div>
-                            <input type="text" value="" name="firstname" asp-for="FirstName" class="form-control" placeholder="First Name">
+        <h4 class="my-2"><span class="text-main-1">Create</span> Account</h4>
 
-                            Last Name:
-                            <input type="text" value="" name="lastname" asp-for="LastName" class="required form-control" placeholder="Last Name">
+        <div class="nk-gap-1"></div>
+        <form asp-action="CreateUser" asp-controller="Users" method="post" class="nk-form text-white">
+            <div class="row">
+                <div class="col-lg-6 col-sm-12">
+                    <label for="firstname">First Name:</label>
+                    <input type="text" value="" name="firstname" asp-for="FirstName" class="form-control">
+                </div>
 
-                            Username:
-                            <div class="nk-gap"></div>
-                            <input type="text" value="" name="username" asp-for="Username" class="form-control" placeholder="Username">
-
-                            Password:
-                            <div class="nk-gap"></div>
-                            <input type="password" value="" name="password" asp-for="Password" class="required form-control" placeholder="Password">
-
-                            Email:
-                            <div class="nk-gap"></div>
-                            <input type="text" value="" name="emailaddress" asp-for="EmailAddress" class="required form-control" placeholder="Email Address">
-                        </div>
-                    </div>
-
-                    <div class="nk-gap-1"></div>
-                    <div class="row vertical-gap">
-                        <div class="col-md-6">
-                            <button class="nk-btn nk-btn-rounded nk-btn-color-main-1" type="submit">Create</button>
-                        </div>
-                    </div>
-                </form>
+                <div class="col-lg-6 col-sm-12">
+                    <label for="lastname">Last Name:</label>
+                    <input type="text" value="" name="lastname" asp-for="LastName" class="required form-control">
+                </div>
             </div>
-        </div>
+
+            <div class="row">
+                <div class="col-lg-6 col-sm-12">
+                    <label for="username">Username:</label>
+                    <input type="text" value="" name="username" asp-for="Username" class="form-control">
+                </div>
+
+                <div class="col-lg-6 col-sm-12">
+                    <label for="password">Password:</label>
+                    <input type="password" value="" name="password" asp-for="Password" class="required form-control">
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-12">
+                    <label for="emailaddress">Email:</label>
+                    <input type="text" value="" name="emailaddress" asp-for="EmailAddress" class="required form-control">
+                </div>
+            </div>
+
+            <div class="row vertical-gap">
+                <div class="col-12 mb-10">
+                    <button class="btn btn-outline-primary" type="submit">Create</button>
+                </div>
+            </div>
+        </form>
+    </div>
 </body>
