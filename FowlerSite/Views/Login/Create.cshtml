@@ -24,9 +24,12 @@
     <div class="form-container mx-auto mt-100">
 
         <h4 class="my-2"><span class="text-main-1">Create</span> Account</h4>
-
+        @if (Model != null)
+        {
+            <span class="error">@Model.ErrorMessage</span>
+        }
         <div class="nk-gap-1"></div>
-        <form asp-action="CreateUser" asp-controller="Users" method="post" class="nk-form text-white">
+        <form asp-action="Validate" asp-controller="Users" method="post" class="nk-form text-white">
             <div class="row">
                 <div class="col-lg-6 col-sm-12">
                     <label for="firstname">First Name:</label>

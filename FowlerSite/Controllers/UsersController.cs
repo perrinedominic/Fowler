@@ -332,5 +332,40 @@ namespace FowlerSite.Controllers
         {
             return View();
         }
+
+        public IActionResult Validate(Users user)
+        {
+            Users login = new Users();
+            RedirectToActionResult result = null;
+
+            using (SqlConnection connection = new SqlConnection(this.connectionString))
+            {
+                string sql = $"SELECT Username FROM Users WHERE Username='{user.Username}'";
+
+                using (SqlCommand command = new SqlCommand(sql, connection))
+                {
+                    connection.Open();
+                    using (SqlDataReader dataReader = command.ExecuteReader())
+                    {
+                        while (dataReader.Read())
+                        {
+                            login.Username = Convert.ToString(dataReader["Username"]);
+                            login.ErrorMessage = "Username is already taken!";
+                        }
+                    }
+                    connection.Close();
+                }
+                if (login.ErrorMessage == null)
+                {
+                    result = RedirectToAction("CreateUser", user);
+                }
+                else
+                {
+                    result = RedirectToAction("Create", "Login", login);
+                }
+            }
+
+            return result;
+        }
     }
 }

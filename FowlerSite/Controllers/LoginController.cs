@@ -388,9 +388,9 @@ namespace FowlerSite.Controllers
         /// The method for the create view.
         /// </summary>
         /// <returns>The create view.</returns>
-        public IActionResult Create()
+        public IActionResult Create(Users user)
         {
-            return View();
+            return View(user);
         }
 
         /// <summary>

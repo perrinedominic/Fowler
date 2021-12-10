@@ -74,6 +74,11 @@ namespace FowlerSite.Models
         public string CardCvc { get; set; }
 
         /// <summary>
+        /// Gets or sets the users error message.
+        /// </summary>
+        public string ErrorMessage { get; set; }
+
+        /// <summary>
         /// Overrides the original tostring method.
         /// </summary>
         /// <returns>The first and last name of the user.</returns>
