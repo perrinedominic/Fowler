@@ -409,10 +409,12 @@ namespace FowlerSite.Controllers
         public IActionResult Login(Login login)
         {
             string UserId = Request.Cookies["UserId"];
+            RedirectToActionResult view = null;
 
             if (UserId != "")
             {
-                
+                view = RedirectToAction("UserPage", "Login", UserId);
+                return view;
             }
             return View(login);
         }
