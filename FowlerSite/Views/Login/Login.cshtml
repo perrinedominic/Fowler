@@ -6,7 +6,7 @@
 }
 
 <head>
-    
+
 </head>
 <style type="text/css">
     .error {
@@ -21,6 +21,15 @@
         display: none;
     }
 </style>
+
+@{
+    string message = TempData["Message"] as string;
+    if (!String.IsNullOrEmpty(message))
+    {
+        <div class="alert alert-success"><strong>Success!</strong> You have been logged out!</div>
+
+    }
+}
 
 <div class="form-container mx-auto mt-100">
     <h4 class="my-2"><span class="text-main-1">Sign</span> In</h4>
