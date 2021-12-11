@@ -45,6 +45,12 @@ namespace FowlerSite.Controllers
         }
 
         /// <summary>
+        /// Gets or sets the message tempdata.
+        /// </summary>
+        [TempData]
+        public string Message { get; set; }
+
+        /// <summary>
         /// Gets the configuration.
         /// </summary>
         public IConfiguration Configuration { get; }
@@ -185,6 +191,11 @@ namespace FowlerSite.Controllers
                 option.Expires = DateTime.Now.AddMinutes(60);
                 Response.Cookies.Append(key, value, option);
             }
+        }
+
+        public void RemoveCookie(string key)
+        {
+            Response.Cookies.Delete(key);
         }
 
         /// <summary>
@@ -539,6 +550,10 @@ namespace FowlerSite.Controllers
             return _context.Users.Any(e => e.Username == id);
         }
 
+        /// <summary>
+        /// If the user is logged in, redirect to user page.
+        /// </summary>
+        /// <returns>The redirected action.</returns>
         public IActionResult DirectUser()
         {
             string UserId = Request.Cookies["UserId"];
@@ -551,6 +566,15 @@ namespace FowlerSite.Controllers
             {
                 return RedirectToAction("Login", new Login());
             }
+        }
+
+
+
+        public IActionResult Logout()
+        {
+            this.RemoveCookie("UserId");
+            Message = "You have successfully logged out.";
+            return RedirectToAction("Login");
         }
     }
 }

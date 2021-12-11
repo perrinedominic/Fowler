@@ -132,6 +132,17 @@
                                     </span>
                                 </a>
                             </li>
+                            @{ string cookies = Context.Request.Cookies["UserId"];
+
+                                if (cookies != null)
+                                {
+                                    <li class="login-icon">
+                                        <a asp-controller="Login" asp-action="Logout">
+                                            <span class="ion-log-out"></span>
+                                        </a>
+                                    </li>
+                                }
+                            }
                         </ul>
                     </div>
                 </div>
