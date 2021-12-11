@@ -1,14 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Data;
-using System.Linq;
-using System.Threading.Tasks;
 using DataAccessLibrary.DataAccess;
 using FowlerSite.Models;
 using FowlerSite.Services;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Data.SqlClient;
 using Microsoft.Extensions.Configuration;
+using BC = BCrypt.Net.BCrypt;
 
 namespace FowlerSite.Controllers
 {
@@ -51,6 +50,7 @@ namespace FowlerSite.Controllers
         [HttpPost]
         public IActionResult CreateUser(Users user)
         {
+            string passwordHash = BC.HashPassword(user.Password);
             using (SqlConnection connection = new SqlConnection(this.connectionString))
             {
                 string sql = "INSERT INTO Users (Username, Password, FirstName, LastName, EmailAddress, Admin) Values (@Username, @Password, @FirstName, @LastName, @EmailAddress, @Admin)";
@@ -72,7 +72,7 @@ namespace FowlerSite.Controllers
                     parameter = new SqlParameter
                     {
                         ParameterName = "@Password",
-                        Value = user.Password,
+                        Value = passwordHash,
                         SqlDbType = SqlDbType.VarChar,
                         Size = 100
                     };
@@ -135,6 +135,7 @@ namespace FowlerSite.Controllers
         [HttpPost]
         public IActionResult CreateAdmin(Users user)
         {
+            string passwordHash = BC.HashPassword(user.Password);
             using (SqlConnection connection = new SqlConnection(this.connectionString))
             {
                 string sql = "INSERT INTO Users (Username, Password, FirstName, LastName, EmailAddress, Admin) Values (@Username, @Password, @FirstName, @LastName, @EmailAddress, @Admin)";
@@ -156,7 +157,7 @@ namespace FowlerSite.Controllers
                     parameter = new SqlParameter
                     {
                         ParameterName = "@Password",
-                        Value = user.Password,
+                        Value = passwordHash,
                         SqlDbType = SqlDbType.VarChar,
                         Size = 100
                     };

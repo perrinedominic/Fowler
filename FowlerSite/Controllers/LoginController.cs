@@ -1,9 +1,7 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using DataAccessLibrary.DataAccess;
 using DataAccessLibrary.Models;
@@ -12,9 +10,8 @@ using Microsoft.Extensions.Configuration;
 using System.Data;
 using FowlerSite.Models;
 using FowlerSite.Services;
-using System.Configuration;
-using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.Http;
+using BC = BCrypt.Net.BCrypt;
 
 namespace FowlerSite.Controllers
 {
@@ -208,6 +205,7 @@ namespace FowlerSite.Controllers
             int admin = (int)TempData["Admin"];
             string username = (string)TempData["Username"];
             string password = (string)TempData["Password"];
+            string passwordHash = BC.HashPassword(password);
             RedirectToActionResult result = null;
 
             using (SqlConnection connection = new SqlConnection(this.connectionString))
@@ -229,7 +227,7 @@ namespace FowlerSite.Controllers
                     parameter = new SqlParameter
                     {
                         ParameterName = "@Password",
-                        Value = password,
+                        Value = passwordHash,
                         SqlDbType = SqlDbType.VarChar,
                         Size = 100
                     };
@@ -422,7 +420,7 @@ namespace FowlerSite.Controllers
             string UserId = Request.Cookies["UserId"];
             RedirectToActionResult view = null;
 
-            if (UserId != "")
+            if (UserId != null)
             {
                 view = RedirectToAction("UserPage", "Login", UserId);
                 return view;
@@ -532,8 +530,9 @@ namespace FowlerSite.Controllers
                         }
                     }
                     connection.Close();
+                    BC.Verify(login.Password, user.Password);
                 }
-                if (user.Username == "" || user.Password == "" || user.Username == null || user.Password == null)
+                if (user.Username == "" || user.Password == "" || user.Username == null || user.Password == null || !BC.Verify(login.Password, user.Password))
                 {
                     login.ErrorMessage = "Invalid Username or Password.";
                     result = RedirectToAction("Login", login);
