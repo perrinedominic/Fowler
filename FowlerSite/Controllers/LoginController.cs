@@ -538,5 +538,19 @@ namespace FowlerSite.Controllers
         {
             return _context.Users.Any(e => e.Username == id);
         }
+
+        public IActionResult DirectUser()
+        {
+            string UserId = Request.Cookies["UserId"];
+            int id = Convert.ToInt32(UserId);
+            if (id > 0)
+            {
+                return RedirectToAction("UserPage", id);
+            }
+            else
+            {
+                return RedirectToAction("Login", new Login());
+            }
+        }
     }
 }
