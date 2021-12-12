@@ -358,7 +358,8 @@ namespace FowlerSite.Controllers
                 }
                 if (login.ErrorMessage == null)
                 {
-                    result = RedirectToAction("CreateUser", user);
+                    this.CreateUser(user);
+                    result = RedirectToAction("CreateLogin", "Login", user.Id);
                 }
                 else
                 {

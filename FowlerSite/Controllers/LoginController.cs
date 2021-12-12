@@ -139,14 +139,12 @@ namespace FowlerSite.Controllers
         public IActionResult UserLogin(Login login)
         {
             RedirectToActionResult view = null;
-            string username = (string)TempData["Username"];
-            string password = (string)TempData["Password"];
 
             using (SqlConnection connection = new SqlConnection(this.connectionString))
             {
                 connection.Open();
 
-                string sql = $"SELECT * FROM [Login] WHERE Username = '{login.Username}' and [Password] = '{login.Password}'";
+                string sql = $"SELECT * FROM [Login] WHERE Username = '{login.Username}'";
                 SqlCommand command = new SqlCommand(sql, connection);
 
                 using (SqlDataReader dataReader = command.ExecuteReader())
@@ -516,7 +514,7 @@ namespace FowlerSite.Controllers
 
             using (SqlConnection connection = new SqlConnection(this.connectionString))
             {
-                string sql = $"SELECT Username, Password FROM Login WHERE Username='{login.Username}' and Password='{login.Password}'";
+                string sql = $"SELECT Username, Password FROM Login WHERE Username='{login.Username}'";
 
                 using (SqlCommand command = new SqlCommand(sql, connection))
                 {
