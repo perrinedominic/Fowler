@@ -582,6 +582,7 @@ namespace FowlerSite.Controllers
         public IActionResult Logout()
         {
             this.RemoveCookie("UserId");
+            this.RemoveCookie("Admin");
             Message = "You have successfully logged out.";
             return RedirectToAction("Login");
         }

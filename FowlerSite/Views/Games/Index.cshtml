@@ -102,7 +102,7 @@
         <div class="col-8 nk-feature-1">
             <div class="nk-feature-cont mx-auto">
                 <h3 class="nk-decorated-h-2"><span class="text-main-1">Games</span></h3>
-                @if (ViewBag.MyCookie != null)
+                @if (ViewBag.MyCookie != null && ViewBag.MyCookie == 1)
                 {
                     <p>
                         <a asp-action="Create">Create New</a>
