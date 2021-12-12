@@ -8,6 +8,7 @@ using Newtonsoft.Json;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Http;
 using System;
 using System.IO;
 using System.Collections;
@@ -103,7 +104,12 @@ namespace FowlerSite.Controllers
         public async Task<IActionResult> Index()
         {
             List<Game> games = Games.ToList();
-
+            var cookie = Request.Cookies["Admin"];
+            if (cookie != null)
+            {
+                ViewBag.MyCookie = int.Parse(cookie);
+            }
+            
             JsonCompare();
 
             return View(games);

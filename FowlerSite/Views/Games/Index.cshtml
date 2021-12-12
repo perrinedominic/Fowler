@@ -5,7 +5,6 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-
 <div class="container">
     <div class="row">
         <div class="col-4">
@@ -103,9 +102,12 @@
         <div class="col-8 nk-feature-1">
             <div class="nk-feature-cont mx-auto">
                 <h3 class="nk-decorated-h-2"><span class="text-main-1">Games</span></h3>
-                <p>
-                    <a asp-action="Create">Create New</a>
-                </p>
+                @if (ViewBag.MyCookie != null)
+                {
+                    <p>
+                        <a asp-action="Create">Create New</a>
+                    </p>
+                }
                 <table class="table text-white">
                     <thead>
                         <tr>

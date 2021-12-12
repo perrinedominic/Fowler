@@ -160,6 +160,7 @@ namespace FowlerSite.Controllers
                     }
                 }
                 this.SetCookie("UserId", Convert.ToString(login.UserId), 14);
+                this.SetCookie("Admin", Convert.ToString(login.Admin), 14);
             }
             if (login.Admin == 0)
             {
@@ -528,17 +529,26 @@ namespace FowlerSite.Controllers
                         }
                     }
                     connection.Close();
-                    BC.Verify(login.Password, user.Password);
+                    if (user.Password != null)
+                    {
+                        BC.Verify(login.Password, user.Password);
+                        if (user.Username == "" || user.Password == "" || user.Username == null || user.Password == null || !BC.Verify(login.Password, user.Password))
+                        {
+                            login.ErrorMessage = "Invalid Username or Password.";
+                            result = RedirectToAction("Login", login);
+                        }
+                        else
+                        {
+                            result = RedirectToAction("UserLogin", login);
+                        }
+                    }
+                    else
+                    {
+                        login.ErrorMessage = "Invalid Username or Password.";
+                        result = RedirectToAction("Login", login);
+                    }
                 }
-                if (user.Username == "" || user.Password == "" || user.Username == null || user.Password == null || !BC.Verify(login.Password, user.Password))
-                {
-                    login.ErrorMessage = "Invalid Username or Password.";
-                    result = RedirectToAction("Login", login);
-                }
-                else
-                {
-                    result = RedirectToAction("UserLogin", login);
-                }
+                
             }
 
             return result;
