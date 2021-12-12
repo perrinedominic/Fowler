@@ -65,6 +65,11 @@ namespace FowlerSite.Controllers
         /// <returns>The user found.</returns>
         public IActionResult UserPage(int id)
         {
+            string UserId = Request.Cookies["UserId"];
+            if (Convert.ToInt32(UserId) > 0)
+            {
+                id = Convert.ToInt32(UserId);
+            }
             Users user = new Users();
 
             using (SqlConnection connection = new SqlConnection(this.connectionString))
