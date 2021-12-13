@@ -10,6 +10,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
 using MimeKit;
 using MimeKit.Text;
+using MimeKit.Utils;
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
@@ -158,7 +159,8 @@ namespace FowlerSite.Controllers
         /// <returns>Returns the view for the store checkout.</returns>
         public IActionResult StoreCheckout()
         {
-            int cardId = 1;
+            var userId = GetUserID();
+            int cardId = _db.ShoppingCart.Where(x => x.UserId == userId).Select(x => x.CartId).FirstOrDefault();
             IEnumerable<CartItem> items = _db.ShoppingCartItems.Include(x => x.Game).Where(x => x.CartId == cardId).ToList();
             
             return View(items);
@@ -184,8 +186,10 @@ namespace FowlerSite.Controllers
 
         public IActionResult Update(IFormCollection fc)
         {
+            var userId = GetUserID();
+            var cardId = _db.ShoppingCart.Where(x => x.UserId == userId).Select(x => x.CartId).FirstOrDefault();
             string[] quantities = fc["quantity"];
-            List<CartItem> items = GetCartItems(1);
+            List<CartItem> items = GetCartItems(cardId);
             for(int i = 0; i < items.Count; i++)
             {
                 items[i].Quantity = Convert.ToInt32(quantities[i]);
@@ -423,17 +427,27 @@ namespace FowlerSite.Controllers
                 connection.Close();
             }
 
+            
             string name = frc["fname"];
             string email = frc["email"];
             // Remove Shopping Cart Session.
             var message = new MimeMessage();
-            message.From.Add(new MailboxAddress("Test Project", "fowlergoodgames@gmail.com"));
+            message.From.Add(new MailboxAddress("Good Games", "fowlergoodgames@gmail.com"));
             message.To.Add(new MailboxAddress(name, email));
             message.Subject = "Order Confirmation";
-            message.Body = new TextPart(TextFormat.Plain)
-            {
-                Text = "Thank you for your order. Your order number is " + orderid
-        };
+
+            var builder = new BodyBuilder();
+            var image = builder.LinkedResources.Add(@"wwwroot\assets\images\favicon.png");
+            image.ContentId = MimeUtils.GenerateMessageId();
+
+            builder.HtmlBody = string.Format("<h1>Thank you for your order!</h1></br>" +
+                "<h3>Your order confirmation number is " + orderid + ".</h3></br></br>" +
+                @"<img src=""cid:{0}"">", image.ContentId);
+
+
+
+            message.Body = builder.ToMessageBody();
+
             using (var client = new SmtpClient())
             {
                 client.Connect("smtp.gmail.com", 587, false);
