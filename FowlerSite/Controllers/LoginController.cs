@@ -12,6 +12,7 @@ using FowlerSite.Models;
 using FowlerSite.Services;
 using Microsoft.AspNetCore.Http;
 using BC = BCrypt.Net.BCrypt;
+using System.Collections.Generic;
 
 namespace FowlerSite.Controllers
 {
@@ -165,6 +166,7 @@ namespace FowlerSite.Controllers
                     }
                 }
                 this.SetCookie("UserId", Convert.ToString(login.UserId), 14);
+                this.SetCookie("Admin", Convert.ToString(0), 14);
                 this.SetCookie("Admin", Convert.ToString(login.Admin), 14);
             }
             if (login.Admin == 0)

@@ -153,9 +153,15 @@
                                 <td class="border-0" colspan="5">
                                     <h4 class="nk-feature-title text-main-1 d-flex justify-content-end">
                                         <a asp-action="StoreCart" asp-controller="Store" asp-route-id="@item.ProductID">Add to cart&nbsp;&nbsp;&nbsp;</a>|
-                                        <a asp-action="Edit" asp-route-id="@item.ProductID">&nbsp;&nbsp;&nbsp;Edit&nbsp;&nbsp;&nbsp;</a>|
+                                        @if (ViewBag.MyCookie != null && ViewBag.MyCookie == 1)
+                                        {
+                                            <a asp-action="Edit" asp-route-id="@item.ProductID">&nbsp;&nbsp;&nbsp;Edit&nbsp;&nbsp;&nbsp;|</a>
+                                        }
                                         <a asp-action="Details" asp-route-id="@item.ProductID">&nbsp;&nbsp;&nbsp;Details&nbsp;&nbsp;&nbsp;</a>|
-                                        <a asp-action="Delete" asp-route-id="@item.ProductID">&nbsp;&nbsp;&nbsp;Delete&nbsp;&nbsp;&nbsp;</a>
+                                        @if (ViewBag.MyCookie != null && ViewBag.MyCookie == 1)
+                                        {
+                                             <a asp-action="Delete" asp-route-id="@item.ProductID">&nbsp;&nbsp;&nbsp;Delete&nbsp;&nbsp;&nbsp;|</a>
+                                        }
                                     </h4>
                                 </td>
                             </tr>
